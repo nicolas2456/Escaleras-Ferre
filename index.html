@@ -48,19 +48,20 @@
 
         /* Header */
         .header {
-            background: white;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
             position: fixed;
             top: 50px;
             left: 0;
             right: 0;
             z-index: 1000;
-            box-shadow: var(--shadow-card);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid var(--color-primary);
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: var(--spacing-sm);
+            padding: 1.2rem var(--spacing-sm);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -69,7 +70,7 @@
         .logo-container {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: 1.5rem;
         }
 
         .logo {
@@ -85,31 +86,35 @@
             font-size: 1.2rem;
         }
 
-        /* Logo SVG con animación buildUp */
+        /* Logo Grande con Animación Impactante */
         .logo-svg {
-            width: 80px;
-            height: 80px;
-            animation: logoEntrance 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 140px;
+            height: 140px;
+            animation: logoEntrance 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             animation-fill-mode: both;
             object-fit: contain;
             display: block;
-            filter: drop-shadow(0 4px 12px rgba(45, 80, 22, 0.3));
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 8px 20px rgba(45, 80, 22, 0.4));
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
         }
 
         .logo-svg:hover {
-            transform: scale(1.1) rotate(5deg);
-            filter: drop-shadow(0 6px 20px rgba(45, 80, 22, 0.5));
+            transform: scale(1.15) rotate(8deg);
+            filter: drop-shadow(0 12px 30px rgba(45, 80, 22, 0.6));
         }
 
         @keyframes logoEntrance {
             0% {
                 opacity: 0;
-                transform: translateY(-30px) scale(0.5) rotate(-10deg);
+                transform: translateY(-50px) scale(0.3) rotate(-180deg);
             }
-            50% {
+            60% {
                 opacity: 1;
-                transform: translateY(5px) scale(1.1) rotate(2deg);
+                transform: translateY(10px) scale(1.15) rotate(10deg);
+            }
+            80% {
+                transform: translateY(-5px) scale(0.95) rotate(-5deg);
             }
             100% {
                 opacity: 1;
@@ -119,15 +124,19 @@
 
         .logo-text {
             font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .logo-subtitle {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--color-accent);
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .nav-menu {
@@ -187,7 +196,7 @@
             color: white;
             padding: 8rem var(--spacing-sm) 4rem;
             text-align: center;
-            margin-top: 100px;
+            margin-top: 200px;
         }
 
         .hero-title {
@@ -690,6 +699,18 @@
                 display: none;
             }
 
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .logo-container {
+                gap: 1rem;
+            }
+
             .hero-title {
                 font-size: 2.5rem;
             }
@@ -715,8 +736,12 @@
             }
 
             .logo-svg {
-                width: 60px;
-                height: 60px;
+                width: 90px;
+                height: 90px;
+            }
+
+            .hero {
+                margin-top: 160px;
             }
         }
 
