@@ -87,11 +87,16 @@
 
         /* Logo SVG con animación buildUp */
         .logo-svg {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             animation: buildUp 2s ease-out;
             animation-fill-mode: both;
             object-fit: contain;
+            display: block;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         @keyframes buildUp {
@@ -710,8 +715,9 @@
             }
 
             .logo-svg {
-                width: 40px;
-                height: 40px;
+                width: 45px;
+                height: 45px;
+                padding: 3px;
             }
         }
 
