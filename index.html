@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html>
+<head>
+            <style>.lw { font-size: 60px; }</style>
+        </head>
+        <body style="overflow: auto;">
+            
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escaleras Ferre - Suministros Varios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Variables CSS */
+        :root {
+            --color-primary: #2d5016;
+            --color-secondary: #1a2e0c;
+            --color-accent: #ffa500;
+            --color-text: #333333;
+            --color-light-gray: #f8f9fa;
+            --color-border: #e9ecef;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --font-heading: 'Segoe UI', Arial, sans-serif;
+            --shadow-card: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-elevated: 0 8px 25px rgba(0,0,0,0.15);
+            --transition-smooth: all 0.3s ease;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 15px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            position: fixed;
+            top: 50px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-card);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .logo-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-md);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--color-text);
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            padding: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+
+        /* WhatsApp Bar */
+        .whatsapp-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #25d366;
+            color: white;
+            padding: 0.5rem 0;
+            z-index: 1100;
+            text-align: center;
+        }
+
+        .whatsapp-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .whatsapp-btn {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .whatsapp-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            padding: 8rem var(--spacing-sm) 4rem;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-xl);
+            opacity: 0.9;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary, .cta-secondary {
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cta-primary {
+            background: var(--color-accent);
+            color: var(--color-primary);
+        }
+
+        .cta-primary:hover {
+            background: #ff8c00;
+            transform: translateY(-2px);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-secondary:hover {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        /* Sections */
+        .section {
+            padding: var(--spacing-xl) var(--spacing-sm);
+        }
+
+        .section-alt {
+            background: var(--color-light-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--color-text);
+            opacity: 0.8;
+        }
+
+        /* SPA Catalog */
+        .spa-catalog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 3000;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .spa-catalog.active {
+            transform: translateX(0);
+        }
+
+        .spa-header {
+            background: var(--color-primary);
+            color: white;
+            padding: var(--spacing-sm);
+            position: sticky;
+            top: 0;
+            z-index: 3100;
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .spa-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .spa-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .spa-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .spa-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .spa-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        .spa-filters {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: var(--color-light-gray);
+            color: var(--color-text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            border: 2px solid transparent;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-accent);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+        }
+
+        .spa-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .spa-product-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition-smooth);
+            border: 1px solid var(--color-border);
+        }
+
+        .spa-product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .spa-product-image {
+            height: 200px;
+            background: var(--color-light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .spa-product-placeholder {
+            color: var(--color-primary);
+            font-size: 3rem;
+        }
+
+        .spa-product-info {
+            padding: var(--spacing-sm);
+        }
+
+        .spa-product-name {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .spa-product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .spa-product-code {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-xs);
+            opacity: 0.8;
+        }
+
+        .product-technical-details {
+            margin: var(--spacing-xs) 0;
+            padding: var(--spacing-xs);
+            background: var(--color-light-gray);
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .product-detail {
+            margin-bottom: 0.25rem;
+            color: var(--color-text);
+        }
+
+        .product-detail strong {
+            color: var(--color-primary);
+        }
+
+        .spa-product-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: var(--spacing-sm);
+        }
+
+        .spa-product-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #20b358;
+        }
+
+        .btn-cart {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-cart:hover {
+            background: var(--color-secondary);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .service-card {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto var(--spacing-sm);
+        }
+
+        .service-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .service-description {
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .service-btn {
+            background: var(--color-accent);
+            color: var(--color-primary);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .service-btn:hover {
+            background: #ff8c00;
+            transform: translateY(-2px);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--color-text);
+        }
+
+        .about-image {
+            background: var(--color-light-gray);
+            height: 300px;
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--color-primary);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+
+        .sede-card {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-card);
+        }
+
+        .sede-title {
+            font-family: var(--font-heading);
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .contact-info {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: 0.75rem;
+            color: var(--color-text);
+        }
+
+        .contact-item i {
+            color: var(--color-primary);
+            width: 20px;
+        }
+
+        .sede-whatsapp {
+            background: #25d366;
+            color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius-lg);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .sede-whatsapp:hover {
+            background: #20b358;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--color-secondary);
+            color: white;
+            padding: var(--spacing-xl) var(--spacing-sm) var(--spacing-sm);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-section h3 {
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-accent);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-section a:hover {
+            color: var(--color-accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .about-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .spa-filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .filter-btn {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .spa-products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+
+
+    <!-- WhatsApp Bar -->
+    <div class="whatsapp-bar">
+        <div class="whatsapp-container">
+            <a href="https://wa.me/573008611868?text=Hola%2C%20necesito%20información%20sobre%20escaleras%20en%20Bogotá" class="whatsapp-btn" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp Bogotá</span>
+            </a>
+            <a href="https://wa.me/573181027047?text=Hola%2C%20necesito%20información%20sobre%20escaleras%20en%20Bucaramanga" class="whatsapp-btn" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp Bucaramanga</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-container">
+                <div class="logo">EF</div>
+                <div>
+                    <div class="logo-text">ESCALERAS FERRE</div>
+                    <div class="logo-subtitle">Suministros Varios</div>
+                </div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+                    <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="#" class="nav-link" onclick="openCatalogSPA()">Catálogo</a></li>
+                    <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <h1 class="hero-title fade-in visible">Escaleras Certificadas</h1>
+            <p class="hero-subtitle fade-in visible">
+                Especialistas en escaleras industriales, comerciales y residenciales con certificación internacional
+            </p>
+            <div class="hero-ctas fade-in visible">
+                <a href="#" onclick="openCatalogSPA()" class="cta-primary">
+                    <i class="fas fa-th-large"></i>
+                    Ver Catálogo Completo
+                </a>
+                <a href="#contacto" class="cta-secondary">
+                    <i class="fas fa-phone"></i>
+                    Contactar
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in visible">¿Quiénes Somos?</h2>
+                <p class="section-subtitle fade-in visible">
+                    Con años de experiencia en el sector, somos la opción confiable para tus proyectos
+                </p>
+            </div>
+            <div class="about-content">
+                <div class="about-text fade-in visible">
+                    <p>
+                        En <strong>Escaleras Ferre</strong> nos especializamos en la fabricación, venta y alquiler 
+                        de escaleras certificadas de la más alta calidad. Con más de una década de experiencia 
+                        en el sector, hemos consolidado nuestra presencia en Bogotá y Bucaramanga.
+                    </p>
+                    <p>
+                        Nuestros productos cumplen con las normativas internacionales ISO 9001:2015, ANSI 14.5, 
+                        EN131 y OSHA, garantizando la máxima seguridad para nuestros clientes en todos sus proyectos 
+                        industriales, comerciales y residenciales.
+                    </p>
+                </div>
+                <div class="about-image fade-in visible">
+                    <i class="fas fa-industry"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in visible">Nuestros Servicios</h2>
+                <p class="section-subtitle fade-in visible">
+                    Soluciones completas para construcción, industria y sector eléctrico
+                </p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in visible">
+                    <div class="service-icon">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <h3 class="service-title">Fabricación de Escaleras</h3>
+                    <p class="service-description">
+                        Fabricamos escaleras a medida en fibra de vidrio y aluminio con certificación 
+                        internacional para proyectos industriales y comerciales.
+                    </p>
+                    <button onclick="openCatalogSPA()" class="service-btn">Ver Productos</button>
+                </div>
+                
+                <div class="service-card fade-in visible">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="service-title">Alquiler de Escaleras</h3>
+                    <p class="service-description">
+                        Servicio de alquiler de escaleras certificadas para proyectos temporales. 
+                        Incluye entrega, instalación y recogida.
+                    </p>
+                    <button onclick="openChatbot()" class="service-btn">Consultar Alquiler</button>
+                </div>
+                
+                <div class="service-card fade-in visible">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="service-title">Mantenimiento Especializado</h3>
+                    <p class="service-description">
+                        Servicio técnico especializado para mantener tus escaleras en perfectas 
+                        condiciones de seguridad y funcionamiento.
+                    </p>
+                    <button onclick="openChatbot()" class="service-btn">Agendar Servicio</button>
+                </div>
+                
+                <div class="service-card fade-in visible">
+                    <div class="service-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="service-title">Herramientas Eléctricas</h3>
+                    <p class="service-description">
+                        Venta de herramientas eléctricas de las mejores marcas. Asesoría técnica 
+                        y garantía completa en todos los productos.
+                    </p>
+                    <button onclick="openChatbot()" class="service-btn">Ver Productos</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in visible">Nuestras Sedes</h2>
+                <p class="section-subtitle fade-in visible">
+                    Estamos cerca de ti con atención especializada en cada ciudad
+                </p>
+            </div>
+            <div class="contact-grid">
+                <div class="sede-card fade-in visible">
+                    <h3 class="sede-title">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Sede Bogotá
+                    </h3>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Carrera 24 No 63-56, Bogotá</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>300 861 1868 / 322 708 3115</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@escalerasferre.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Lun - Vie: 8:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Sáb: 8:00 AM - 2:00 PM</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/573008611868?text=Hola%2C%20necesito%20información%20desde%20Bogotá" class="sede-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Contactar Bogotá por WhatsApp
+                    </a>
+                </div>
+                
+                <div class="sede-card fade-in visible">
+                    <h3 class="sede-title">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Sede Bucaramanga
+                    </h3>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Cll 34 No 11-27, Bucaramanga</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>318 102 7047 / 322 708 3115</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@escalerasferre.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Lun - Vie: 8:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Sáb: 8:00 AM - 2:00 PM</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/573181027047?text=Hola%2C%20necesito%20información%20desde%20Bucaramanga" class="sede-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Contactar Bucaramanga por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPA Catalog -->
+    <div class="spa-catalog" id="spaCatalog">
+        <div class="spa-header">
+            <div class="spa-header-content">
+                <h2 class="spa-title">
+                    <i class="fas fa-th-large"></i>
+                    Catálogo Completo - Escaleras Ferre
+                </h2>
+                <button class="spa-close" onclick="closeCatalogSPA()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="spa-content">
+            <div class="spa-filters">
+                <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
+                <button class="filter-btn" onclick="filterProducts('fibra-extension')">Extensión Fibra</button>
+                <button class="filter-btn" onclick="filterProducts('fibra-tijera')">Tijera Fibra</button>
+                <button class="filter-btn" onclick="filterProducts('fibra-sencilla')">Sencilla Fibra</button>
+                <button class="filter-btn" onclick="filterProducts('aluminio-extension')">Extensión Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('aluminio-tijera')">Tijera Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('aluminio-sencilla')">Sencilla Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('pertigas')">Pértigas</button>
+                <button class="filter-btn" onclick="filterProducts('accesorios')">Accesorios</button>
+            </div>
+            
+            <div class="spa-products-grid" id="productsGrid"><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 5.00m/16 pasos</h3>
+                    <div class="spa-product-price">$ 1.349.800</div>
+                    <div class="spa-product-code">Código: EF 5,00</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 18,5 kg</div><div class="product-detail"><strong>Tipo:</strong> Extensión Dos Cuerpos</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 5.00m/16 pasos', '$ 1.349.800', 'EF 5,00')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 6.00m/20 pasos</h3>
+                    <div class="spa-product-price">$ 1.649.800</div>
+                    <div class="spa-product-code">Código: EF 6,00</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 19,5 kg</div><div class="product-detail"><strong>Tipo:</strong> Extensión Dos Cuerpos</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 6.00m/20 pasos', '$ 1.649.800', 'EF 6,00')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 7.40m/24 pasos</h3>
+                    <div class="spa-product-price">$ 1.949.800</div>
+                    <div class="spa-product-code">Código: EF 7,40</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 23,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Extensión Dos Cuerpos</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 7.40m/24 pasos', '$ 1.949.800', 'EF 7,40')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Certificada Fibra Vidrio - Sencilla - 1.50m/5 pasos</h3>
+                    <div class="spa-product-price">$ 549.800</div>
+                    <div class="spa-product-code">Código: SF 1,50</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 6,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Sencilla 1 Cuerpo</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Certificada Fibra Vidrio - Sencilla - 1.50m/5 pasos', '$ 549.800', 'SF 1,50')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Certificada Fibra Vidrio - Sencilla - 2.10m/7 pasos</h3>
+                    <div class="spa-product-price">$ 699.800</div>
+                    <div class="spa-product-code">Código: SF 2,10</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 7,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Sencilla 1 Cuerpo</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Certificada Fibra Vidrio - Sencilla - 2.10m/7 pasos', '$ 699.800', 'SF 2,10')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Certificada Fibra Vidrio - Tijera - 1.20m/4 pasos</h3>
+                    <div class="spa-product-price">$ 499.800</div>
+                    <div class="spa-product-code">Código: TF 1,20</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 8,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Tijera Peldaños Planos</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Certificada Fibra Vidrio - Tijera - 1.20m/4 pasos', '$ 499.800', 'TF 1,20')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Certificada Fibra Vidrio - Tijera - 1.80m/6 pasos</h3>
+                    <div class="spa-product-price">$ 749.800</div>
+                    <div class="spa-product-code">Código: TF 1,80</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 11,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Tijera Peldaños Planos</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Certificada Fibra Vidrio - Tijera - 1.80m/6 pasos', '$ 749.800', 'TF 1,80')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Aluminio Industrial - Extensión - 5.00m/16 pasos</h3>
+                    <div class="spa-product-price">$ 1.174.800</div>
+                    <div class="spa-product-code">Código: EA 5,00</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Aluminio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 13,8 kg</div><div class="product-detail"><strong>Tipo:</strong> Extensión Industrial</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Aluminio Industrial - Extensión - 5.00m/16 pasos', '$ 1.174.800', 'EA 5,00')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Aluminio Industrial - Extensión - 6.00m/20 pasos</h3>
+                    <div class="spa-product-price">$ 1.349.800</div>
+                    <div class="spa-product-code">Código: EA 6,00</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Aluminio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 16,5 kg</div><div class="product-detail"><strong>Tipo:</strong> Extensión Industrial</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Aluminio Industrial - Extensión - 6.00m/20 pasos', '$ 1.349.800', 'EA 6,00')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Aluminio Industrial - Sencilla - 1.50m/5 pasos</h3>
+                    <div class="spa-product-price">$ 499.800</div>
+                    <div class="spa-product-code">Código: SA 1,50</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Aluminio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 5,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Sencilla Industrial</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Aluminio Industrial - Sencilla - 1.50m/5 pasos', '$ 499.800', 'SA 1,50')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Aluminio Industrial - Sencilla - 2.10m/7 pasos</h3>
+                    <div class="spa-product-price">$ 649.800</div>
+                    <div class="spa-product-code">Código: SA 2,10</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Aluminio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 7,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Sencilla Industrial</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Aluminio Industrial - Sencilla - 2.10m/7 pasos', '$ 649.800', 'SA 2,10')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Aluminio Industrial - Tijera - 1.20m/4 pasos</h3>
+                    <div class="spa-product-price">$ 399.800</div>
+                    <div class="spa-product-code">Código: TA 1,20</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Aluminio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 5,5 kg</div><div class="product-detail"><strong>Tipo:</strong> Tijera Industrial</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Aluminio Industrial - Tijera - 1.20m/4 pasos', '$ 399.800', 'TA 1,20')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Escalera Aluminio Industrial - Tijera - 1.80m/6 pasos</h3>
+                    <div class="spa-product-price">$ 599.800</div>
+                    <div class="spa-product-code">Código: TA 1,80</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Aluminio</div><div class="product-detail"><strong>Capacidad:</strong> 136 kg - Tipo IA</div><div class="product-detail"><strong>Peso:</strong> 9,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Tijera Industrial</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Escalera Aluminio Industrial - Tijera - 1.80m/6 pasos', '$ 599.800', 'TA 1,80')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Pértiga Telescópica Fibra Vidrio - 6 metros</h3>
+                    <div class="spa-product-price">$ 1.249.800</div>
+                    <div class="spa-product-code">Código: PT 6,0</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> Aislada 100kV</div><div class="product-detail"><strong>Peso:</strong> 2,5 kg</div><div class="product-detail"><strong>Tipo:</strong> Pértiga Telescópica</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Pértiga Telescópica Fibra Vidrio - 6 metros', '$ 1.249.800', 'PT 6,0')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Pértiga Telescópica Fibra Vidrio - 10 metros</h3>
+                    <div class="spa-product-price">$ 1.849.800</div>
+                    <div class="spa-product-code">Código: PT 10,0</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Fibra de Vidrio</div><div class="product-detail"><strong>Capacidad:</strong> Aislada 100kV</div><div class="product-detail"><strong>Peso:</strong> 4,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Pértiga Telescópica</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Pértiga Telescópica Fibra Vidrio - 10 metros', '$ 1.849.800', 'PT 10,0')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Ganchos Bomberos</h3>
+                    <div class="spa-product-price">$ 199.800</div>
+                    <div class="spa-product-code">Código: ACC-GB</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Acero Galvanizado</div><div class="product-detail"><strong>Capacidad:</strong> Compatible con extensión</div><div class="product-detail"><strong>Peso:</strong> 1,5 kg</div><div class="product-detail"><strong>Tipo:</strong> Accesorio</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Ganchos Bomberos', '$ 199.800', 'ACC-GB')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div><div class="spa-product-card">
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">Zapata Niveladora</h3>
+                    <div class="spa-product-price">$ 699.800</div>
+                    <div class="spa-product-code">Código: ACC-ZN</div>
+                    <div class="product-technical-details"><div class="product-detail"><strong>Material:</strong> Aluminio</div><div class="product-detail"><strong>Capacidad:</strong> Ajuste de nivel automático</div><div class="product-detail"><strong>Peso:</strong> 2,0 kg</div><div class="product-detail"><strong>Tipo:</strong> Accesorio</div></div>
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('Zapata Niveladora', '$ 699.800', 'ACC-ZN')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            </div></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Escaleras Ferre</h3>
+                <p>Especialistas en escaleras certificadas y herramientas eléctricas para construcción e industria.</p>
+                <p><strong>Tu seguridad es nuestra prioridad</strong></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Servicios</h3>
+                <ul>
+                    <li><a href="#servicios">Fabricación de Escaleras</a></li>
+                    <li><a href="#servicios">Alquiler de Escaleras</a></li>
+                    <li><a href="#servicios">Mantenimiento Especializado</a></li>
+                    <li><a href="#servicios">Herramientas Eléctricas</a></li>
+                    <li><a href="#" onclick="openCatalogSPA()">Catálogo de Productos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto Rápido</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Bogotá: 300 861 1868</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Bucaramanga: 318 102 7047</li>
+                    <li><i class="fas fa-envelope"></i> info@escalerasferre.com</li>
+                    <li><i class="fas fa-clock"></i> Lun - Vie: 8:00 AM - 6:00 PM</li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Certificaciones</h3>
+                <p>Todas nuestras escaleras cumplen con las normas de seguridad industrial vigentes.</p>
+                <ul>
+                    <li><i class="fas fa-certificate"></i> ISO 9001:2015</li>
+                    <li><i class="fas fa-certificate"></i> Normas ANSI</li>
+                    <li><i class="fas fa-certificate"></i> Certificación OSHA</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2024 Escaleras Ferre - Suministros Varios. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Base de datos de productos (versión resumida para prueba)
+        const productDatabase = [
+            // Productos de fibra de vidrio - Extensión
+            {
+                id: 1,
+                name: "Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 5.00m/16 pasos",
+                price: "$ 1.349.800",
+                code: "EF 5,00",
+                category: "fibra-extension",
+                type: "Extensión Dos Cuerpos",
+                material: "Fibra de Vidrio",
+                capacity: "136 kg - Tipo IA",
+                weight: "18,5 kg"
+            },
+            {
+                id: 2,
+                name: "Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 6.00m/20 pasos",
+                price: "$ 1.649.800",
+                code: "EF 6,00",
+                category: "fibra-extension",
+                type: "Extensión Dos Cuerpos",
+                material: "Fibra de Vidrio",
+                capacity: "136 kg - Tipo IA",
+                weight: "19,5 kg"
+            },
+            {
+                id: 3,
+                name: "Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 7.40m/24 pasos",
+                price: "$ 1.949.800",
+                code: "EF 7,40",
+                category: "fibra-extension",
+                type: "Extensión Dos Cuerpos",
+                material: "Fibra de Vidrio",
+                capacity: "136 kg - Tipo IA",
+                weight: "23,0 kg"
+            },
+
+            // Productos de fibra de vidrio - Sencillas
+            {
+                id: 4,
+                name: "Escalera Certificada Fibra Vidrio - Sencilla - 1.50m/5 pasos",
+                price: "$ 549.800",
+                code: "SF 1,50",
+                category: "fibra-sencilla",
+                type: "Sencilla 1 Cuerpo",
+                material: "Fibra de Vidrio",
+                capacity: "136 kg - Tipo IA",
+                weight: "6,0 kg"
+            },
+            {
+                id: 5,
+                name: "Escalera Certificada Fibra Vidrio - Sencilla - 2.10m/7 pasos",
+                price: "$ 699.800",
+                code: "SF 2,10",
+                category: "fibra-sencilla",
+                type: "Sencilla 1 Cuerpo",
+                material: "Fibra de Vidrio",
+                capacity: "136 kg - Tipo IA",
+                weight: "7,0 kg"
+            },
+
+            // Productos de fibra de vidrio - Tijeras
+            {
+                id: 6,
+                name: "Escalera Certificada Fibra Vidrio - Tijera - 1.20m/4 pasos",
+                price: "$ 499.800",
+                code: "TF 1,20",
+                category: "fibra-tijera",
+                type: "Tijera Peldaños Planos",
+                material: "Fibra de Vidrio",
+                capacity: "136 kg - Tipo IA",
+                weight: "8,0 kg"
+            },
+            {
+                id: 7,
+                name: "Escalera Certificada Fibra Vidrio - Tijera - 1.80m/6 pasos",
+                price: "$ 749.800",
+                code: "TF 1,80",
+                category: "fibra-tijera",
+                type: "Tijera Peldaños Planos",
+                material: "Fibra de Vidrio",
+                capacity: "136 kg - Tipo IA",
+                weight: "11,0 kg"
+            },
+
+            // Productos de aluminio - Extensión
+            {
+                id: 8,
+                name: "Escalera Aluminio Industrial - Extensión - 5.00m/16 pasos",
+                price: "$ 1.174.800",
+                code: "EA 5,00",
+                category: "aluminio-extension",
+                type: "Extensión Industrial",
+                material: "Aluminio",
+                capacity: "136 kg - Tipo IA",
+                weight: "13,8 kg"
+            },
+            {
+                id: 9,
+                name: "Escalera Aluminio Industrial - Extensión - 6.00m/20 pasos",
+                price: "$ 1.349.800",
+                code: "EA 6,00",
+                category: "aluminio-extension",
+                type: "Extensión Industrial",
+                material: "Aluminio",
+                capacity: "136 kg - Tipo IA",
+                weight: "16,5 kg"
+            },
+
+            // Productos de aluminio - Sencillas
+            {
+                id: 10,
+                name: "Escalera Aluminio Industrial - Sencilla - 1.50m/5 pasos",
+                price: "$ 499.800",
+                code: "SA 1,50",
+                category: "aluminio-sencilla",
+                type: "Sencilla Industrial",
+                material: "Aluminio",
+                capacity: "136 kg - Tipo IA",
+                weight: "5,0 kg"
+            },
+            {
+                id: 11,
+                name: "Escalera Aluminio Industrial - Sencilla - 2.10m/7 pasos",
+                price: "$ 649.800",
+                code: "SA 2,10",
+                category: "aluminio-sencilla",
+                type: "Sencilla Industrial",
+                material: "Aluminio",
+                capacity: "136 kg - Tipo IA",
+                weight: "7,0 kg"
+            },
+
+            // Productos de aluminio - Tijeras
+            {
+                id: 12,
+                name: "Escalera Aluminio Industrial - Tijera - 1.20m/4 pasos",
+                price: "$ 399.800",
+                code: "TA 1,20",
+                category: "aluminio-tijera",
+                type: "Tijera Industrial",
+                material: "Aluminio",
+                capacity: "136 kg - Tipo IA",
+                weight: "5,5 kg"
+            },
+            {
+                id: 13,
+                name: "Escalera Aluminio Industrial - Tijera - 1.80m/6 pasos",
+                price: "$ 599.800",
+                code: "TA 1,80",
+                category: "aluminio-tijera",
+                type: "Tijera Industrial",
+                material: "Aluminio",
+                capacity: "136 kg - Tipo IA",
+                weight: "9,0 kg"
+            },
+
+            // Pértigas telescópicas
+            {
+                id: 14,
+                name: "Pértiga Telescópica Fibra Vidrio - 6 metros",
+                price: "$ 1.249.800",
+                code: "PT 6,0",
+                category: "pertigas",
+                type: "Pértiga Telescópica",
+                material: "Fibra de Vidrio",
+                capacity: "Aislada 100kV",
+                weight: "2,5 kg"
+            },
+            {
+                id: 15,
+                name: "Pértiga Telescópica Fibra Vidrio - 10 metros",
+                price: "$ 1.849.800",
+                code: "PT 10,0",
+                category: "pertigas",
+                type: "Pértiga Telescópica",
+                material: "Fibra de Vidrio",
+                capacity: "Aislada 100kV",
+                weight: "4,0 kg"
+            },
+
+            // Accesorios
+            {
+                id: 16,
+                name: "Ganchos Bomberos",
+                price: "$ 199.800",
+                code: "ACC-GB",
+                category: "accesorios",
+                type: "Accesorio",
+                material: "Acero Galvanizado",
+                capacity: "Compatible con extensión",
+                weight: "1,5 kg"
+            },
+            {
+                id: 17,
+                name: "Zapata Niveladora",
+                price: "$ 699.800",
+                code: "ACC-ZN",
+                category: "accesorios",
+                type: "Accesorio",
+                material: "Aluminio",
+                capacity: "Ajuste de nivel automático",
+                weight: "2,0 kg"
+            }
+        ];
+
+        // Funciones del catálogo
+        function openCatalogSPA() {
+            console.log('🚀 Abriendo catálogo SPA...');
+            
+            const spaCatalog = document.getElementById('spaCatalog');
+            if (!spaCatalog) {
+                console.error('❌ No se encontró el elemento spaCatalog');
+                alert('Error: No se pudo abrir el catálogo');
+                return;
+            }
+            
+            console.log('✅ Elemento spaCatalog encontrado');
+            spaCatalog.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            console.log(`✅ Base de datos cargada con ${productDatabase.length} productos`);
+            
+            // Renderizar productos con un pequeño delay
+            setTimeout(() => {
+                renderProducts('todos');
+            }, 100);
+            
+            console.log('🎉 Catálogo SPA abierto exitosamente');
+        }
+
+        function closeCatalogSPA() {
+            console.log('🔒 Cerrando catálogo SPA...');
+            const spaCatalog = document.getElementById('spaCatalog');
+            if (spaCatalog) {
+                spaCatalog.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                console.log('✅ Catálogo SPA cerrado');
+            }
+        }
+
+        function filterProducts(category) {
+            // Actualizar botones activos
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Renderizar productos filtrados
+            renderProducts(category);
+        }
+
+        function renderProducts(category) {
+            console.log('🔄 Renderizando productos para categoría:', category);
+            
+            const grid = document.getElementById('productsGrid');
+            if (!grid) {
+                console.error('❌ No se encontró el elemento productsGrid');
+                return;
+            }
+            
+            let filteredProducts = productDatabase;
+            
+            if (category !== 'todos') {
+                filteredProducts = productDatabase.filter(product => product.category === category);
+                console.log(`📊 Productos filtrados: ${filteredProducts.length}`);
+            } else {
+                console.log(`📊 Mostrando todos los productos: ${filteredProducts.length}`);
+            }
+            
+            grid.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                console.log('❌ No hay productos para esta categoría');
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; color: #2d5016;"></i>
+                        <h3>No se encontraron productos</h3>
+                        <p>No hay productos disponibles para esta categoría: ${category}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            console.log('✅ Creando tarjetas de productos...');
+            filteredProducts.forEach((product, index) => {
+                try {
+                    const productCard = createProductCard(product);
+                    grid.appendChild(productCard);
+                    if (index < 3) console.log(`✅ Producto agregado: ${product.name}`);
+                } catch (error) {
+                    console.error('❌ Error creando tarjeta para producto:', product, error);
+                }
+            });
+            
+            console.log('🎉 Productos renderizados exitosamente');
+        }
+
+        function createProductCard(product) {
+            if (!product) {
+                console.error('❌ Producto indefinido en createProductCard');
+                return document.createElement('div');
+            }
+            
+            const card = document.createElement('div');
+            card.className = 'spa-product-card';
+            
+            // Crear detalles técnicos
+            let technicalDetails = '';
+            if (product.material) {
+                technicalDetails += `<div class="product-detail"><strong>Material:</strong> ${product.material}</div>`;
+            }
+            if (product.capacity) {
+                technicalDetails += `<div class="product-detail"><strong>Capacidad:</strong> ${product.capacity}</div>`;
+            }
+            if (product.weight) {
+                technicalDetails += `<div class="product-detail"><strong>Peso:</strong> ${product.weight}</div>`;
+            }
+            if (product.type) {
+                technicalDetails += `<div class="product-detail"><strong>Tipo:</strong> ${product.type}</div>`;
+            }
+            
+            const safeName = (product.name || 'Sin nombre').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+            const safePrice = (product.price || 'Consultar').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+            const safeCode = (product.code || 'Sin código').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+            
+            card.innerHTML = `
+                <div class="spa-product-image">
+                    <div class="spa-product-placeholder">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                </div>
+                <div class="spa-product-info">
+                    <h3 class="spa-product-name">${safeName}</h3>
+                    <div class="spa-product-price">${safePrice}</div>
+                    <div class="spa-product-code">Código: ${safeCode}</div>
+                    ${technicalDetails ? `<div class="product-technical-details">${technicalDetails}</div>` : ''}
+                    <div class="spa-product-actions">
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('${safeName}', '${safePrice}', '${safeCode}')">
+                            <i class="fab fa-whatsapp"></i> Consultar
+                        </button>
+                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
+                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function contactProduct(productName, productPrice, productCode) {
+            const message = `Hola, estoy interesado en el producto:
+            
+📦 *${productName}*
+💰 Precio: ${productPrice}
+🔑 Código: ${productCode}
+
+¿Podrían darme más información sobre disponibilidad, especificaciones técnicas y opciones de entrega?`;
+            const whatsappURL = `https://wa.me/573008611868?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        function openChatbot() {
+            // Placeholder para función de chatbot
+            alert('Función de chatbot en desarrollo. Por favor use WhatsApp para cotizaciones.');
+        }
+
+        // Navegación suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 120;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Cerrar catálogo con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCatalogSPA();
+            }
+        });
+
+        // Animaciones de scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Inicialización cuando se carga la página
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Página cargada, inicializando...');
+            
+            // Observar elementos animados
+            const animatedElements = document.querySelectorAll('.fade-in');
+            animatedElements.forEach(el => observer.observe(el));
+            
+            console.log(`✅ Base de datos de productos lista: ${productDatabase.length} productos`);
+            console.log('🎉 Inicialización completa');
+        });
+    </script>
+
+
+            <script>// Write JavaScript here</script>
+        
+    
+</body>
