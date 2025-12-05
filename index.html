@@ -498,6 +498,224 @@
             background: var(--color-secondary);
         }
 
+        /* Tarjetas de producto mejoradas */
+        .spa-product-card-new {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .spa-product-card-new:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .spa-product-info-new {
+            padding: 1.5rem;
+        }
+
+        .spa-product-specs {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        /* Selector de referencias */
+        .references-section {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #2d5016;
+        }
+
+        .references-section h4 {
+            color: #2d5016;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.5rem;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .reference-option {
+            display: block;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .reference-option input[type="radio"] {
+            display: none;
+        }
+
+        .reference-info {
+            display: block;
+            padding: 0.5rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .reference-option input[type="radio"]:checked + .reference-info {
+            border-color: #2d5016;
+            background: rgba(45, 80, 22, 0.1);
+        }
+
+        .reference-info:hover {
+            border-color: #2d5016;
+            transform: scale(1.02);
+        }
+
+        /* Sección de accesorios */
+        .accessories-section {
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background: rgba(255, 165, 0, 0.1);
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .accessories-list {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Botones de acción mejorados */
+        .spa-product-actions-new {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+        }
+
+        /* Modal de información técnica */
+        .tech-info-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+        }
+
+        .tech-info-container {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .tech-info-header {
+            background: linear-gradient(135deg, #2d5016, #4a7028);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tech-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .tech-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .tech-info-content {
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .tech-specifications, .tech-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-specifications h4, .tech-details h4 {
+            color: #2d5016;
+            margin-bottom: 0.75rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+
+        .tech-details pre {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: inherit;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .tech-close-btn {
+            width: 100%;
+            background: #2d5016;
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .tech-close-btn:hover {
+            background: #1a2e0c;
+        }
+
+        /* Responsive para nuevo sistema */
+        @media (max-width: 768px) {
+            .references-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .spa-product-actions-new {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .tech-info-container {
+                width: 95%;
+                max-height: 90vh;
+            }
+        }
+
         /* Services Grid */
         .services-grid {
             display: grid;
@@ -1017,12 +1235,12 @@
             <div class="spa-filters">
                 <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
                 <button class="filter-btn" onclick="filterProducts('fibra-extension')">Extensión Fibra</button>
-                <button class="filter-btn" onclick="filterProducts('fibra-tijera')">Tijera Fibra</button>
                 <button class="filter-btn" onclick="filterProducts('fibra-sencilla')">Sencilla Fibra</button>
+                <button class="filter-btn" onclick="filterProducts('fibra-tijera')">Tijera Fibra</button>
+                <button class="filter-btn" onclick="filterProducts('fibra-caballete')">Caballete Fibra</button>
                 <button class="filter-btn" onclick="filterProducts('aluminio-extension')">Extensión Aluminio</button>
-                <button class="filter-btn" onclick="filterProducts('aluminio-tijera')">Tijera Aluminio</button>
                 <button class="filter-btn" onclick="filterProducts('aluminio-sencilla')">Sencilla Aluminio</button>
-                <button class="filter-btn" onclick="filterProducts('pertigas')">Pértigas</button>
+                <button class="filter-btn" onclick="filterProducts('aluminio-tijera')">Tijera Aluminio</button>
                 <button class="filter-btn" onclick="filterProducts('accesorios')">Accesorios</button>
             </div>
             
@@ -1417,209 +1635,296 @@
     </footer>
 
     <script>
-        // Base de datos de productos (versión resumida para prueba)
-        const productDatabase = [
-            // Productos de fibra de vidrio - Extensión
+        // Base de datos de productos - Sistema de catálogo por tipos
+        const catalogoEscaleras = [
+            // ═══════ FIBRA DE VIDRIO - EXTENSIÓN ═══════
             {
                 id: 1,
-                name: "Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 5.00m/16 pasos",
-                price: "$ 1.349.800",
-                code: "EF 5,00",
+                type: "Escalera Fibra de Vidrio - Extensión Dos Cuerpos",
                 category: "fibra-extension",
-                type: "Extensión Dos Cuerpos",
-                material: "Fibra de Vidrio",
-                capacity: "136 kg - Tipo IA",
-                weight: "18,5 kg"
+                specifications: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D - Uso Eléctrico Extra Pesado",
+                references: [
+                    { ref: "EF 5,00", metros: "5.00m", pasos: "16 pasos", peso: "18.5kg" },
+                    { ref: "EF 6,00", metros: "6.00m", pasos: "20 pasos", peso: "19.5kg" },
+                    { ref: "EF 7,40", metros: "7.40m", pasos: "24 pasos", peso: "23.0kg" },
+                    { ref: "EF 8,60", metros: "8.60m", pasos: "28 pasos", peso: "26.0kg" },
+                    { ref: "EF 10,0", metros: "10.0m", pasos: "32 pasos", peso: "28.5kg" },
+                    { ref: "EF 11,0", metros: "11.0m", pasos: "36 pasos", peso: "32.0kg" },
+                    { ref: "EF 12,0", metros: "12.0m", pasos: "40 pasos", peso: "36.0kg" }
+                ],
+                technicalInfo: "Escaleras de fibra de vidrio EXTREN 525 de Strongwell\\n\\nCARACTERÍSTICAS:\\n• Livianas y resistentes: Ideales para trabajos en altura\\n• Aisladas eléctricamente: Perfectas para entornos con riesgos eléctricos\\n• Duraderas: Resistentes a la corrosión y a los rayos UV\\n• Seguras: Peldaños antideslizantes y capacidad de carga de hasta 300 libras\\n• Construcción robusta: Remachado colombiano para mayor resistencia\\n• Componentes de alta calidad: Ganchos de aluminio, tapones de ABS, cuerda de polietileno y polea de acero galvanizado\\n• Cumplimiento de normas: Cumplen con los estándares internacionales de seguridad",
+                accessories: ["Bincha en fibra", "Bincha en hierro", "Gancho bomberos", "Zapata niveladora"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - EXTENSIÓN DOS CUERPOS (Tipo IA - 136kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - EXTENSIÓN DOS CUERPOS, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
             {
                 id: 2,
-                name: "Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 6.00m/20 pasos",
-                price: "$ 1.649.800",
-                code: "EF 6,00",
+                type: "Escalera Fibra de Vidrio - Extensión Tres Cuerpos",
                 category: "fibra-extension",
-                type: "Extensión Dos Cuerpos",
-                material: "Fibra de Vidrio",
-                capacity: "136 kg - Tipo IA",
-                weight: "19,5 kg"
+                specifications: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D - Uso Eléctrico Extra Pesado",
+                references: [
+                    { ref: "EF3 2.40/7.20", metros: "2.40/7.20m", pasos: "24 pasos", peso: "26.0kg" },
+                    { ref: "EF3 3.00/9.20", metros: "3.00/9.20m", pasos: "30 pasos", peso: "28.5kg" }
+                ],
+                technicalInfo: "Escaleras de fibra de vidrio EXTREN 525 de Strongwell\\n\\nCARACTERÍSTICAS:\\n• Livianas y resistentes: Ideales para trabajos en altura\\n• Aisladas eléctricamente: Perfectas para entornos con riesgos eléctricos\\n• Duraderas: Resistentes a la corrosión y a los rayos UV\\n• Seguras: Peldaños antideslizantes y capacidad de carga de hasta 300 libras\\n• Construcción robusta: Remachado colombiano para mayor resistencia\\n• Componentes de alta calidad: Ganchos de aluminio, tapones de ABS, cuerda de polietileno y polea de acero galvanizado\\n• Cumplimiento de normas: Cumplen con los estándares internacionales de seguridad",
+                accessories: ["Bincha en fibra", "Bincha en hierro", "Gancho bomberos", "Zapata niveladora"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - EXTENSIÓN TRES CUERPOS (Tipo IA - 136kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - EXTENSIÓN TRES CUERPOS, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
+
+            // ═══════ FIBRA DE VIDRIO - CABALLETE ═══════
             {
                 id: 3,
-                name: "Escalera Certificada Fibra Vidrio - Extensión 2 Cuerpos - 7.40m/24 pasos",
-                price: "$ 1.949.800",
-                code: "EF 7,40",
-                category: "fibra-extension",
-                type: "Extensión Dos Cuerpos",
-                material: "Fibra de Vidrio",
-                capacity: "136 kg - Tipo IA",
-                weight: "23,0 kg"
+                type: "Escalera Fibra de Vidrio - Caballete",
+                category: "fibra-caballete",
+                specifications: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D - Uso Eléctrico Extra Pesado",
+                references: [
+                    { ref: "EFC 5,00", metros: "5.00m", pasos: "16 pasos", peso: "19.5kg" },
+                    { ref: "EFC 6,00", metros: "6.00m", pasos: "20 pasos", peso: "23.0kg" },
+                    { ref: "EFC 7,40", metros: "7.40m", pasos: "24 pasos", peso: "26.0kg" },
+                    { ref: "EFC 8,60", metros: "8.60m", pasos: "28 pasos", peso: "28.5kg" },
+                    { ref: "EFC 10,0", metros: "10.0m", pasos: "32 pasos", peso: "32.0kg" }
+                ],
+                technicalInfo: "Escaleras de fibra de vidrio EXTREN 525 de Strongwell\\n\\nCARACTERÍSTICAS:\\n• Livianas y resistentes: Ideales para trabajos en altura\\n• Aisladas eléctricamente: Perfectas para entornos con riesgos eléctricos\\n• Duraderas: Resistentes a la corrosión y a los rayos UV\\n• Seguras: Peldaños antideslizantes y capacidad de carga de hasta 300 libras\\n• Construcción robusta: Remachado colombiano para mayor resistencia\\n• Componentes de alta calidad: Ganchos de aluminio, tapones de ABS, cuerda de polietileno y polea de acero galvanizado\\n• Cumplimiento de normas: Cumplen con los estándares internacionales de seguridad",
+                accessories: ["Bincha en fibra", "Bincha en hierro", "Gancho bomberos"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - CABALLETE (Tipo IA - 136kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - CABALLETE, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
 
-            // Productos de fibra de vidrio - Sencillas
+            // ═══════ FIBRA DE VIDRIO - SENCILLA ═══════
             {
                 id: 4,
-                name: "Escalera Certificada Fibra Vidrio - Sencilla - 1.50m/5 pasos",
-                price: "$ 549.800",
-                code: "SF 1,50",
+                type: "Escalera Fibra de Vidrio - Sencilla Industrial",
                 category: "fibra-sencilla",
-                type: "Sencilla 1 Cuerpo",
-                material: "Fibra de Vidrio",
-                capacity: "136 kg - Tipo IA",
-                weight: "6,0 kg"
+                specifications: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D - 1 Solo Cuerpo",
+                references: [
+                    { ref: "SF 1,50", metros: "1.50m", pasos: "5 pasos", peso: "6.0kg" },
+                    { ref: "SF 1,80", metros: "1.80m", pasos: "6 pasos", peso: "6.5kg" },
+                    { ref: "SF 2,10", metros: "2.10m", pasos: "7 pasos", peso: "7.0kg" },
+                    { ref: "SF 2,40", metros: "2.40m", pasos: "8 pasos", peso: "8.0kg" },
+                    { ref: "SF 2,70", metros: "2.70m", pasos: "9 pasos", peso: "9.0kg" },
+                    { ref: "SF 3,00", metros: "3.00m", pasos: "10 pasos", peso: "10.5kg" },
+                    { ref: "SF 3,60", metros: "3.60m", pasos: "12 pasos", peso: "12.0kg" },
+                    { ref: "SF 4,00", metros: "4.00m", pasos: "13 pasos", peso: "13.0kg" },
+                    { ref: "SF 5,00", metros: "5.00m", pasos: "16 pasos", peso: "14.0kg" },
+                    { ref: "SF 6,00", metros: "6.00m", pasos: "20 pasos", peso: "17.0kg" }
+                ],
+                technicalInfo: "Escaleras de fibra de vidrio EXTREN 525 de Strongwell\\n\\nCARACTERÍSTICAS:\\n• Livianas y resistentes: Ideales para trabajos en altura\\n• Aisladas eléctricamente: Perfectas para entornos con riesgos eléctricos\\n• Duraderas: Resistentes a la corrosión y a los rayos UV\\n• Seguras: Peldaños antideslizantes y capacidad de carga de hasta 300 libras\\n• Construcción robusta: Remachado colombiano para mayor resistencia\\n• Componentes de alta calidad: Ganchos de aluminio, tapones de ABS, cuerda de polietileno y polea de acero galvanizado\\n• Cumplimiento de normas: Cumplen con los estándares internacionales de seguridad",
+                accessories: ["Bincha en fibra", "Bincha en hierro", "Gancho bomberos", "Zapata niveladora"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - SENCILLA INDUSTRIAL (Tipo IA - 136kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - SENCILLA INDUSTRIAL, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
+
             {
                 id: 5,
-                name: "Escalera Certificada Fibra Vidrio - Sencilla - 2.10m/7 pasos",
-                price: "$ 699.800",
-                code: "SF 2,10",
+                type: "Escalera Fibra de Vidrio - Sencilla Comercial",
                 category: "fibra-sencilla",
-                type: "Sencilla 1 Cuerpo",
-                material: "Fibra de Vidrio",
-                capacity: "136 kg - Tipo IA",
-                weight: "7,0 kg"
+                specifications: "Comercial - Capacidad 114kg (250 libras) - Tipo I - Peldaños Tipo D - 1 Solo Cuerpo",
+                references: [
+                    { ref: "SFL 1,50", metros: "1.50m", pasos: "5 pasos", peso: "5.5kg" },
+                    { ref: "SFL 1,80", metros: "1.80m", pasos: "6 pasos", peso: "6.0kg" },
+                    { ref: "SFL 2,10", metros: "2.10m", pasos: "7 pasos", peso: "6.5kg" },
+                    { ref: "SFL 2,40", metros: "2.40m", pasos: "8 pasos", peso: "7.0kg" },
+                    { ref: "SFL 2,70", metros: "2.70m", pasos: "9 pasos", peso: "8.0kg" },
+                    { ref: "SFL 3,00", metros: "3.00m", pasos: "10 pasos", peso: "9.0kg" },
+                    { ref: "SFL 3,60", metros: "3.60m", pasos: "12 pasos", peso: "10.5kg" }
+                ],
+                technicalInfo: "Escaleras de fibra de vidrio EXTREN 525 de Strongwell\\n\\nCARACTERÍSTICAS:\\n• Livianas y resistentes: Ideales para trabajos en altura\\n• Aisladas eléctricamente: Perfectas para entornos con riesgos eléctricos\\n• Duraderas: Resistentes a la corrosión y a los rayos UV\\n• Seguras: Peldaños antideslizantes y capacidad de carga de hasta 250 libras (Comercial)\\n• Construcción robusta: Remachado colombiano para mayor resistencia\\n• Componentes de alta calidad: Ganchos de aluminio, tapones de ABS, cuerda de polietileno y polea de acero galvanizado\\n• Cumplimiento de normas: Cumplen con los estándares internacionales de seguridad",
+                accessories: ["Bincha en fibra", "Bincha en hierro", "Gancho bomberos", "Zapata niveladora"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - SENCILLA COMERCIAL (Tipo I - 114kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - SENCILLA COMERCIAL, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
 
-            // Productos de fibra de vidrio - Tijeras
+            // ═══════ FIBRA DE VIDRIO - TIJERA ═══════
             {
                 id: 6,
-                name: "Escalera Certificada Fibra Vidrio - Tijera - 1.20m/4 pasos",
-                price: "$ 499.800",
-                code: "TF 1,20",
+                type: "Escalera Fibra de Vidrio - Tijera Industrial",
                 category: "fibra-tijera",
-                type: "Tijera Peldaños Planos",
-                material: "Fibra de Vidrio",
-                capacity: "136 kg - Tipo IA",
-                weight: "8,0 kg"
+                specifications: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Planos - Uso Eléctrico Extra Pesado",
+                references: [
+                    { ref: "TF 0,60", metros: "0.60m", pasos: "2 pasos", peso: "5.0kg" },
+                    { ref: "TF 0,90", metros: "0.90m", pasos: "3 pasos", peso: "6.5kg" },
+                    { ref: "TF 1,20", metros: "1.20m", pasos: "4 pasos", peso: "8.0kg" },
+                    { ref: "TF 1,50", metros: "1.50m", pasos: "5 pasos", peso: "10.0kg" },
+                    { ref: "TF 1,80", metros: "1.80m", pasos: "6 pasos", peso: "11.0kg" },
+                    { ref: "TF 2,10", metros: "2.10m", pasos: "7 pasos", peso: "13.0kg" },
+                    { ref: "TF 2,40", metros: "2.40m", pasos: "8 pasos", peso: "14.0kg" },
+                    { ref: "TF 2,70", metros: "2.70m", pasos: "9 pasos", peso: "16.0kg" },
+                    { ref: "TF 3,00", metros: "3.00m", pasos: "10 pasos", peso: "18.0kg" },
+                    { ref: "TF 3,30", metros: "3.30m", pasos: "11 pasos", peso: "20.0kg" },
+                    { ref: "TF 3,60", metros: "3.60m", pasos: "13 pasos", peso: "21.5kg" },
+                    { ref: "TF 4,00", metros: "4.00m", pasos: "13 pasos", peso: "24.0kg" },
+                    { ref: "TF 5,00", metros: "5.00m", pasos: "16 pasos", peso: "31.0kg" },
+                    { ref: "TF 6,00", metros: "6.00m", pasos: "20 pasos", peso: "38.0kg" }
+                ],
+                technicalInfo: "Escaleras de fibra de vidrio EXTREN 525 de Strongwell\\n\\nCARACTERÍSTICAS:\\n• Livianas y resistentes: Ideales para trabajos en altura\\n• Aisladas eléctricamente: Perfectas para entornos con riesgos eléctricos\\n• Duraderas: Resistentes a la corrosión y a los rayos UV\\n• Seguras: Peldaños antideslizantes y capacidad de carga de hasta 300 libras\\n• Construcción robusta: Remachado colombiano para mayor resistencia\\n• Componentes de alta calidad: Ganchos de aluminio, tapones de ABS, cuerda de polietileno y polea de acero galvanizado\\n• Cumplimiento de normas: Cumplen con los estándares internacionales de seguridad",
+                accessories: ["Plataforma aluminio", "Zapata planchón"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - TIJERA INDUSTRIAL (Tipo IA - 136kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - TIJERA INDUSTRIAL, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
+
             {
                 id: 7,
-                name: "Escalera Certificada Fibra Vidrio - Tijera - 1.80m/6 pasos",
-                price: "$ 749.800",
-                code: "TF 1,80",
+                type: "Escalera Fibra de Vidrio - Tijera Comercial",
                 category: "fibra-tijera",
-                type: "Tijera Peldaños Planos",
-                material: "Fibra de Vidrio",
-                capacity: "136 kg - Tipo IA",
-                weight: "11,0 kg"
+                specifications: "Comercial - Capacidad 114kg (250 libras) - Tipo I - Peldaños Planos - Uso Eléctrico",
+                references: [
+                    { ref: "TFL 0,60", metros: "0.60m", pasos: "2 pasos", peso: "5.0kg" },
+                    { ref: "TFL 0,90", metros: "0.90m", pasos: "3 pasos", peso: "6.5kg" },
+                    { ref: "TFL 1,20", metros: "1.20m", pasos: "4 pasos", peso: "8.0kg" },
+                    { ref: "TFL 1,50", metros: "1.50m", pasos: "5 pasos", peso: "10.0kg" },
+                    { ref: "TFL 1,80", metros: "1.80m", pasos: "6 pasos", peso: "11.0kg" },
+                    { ref: "TFL 2,10", metros: "2.10m", pasos: "7 pasos", peso: "13.0kg" },
+                    { ref: "TFL 2,40", metros: "2.40m", pasos: "8 pasos", peso: "14.0kg" },
+                    { ref: "TFL 2,70", metros: "2.70m", pasos: "9 pasos", peso: "16.0kg" },
+                    { ref: "TFL 3,00", metros: "3.00m", pasos: "10 pasos", peso: "18.0kg" },
+                    { ref: "TFL 3,30", metros: "3.30m", pasos: "11 pasos", peso: "20.0kg" },
+                    { ref: "TFL 3,60", metros: "3.60m", pasos: "13 pasos", peso: "21.5kg" }
+                ],
+                technicalInfo: "Escaleras de fibra de vidrio EXTREN 525 de Strongwell\\n\\nCARACTERÍSTICAS:\\n• Livianas y resistentes: Ideales para trabajos en altura\\n• Aisladas eléctricamente: Perfectas para entornos con riesgos eléctricos\\n• Duraderas: Resistentes a la corrosión y a los rayos UV\\n• Seguras: Peldaños antideslizantes y capacidad de carga de hasta 250 libras (Comercial)\\n• Construcción robusta: Remachado colombiano para mayor resistencia\\n• Componentes de alta calidad: Ganchos de aluminio, tapones de ABS, cuerda de polietileno y polea de acero galvanizado\\n• Cumplimiento de normas: Cumplen con los estándares internacionales de seguridad",
+                accessories: ["Plataforma aluminio", "Zapata planchón"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - TIJERA COMERCIAL (Tipo I - 114kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA FIBRA DE VIDRIO - TIJERA COMERCIAL, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
 
-            // Productos de aluminio - Extensión
+            // ═══════ ALUMINIO - EXTENSIÓN ═══════
             {
                 id: 8,
-                name: "Escalera Aluminio Industrial - Extensión - 5.00m/16 pasos",
-                price: "$ 1.174.800",
-                code: "EA 5,00",
+                type: "Escalera Aluminio - Extensión Dos Cuerpos",
                 category: "aluminio-extension",
-                type: "Extensión Industrial",
-                material: "Aluminio",
-                capacity: "136 kg - Tipo IA",
-                weight: "13,8 kg"
+                specifications: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D - Uso Industrial Extra Pesado",
+                references: [
+                    { ref: "EA 5,00", metros: "5.00m", pasos: "16 pasos", peso: "13.8kg" },
+                    { ref: "EA 6,00", metros: "6.00m", pasos: "20 pasos", peso: "16.5kg" },
+                    { ref: "EA 7,40", metros: "7.40m", pasos: "24 pasos", peso: "20.0kg" },
+                    { ref: "EA 8,60", metros: "8.60m", pasos: "28 pasos", peso: "22.0kg" },
+                    { ref: "EA 10,0", metros: "10.0m", pasos: "32 pasos", peso: "26.0kg" },
+                    { ref: "EA 11,0", metros: "11.0m", pasos: "36 pasos", peso: "29.5kg" },
+                    { ref: "EA 12,0", metros: "12.0m", pasos: "40 pasos", peso: "33.0kg" }
+                ],
+                technicalInfo: "ALUMINIO EXTRUIDO\\n\\nCARACTERÍSTICAS:\\n• Excelente relación resistencia-peso\\n• Formas complejas y precisas para mayor estabilidad\\n• Resistencia natural a la corrosión\\n• Alta durabilidad y larga vida útil\\n• Materiales de alta calidad (aluminio, duraluminio, acero, plástico ABS)\\n• Fabricación robusta con remaches duraderos\\n• Cumplimiento de estándares internacionales\\n• Alta capacidad de carga para uso industrial",
+                accessories: ["Porta herramienta", "Bincha en hierro", "Gancho bomberos", "Zapata niveladora"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA ALUMINIO - EXTENSIÓN DOS CUERPOS (Tipo IA - 136kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA ALUMINIO - EXTENSIÓN DOS CUERPOS, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
+
+            // ═══════ ALUMINIO - SENCILLA ═══════
             {
                 id: 9,
-                name: "Escalera Aluminio Industrial - Extensión - 6.00m/20 pasos",
-                price: "$ 1.349.800",
-                code: "EA 6,00",
-                category: "aluminio-extension",
-                type: "Extensión Industrial",
-                material: "Aluminio",
-                capacity: "136 kg - Tipo IA",
-                weight: "16,5 kg"
+                type: "Escalera Aluminio - Sencilla Industrial",
+                category: "aluminio-sencilla",
+                specifications: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D - 1 Cuerpo",
+                references: [
+                    { ref: "SA 1,50", metros: "1.50m", pasos: "5 pasos", peso: "5.0kg" },
+                    { ref: "SA 1,80", metros: "1.80m", pasos: "6 pasos", peso: "6.0kg" },
+                    { ref: "SA 2,10", metros: "2.10m", pasos: "7 pasos", peso: "7.0kg" },
+                    { ref: "SA 2,40", metros: "2.40m", pasos: "8 pasos", peso: "8.0kg" },
+                    { ref: "SA 2,70", metros: "2.70m", pasos: "9 pasos", peso: "9.0kg" },
+                    { ref: "SA 3,00", metros: "3.00m", pasos: "10 pasos", peso: "10.0kg" },
+                    { ref: "SA 3,60", metros: "3.60m", pasos: "12 pasos", peso: "11.0kg" },
+                    { ref: "SA 4,00", metros: "4.00m", pasos: "13 pasos", peso: "12.5kg" },
+                    { ref: "SA 5,00", metros: "5.00m", pasos: "16 pasos", peso: "15.0kg" },
+                    { ref: "SA 6,00", metros: "6.00m", pasos: "20 pasos", peso: "17.0kg" }
+                ],
+                technicalInfo: "ALUMINIO EXTRUIDO\\n\\nCARACTERÍSTICAS:\\n• Excelente relación resistencia-peso\\n• Formas complejas y precisas para mayor estabilidad\\n• Resistencia natural a la corrosión\\n• Alta durabilidad y larga vida útil\\n• Materiales de alta calidad (aluminio, duraluminio, acero, plástico ABS)\\n• Fabricación robusta con remaches duraderos\\n• Cumplimiento de estándares internacionales\\n• Alta capacidad de carga para uso industrial",
+                accessories: ["Porta herramienta", "Bincha en hierro", "Gancho bomberos", "Zapata niveladora"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA ALUMINIO - SENCILLA INDUSTRIAL (Tipo IA - 136kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA ALUMINIO - SENCILLA INDUSTRIAL, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
 
-            // Productos de aluminio - Sencillas
+            // ═══════ ALUMINIO - TIJERA ═══════
             {
                 id: 10,
-                name: "Escalera Aluminio Industrial - Sencilla - 1.50m/5 pasos",
-                price: "$ 499.800",
-                code: "SA 1,50",
-                category: "aluminio-sencilla",
-                type: "Sencilla Industrial",
-                material: "Aluminio",
-                capacity: "136 kg - Tipo IA",
-                weight: "5,0 kg"
+                type: "Escalera Aluminio - Tijera Industrial",
+                category: "aluminio-tijera",
+                specifications: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Planos - Uso Industrial Extra Pesado",
+                references: [
+                    { ref: "TA 0,60", metros: "0.60m", pasos: "2 pasos", peso: "4.0kg" },
+                    { ref: "TA 0,90", metros: "0.90m", pasos: "3 pasos", peso: "5.0kg" },
+                    { ref: "TA 1,20", metros: "1.20m", pasos: "4 pasos", peso: "5.5kg" },
+                    { ref: "TA 1,50", metros: "1.50m", pasos: "5 pasos", peso: "8.0kg" },
+                    { ref: "TA 1,80", metros: "1.80m", pasos: "6 pasos", peso: "9.0kg" },
+                    { ref: "TA 2,10", metros: "2.10m", pasos: "7 pasos", peso: "10.5kg" },
+                    { ref: "TA 2,40", metros: "2.40m", pasos: "8 pasos", peso: "12.0kg" },
+                    { ref: "TA 2,70", metros: "2.70m", pasos: "9 pasos", peso: "13.0kg" },
+                    { ref: "TA 3,00", metros: "3.00m", pasos: "10 pasos", peso: "15.0kg" },
+                    { ref: "TA 3,60", metros: "3.60m", pasos: "12 pasos", peso: "17.0kg" },
+                    { ref: "TA 4,00", metros: "4.00m", pasos: "13 pasos", peso: "20.0kg" },
+                    { ref: "TA 5,00", metros: "5.00m", pasos: "16 pasos", peso: "25.0kg" },
+                    { ref: "TA 6,00", metros: "6.00m", pasos: "20 pasos", peso: "30.0kg" }
+                ],
+                technicalInfo: "ALUMINIO EXTRUIDO\\n\\nCARACTERÍSTICAS:\\n• Excelente relación resistencia-peso\\n• Formas complejas y precisas para mayor estabilidad\\n• Resistencia natural a la corrosión\\n• Alta durabilidad y larga vida útil\\n• Materiales de alta calidad (aluminio, duraluminio, acero, plástico ABS)\\n• Fabricación robusta con remaches duraderos\\n• Cumplimiento de estándares internacionales\\n• Alta capacidad de carga para uso industrial",
+                accessories: ["Plataforma aluminio", "Zapata planchón"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA ALUMINIO - TIJERA INDUSTRIAL (Tipo IA - 136kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA ALUMINIO - TIJERA INDUSTRIAL, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
+
             {
                 id: 11,
-                name: "Escalera Aluminio Industrial - Sencilla - 2.10m/7 pasos",
-                price: "$ 649.800",
-                code: "SA 2,10",
-                category: "aluminio-sencilla",
-                type: "Sencilla Industrial",
-                material: "Aluminio",
-                capacity: "136 kg - Tipo IA",
-                weight: "7,0 kg"
+                type: "Escalera Aluminio - Tijera Comercial",
+                category: "aluminio-tijera",
+                specifications: "Comercial - Capacidad 102kg (225 libras) - Tipo II - Peldaños Planos - Uso Comercial Liviano",
+                references: [
+                    { ref: "TAL 0,60", metros: "0.60m", pasos: "2 pasos", peso: "2.0kg" },
+                    { ref: "TAL 0,90", metros: "0.90m", pasos: "3 pasos", peso: "3.0kg" },
+                    { ref: "TAL 1,20", metros: "1.20m", pasos: "4 pasos", peso: "4.0kg" },
+                    { ref: "TAL 1,50", metros: "1.50m", pasos: "5 pasos", peso: "5.0kg" },
+                    { ref: "TAL 1,80", metros: "1.80m", pasos: "6 pasos", peso: "5.5kg" },
+                    { ref: "TAL 2,10", metros: "2.10m", pasos: "7 pasos", peso: "6.2kg" },
+                    { ref: "TAL 2,40", metros: "2.40m", pasos: "8 pasos", peso: "7.0kg" },
+                    { ref: "TAL 2,70", metros: "2.70m", pasos: "9 pasos", peso: "8.0kg" },
+                    { ref: "TAL 3,00", metros: "3.00m", pasos: "10 pasos", peso: "9.0kg" }
+                ],
+                technicalInfo: "ALUMINIO EXTRUIDO\\n\\nCARACTERÍSTICAS:\\n• Excelente relación resistencia-peso\\n• Formas complejas y precisas para mayor estabilidad\\n• Resistencia natural a la corrosión\\n• Alta durabilidad y larga vida útil\\n• Materiales de alta calidad (aluminio, duraluminio, acero, plástico ABS)\\n• Fabricación robusta con remaches duraderos\\n• Cumplimiento de estándares internacionales\\n• Alta capacidad de carga para uso comercial",
+                accessories: ["Plataforma aluminio", "Zapata planchón"],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ESCALERA ALUMINIO - TIJERA COMERCIAL (Tipo II - 102kg). ¿Podrían enviarme información completa de todas las referencias disponibles, especificaciones técnicas y disponibilidad?",
+                    specific: "Hola, estoy interesado en ESCALERA ALUMINIO - TIJERA COMERCIAL, referencia [REF] ([PASOS] - [METROS]). ¿Podrían enviarme información técnica detallada, disponibilidad y cotización?"
+                }
             },
 
-            // Productos de aluminio - Tijeras
+            // ═══════ ACCESORIOS ═══════
             {
                 id: 12,
-                name: "Escalera Aluminio Industrial - Tijera - 1.20m/4 pasos",
-                price: "$ 399.800",
-                code: "TA 1,20",
-                category: "aluminio-tijera",
-                type: "Tijera Industrial",
-                material: "Aluminio",
-                capacity: "136 kg - Tipo IA",
-                weight: "5,5 kg"
-            },
-            {
-                id: 13,
-                name: "Escalera Aluminio Industrial - Tijera - 1.80m/6 pasos",
-                price: "$ 599.800",
-                code: "TA 1,80",
-                category: "aluminio-tijera",
-                type: "Tijera Industrial",
-                material: "Aluminio",
-                capacity: "136 kg - Tipo IA",
-                weight: "9,0 kg"
-            },
-
-            // Pértigas telescópicas
-            {
-                id: 14,
-                name: "Pértiga Telescópica Fibra Vidrio - 6 metros",
-                price: "$ 1.249.800",
-                code: "PT 6,0",
-                category: "pertigas",
-                type: "Pértiga Telescópica",
-                material: "Fibra de Vidrio",
-                capacity: "Aislada 100kV",
-                weight: "2,5 kg"
-            },
-            {
-                id: 15,
-                name: "Pértiga Telescópica Fibra Vidrio - 10 metros",
-                price: "$ 1.849.800",
-                code: "PT 10,0",
-                category: "pertigas",
-                type: "Pértiga Telescópica",
-                material: "Fibra de Vidrio",
-                capacity: "Aislada 100kV",
-                weight: "4,0 kg"
-            },
-
-            // Accesorios
-            {
-                id: 16,
-                name: "Ganchos Bomberos",
-                price: "$ 199.800",
-                code: "ACC-GB",
+                type: "Accesorios para Escaleras",
                 category: "accesorios",
-                type: "Accesorio",
-                material: "Acero Galvanizado",
-                capacity: "Compatible con extensión",
-                weight: "1,5 kg"
-            },
-            {
-                id: 17,
-                name: "Zapata Niveladora",
-                price: "$ 699.800",
-                code: "ACC-ZN",
-                category: "accesorios",
-                type: "Accesorio",
-                material: "Aluminio",
-                capacity: "Ajuste de nivel automático",
-                weight: "2,0 kg"
+                specifications: "Accesorios opcionales que mejoran la utilidad y seguridad de las escaleras",
+                references: [
+                    { ref: "ACC-BF", metros: "Universal", pasos: "Bincha en fibra", peso: "Variable" },
+                    { ref: "ACC-BH", metros: "Universal", pasos: "Bincha en hierro", peso: "Variable" },
+                    { ref: "ACC-GB", metros: "Universal", pasos: "Gancho bomberos", peso: "Variable" },
+                    { ref: "ACC-ZN", metros: "Universal", pasos: "Zapata niveladora", peso: "Variable" },
+                    { ref: "ACC-PA", metros: "Universal", pasos: "Plataforma aluminio", peso: "Variable" },
+                    { ref: "ACC-ZP", metros: "Universal", pasos: "Zapata planchón", peso: "Variable" },
+                    { ref: "ACC-PH", metros: "Universal", pasos: "Porta herramienta", peso: "Variable" },
+                    { ref: "ACC-RT", metros: "Universal", pasos: "Ruedas traseras", peso: "Variable" }
+                ],
+                technicalInfo: "ACCESORIOS DE ALTA CALIDAD\\n\\nCARACTERÍSTICAS:\\n• Bincha en fibra: Aislamiento eléctrico, ideal para trabajos con riesgo eléctrico\\n• Bincha en hierro: Mayor resistencia y durabilidad\\n• Gancho bomberos: Diseño especializado para servicios de emergencia\\n• Zapata niveladora: Ajuste automático en superficies irregulares\\n• Plataforma aluminio: Superficie antideslizante adicional\\n• Zapata planchón: Estabilidad en superficies blandas\\n• Porta herramienta: Organización y acceso rápido a herramientas\\n• Ruedas traseras: Facilita transporte y movilidad",
+                accessories: [],
+                whatsappMessages: {
+                    general: "Hola, estoy interesado en ACCESORIOS PARA ESCALERAS. ¿Podrían enviarme información completa de todos los accesorios disponibles, compatibilidad y especificaciones técnicas?",
+                    specific: "Hola, estoy interesado en el accesorio [PASOS]. ¿Podrían enviarme información sobre compatibilidad, especificaciones técnicas y cotización?"
+                }
             }
         ];
 
@@ -1638,7 +1943,7 @@
             spaCatalog.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            console.log(`✅ Base de datos cargada con ${productDatabase.length} productos`);
+            console.log(`✅ Base de datos cargada con ${catalogoEscaleras.length} productos`);
             
             // Renderizar productos con un pequeño delay
             setTimeout(() => {
@@ -1678,10 +1983,10 @@
                 return;
             }
             
-            let filteredProducts = productDatabase;
-            
+            let filteredProducts = catalogoEscaleras;
+
             if (category !== 'todos') {
-                filteredProducts = productDatabase.filter(product => product.category === category);
+                filteredProducts = catalogoEscaleras.filter(product => product.category === category);
                 console.log(`📊 Productos filtrados: ${filteredProducts.length}`);
             } else {
                 console.log(`📊 Mostrando todos los productos: ${filteredProducts.length}`);
@@ -1715,67 +2020,144 @@
             console.log('🎉 Productos renderizados exitosamente');
         }
 
-        function createProductCard(product) {
-            if (!product) {
+        function createProductCard(producto) {
+            if (!producto) {
                 console.error('❌ Producto indefinido en createProductCard');
                 return document.createElement('div');
             }
-            
+
             const card = document.createElement('div');
-            card.className = 'spa-product-card';
-            
-            // Crear detalles técnicos
-            let technicalDetails = '';
-            if (product.material) {
-                technicalDetails += `<div class="product-detail"><strong>Material:</strong> ${product.material}</div>`;
+            card.className = 'spa-product-card-new';
+
+            // Crear selector de referencias
+            let referencesSelector = '';
+            if (producto.references && producto.references.length > 0) {
+                referencesSelector = `
+                    <div class="references-section">
+                        <h4>Selecciona una referencia (opcional):</h4>
+                        <div class="references-grid">
+                            ${producto.references.map((ref, index) => `
+                                <label class="reference-option">
+                                    <input type="radio" name="ref-${producto.id}" value="${ref.ref}" data-metros="${ref.metros}" data-pasos="${ref.pasos}">
+                                    <span class="reference-info">
+                                        <strong>${ref.ref}</strong><br>
+                                        ${ref.pasos} - ${ref.metros}<br>
+                                        <small>Peso: ${ref.peso}</small>
+                                    </span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
             }
-            if (product.capacity) {
-                technicalDetails += `<div class="product-detail"><strong>Capacidad:</strong> ${product.capacity}</div>`;
+
+            // Crear lista de accesorios
+            let accessoriesInfo = '';
+            if (producto.accessories && producto.accessories.length > 0) {
+                accessoriesInfo = `
+                    <div class="accessories-section">
+                        <strong>Accesorios compatibles:</strong><br>
+                        <span class="accessories-list">${producto.accessories.join(', ')}</span>
+                    </div>
+                `;
             }
-            if (product.weight) {
-                technicalDetails += `<div class="product-detail"><strong>Peso:</strong> ${product.weight}</div>`;
-            }
-            if (product.type) {
-                technicalDetails += `<div class="product-detail"><strong>Tipo:</strong> ${product.type}</div>`;
-            }
-            
-            const safeName = (product.name || 'Sin nombre').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
-            const safePrice = (product.price || 'Consultar').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
-            const safeCode = (product.code || 'Sin código').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
-            
+
             card.innerHTML = `
                 <div class="spa-product-image">
                     <div class="spa-product-placeholder">
                         <i class="fas fa-industry"></i>
                     </div>
                 </div>
-                <div class="spa-product-info">
-                    <h3 class="spa-product-name">${safeName}</h3>
-                    <div class="spa-product-price">${safePrice}</div>
-                    <div class="spa-product-code">Código: ${safeCode}</div>
-                    ${technicalDetails ? `<div class="product-technical-details">${technicalDetails}</div>` : ''}
-                    <div class="spa-product-actions">
-                        <button class="spa-product-btn btn-whatsapp" onclick="contactProduct('${safeName}', '${safePrice}', '${safeCode}')">
-                            <i class="fab fa-whatsapp"></i> Consultar
+                <div class="spa-product-info-new">
+                    <h3 class="spa-product-name">${producto.type}</h3>
+                    <div class="spa-product-specs">${producto.specifications}</div>
+
+                    ${referencesSelector}
+                    ${accessoriesInfo}
+
+                    <div class="spa-product-actions-new">
+                        <button class="spa-product-btn btn-info" onclick="showTechnicalInfo(${producto.id})">
+                            <i class="fas fa-info-circle"></i> Ver Información Técnica
                         </button>
-                        <button class="spa-product-btn btn-cart" onclick="openChatbot()">
-                            <i class="fas fa-shopping-cart"></i> Cotizar
+                        <button class="spa-product-btn btn-whatsapp" onclick="contactWhatsApp(${producto.id})">
+                            <i class="fab fa-whatsapp"></i> Cotizar en WhatsApp
                         </button>
                     </div>
                 </div>
             `;
-            
+
             return card;
         }
 
         function contactProduct(productName, productPrice, productCode) {
             const message = `Hola, estoy interesado en el producto:
-            
+
 📦 *${productName}*
 💰 Precio: ${productPrice}
 🔑 Código: ${productCode}
 
 ¿Podrían darme más información sobre disponibilidad, especificaciones técnicas y opciones de entrega?`;
+            const whatsappURL = `https://wa.me/573008611868?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        function showTechnicalInfo(productId) {
+            const producto = catalogoEscaleras.find(p => p.id === productId);
+            if (!producto) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'tech-info-modal';
+            modal.innerHTML = `
+                <div class="tech-info-container">
+                    <div class="tech-info-header">
+                        <h3><i class="fas fa-cogs"></i> ${producto.type}</h3>
+                        <button class="tech-close" onclick="closeTechInfo()">×</button>
+                    </div>
+                    <div class="tech-info-content">
+                        <div class="tech-specifications">
+                            <h4>Especificaciones:</h4>
+                            <p>${producto.specifications}</p>
+                        </div>
+                        <div class="tech-details">
+                            <h4>Información Técnica Detallada:</h4>
+                            <pre>${producto.technicalInfo}</pre>
+                        </div>
+                    </div>
+                    <button class="tech-close-btn" onclick="closeTechInfo()">Cerrar</button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+
+        function closeTechInfo() {
+            const modal = document.querySelector('.tech-info-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function contactWhatsApp(productId) {
+            const producto = catalogoEscaleras.find(p => p.id === productId);
+            if (!producto) return;
+
+            // Verificar si hay referencia seleccionada
+            const selectedRef = document.querySelector(`input[name="ref-${productId}"]:checked`);
+
+            let message;
+            if (selectedRef) {
+                const refData = selectedRef.value;
+                const metros = selectedRef.dataset.metros;
+                const pasos = selectedRef.dataset.pasos;
+                message = producto.whatsappMessages.specific
+                    .replace('[REF]', refData)
+                    .replace('[METROS]', metros)
+                    .replace('[PASOS]', pasos);
+            } else {
+                message = producto.whatsappMessages.general;
+            }
+
             const whatsappURL = `https://wa.me/573008611868?text=${encodeURIComponent(message)}`;
             window.open(whatsappURL, '_blank');
         }
@@ -1832,7 +2214,7 @@
             const animatedElements = document.querySelectorAll('.fade-in');
             animatedElements.forEach(el => observer.observe(el));
             
-            console.log(`✅ Base de datos de productos lista: ${productDatabase.length} productos`);
+            console.log(`✅ Base de datos de productos lista: ${catalogoEscaleras.length} productos`);
             console.log('🎉 Inicialización completa');
         });
     </script>
