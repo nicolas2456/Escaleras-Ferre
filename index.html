@@ -382,8 +382,39 @@
 
         .spa-products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: var(--spacing-md);
+            justify-content: center;
+            align-items: start;
+        }
+
+        /* Para una sola tarjeta */
+        .spa-products-grid.single-item {
+            grid-template-columns: 1fr;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Para 2-3 tarjetas */
+        .spa-products-grid.few-items {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 500px));
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Para 4+ tarjetas */
+        .spa-products-grid.many-items {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .spa-products-grid.single-item,
+            .spa-products-grid.few-items,
+            .spa-products-grid.many-items {
+                grid-template-columns: 1fr;
+                max-width: 100%;
+                padding: 0 1rem;
+            }
         }
 
         .spa-product-card {
@@ -519,6 +550,34 @@
         .spa-product-card-new:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Mejorar apariencia cuando hay pocas tarjetas */
+        .single-item .spa-product-card-new,
+        .few-items .spa-product-card-new {
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .single-item .spa-product-image,
+        .few-items .spa-product-image {
+            height: 250px;
+            flex-shrink: 0;
+        }
+
+        .single-item .spa-product-info-new,
+        .few-items .spa-product-info-new {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Centrar contenido cuando hay pocas tarjetas */
+        .single-item,
+        .few-items {
+            justify-items: center;
         }
 
         .spa-product-info-new {
@@ -1978,47 +2037,55 @@
 
         function renderProducts(category) {
             console.log('🔄 Renderizando productos para categoría:', category);
-            
+
             const grid = document.getElementById('productsGrid');
             if (!grid) {
                 console.error('❌ No se encontró el elemento productsGrid');
                 return;
             }
-            
+
             let filteredProducts = catalogoEscaleras;
 
             if (category !== 'todos') {
-                filteredProducts = catalogoEscaleras.filter(product => product.category === category);
+                filteredProducts = catalogoEscaleras.filter(producto => producto.category === category);
                 console.log(`📊 Productos filtrados: ${filteredProducts.length}`);
             } else {
                 console.log(`📊 Mostrando todos los productos: ${filteredProducts.length}`);
             }
-            
+
+            // Limpiar grid
             grid.innerHTML = '';
-            
+
+            // Determinar clase CSS según cantidad de productos
+            grid.className = 'spa-products-grid';
+            if (filteredProducts.length === 1) {
+                grid.classList.add('single-item');
+            } else if (filteredProducts.length <= 3) {
+                grid.classList.add('few-items');
+            } else {
+                grid.classList.add('many-items');
+            }
+
             if (filteredProducts.length === 0) {
-                console.log('❌ No hay productos para esta categoría');
                 grid.innerHTML = `
                     <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
                         <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; color: #2d5016;"></i>
                         <h3>No se encontraron productos</h3>
-                        <p>No hay productos disponibles para esta categoría: ${category}</p>
+                        <p>No hay productos disponibles para esta categoría</p>
                     </div>
                 `;
                 return;
             }
-            
-            console.log('✅ Creando tarjetas de productos...');
-            filteredProducts.forEach((product, index) => {
+
+            filteredProducts.forEach((producto) => {
                 try {
-                    const productCard = createProductCard(product);
+                    const productCard = createProductCard(producto);
                     grid.appendChild(productCard);
-                    if (index < 3) console.log(`✅ Producto agregado: ${product.name}`);
                 } catch (error) {
-                    console.error('❌ Error creando tarjeta para producto:', product, error);
+                    console.error('❌ Error creando tarjeta para producto:', producto, error);
                 }
             });
-            
+
             console.log('🎉 Productos renderizados exitosamente');
         }
 
