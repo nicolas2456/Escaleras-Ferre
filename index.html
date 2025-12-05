@@ -402,12 +402,21 @@
 
         .spa-product-image {
             height: 200px;
-            background: var(--color-light-gray);
+            background: #f8f9fa;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             position: relative;
+            padding: 1rem;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: white;
+            border-radius: 8px;
         }
 
         .spa-product-placeholder {
@@ -739,16 +748,20 @@
         }
 
         .service-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--color-primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin: 0 auto var(--spacing-sm);
+            display: none; /* Ocultar iconos, ahora usamos imágenes */
+        }
+
+        .service-image, .about-image {
+            height: 200px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .service-img, .section-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .service-title {
@@ -1067,7 +1080,7 @@
                     </p>
                 </div>
                 <div class="about-image fade-in visible">
-                    <i class="fas fa-industry"></i>
+                    <img src="https://i.imgur.com/SfndVuY.png" alt="Instalaciones Escaleras Ferre" class="section-img">
                 </div>
             </div>
         </div>
@@ -1084,51 +1097,41 @@
             </div>
             <div class="services-grid">
                 <div class="service-card fade-in visible">
-                    <div class="service-icon">
-                        <i class="fas fa-hammer"></i>
+                    <div class="service-image">
+                        <img src="https://i.imgur.com/eudaPJq.png" alt="Fabricación de Escaleras" class="service-img">
                     </div>
                     <h3 class="service-title">Fabricación de Escaleras</h3>
                     <p class="service-description">
-                        Fabricamos escaleras a medida en fibra de vidrio y aluminio con certificación 
+                        Fabricamos escaleras a medida en fibra de vidrio y aluminio con certificación
                         internacional para proyectos industriales y comerciales.
                     </p>
                     <button onclick="openCatalogSPA()" class="service-btn">Ver Productos</button>
                 </div>
-                
+
                 <div class="service-card fade-in visible">
-                    <div class="service-icon">
-                        <i class="fas fa-calendar-alt"></i>
+                    <div class="service-image">
+                        <img src="https://i.imgur.com/MTg1Swv.png" alt="Alquiler de Escaleras" class="service-img">
                     </div>
                     <h3 class="service-title">Alquiler de Escaleras</h3>
                     <p class="service-description">
-                        Servicio de alquiler de escaleras certificadas para proyectos temporales. 
+                        Alquiler de:<br>
+                        • Escaleras en extensión<br>
+                        • Tijera, sencilla y tijera plataforma<br>
                         Incluye entrega, instalación y recogida.
                     </p>
                     <button onclick="openChatbot()" class="service-btn">Consultar Alquiler</button>
                 </div>
-                
+
                 <div class="service-card fade-in visible">
-                    <div class="service-icon">
-                        <i class="fas fa-tools"></i>
+                    <div class="service-image">
+                        <img src="https://i.imgur.com/yYie6le.png" alt="Mantenimiento Especializado" class="service-img">
                     </div>
                     <h3 class="service-title">Mantenimiento Especializado</h3>
                     <p class="service-description">
-                        Servicio técnico especializado para mantener tus escaleras en perfectas 
-                        condiciones de seguridad y funcionamiento.
+                        Especialistas certificados en mantenimiento preventivo y correctivo de escaleras
+                        industriales y comerciales. Tu seguridad es nuestra experiencia.
                     </p>
                     <button onclick="openChatbot()" class="service-btn">Agendar Servicio</button>
-                </div>
-                
-                <div class="service-card fade-in visible">
-                    <div class="service-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="service-title">Herramientas Eléctricas</h3>
-                    <p class="service-description">
-                        Venta de herramientas eléctricas de las mejores marcas. Asesoría técnica 
-                        y garantía completa en todos los productos.
-                    </p>
-                    <button onclick="openChatbot()" class="service-btn">Ver Productos</button>
                 </div>
             </div>
         </div>
@@ -2020,6 +2023,22 @@
             console.log('🎉 Productos renderizados exitosamente');
         }
 
+        // Mapping de imágenes reales del catálogo
+        const imageMapping = {
+            1: "https://i.imgur.com/CP8RsQJ.png", // Escalera Fibra de Vidrio - Extensión Dos Cuerpos
+            2: "https://i.imgur.com/Ia8HCVJ.png", // Escalera Fibra de Vidrio - Extensión Tres Cuerpos
+            3: "https://i.imgur.com/wgnLz0L.png", // Escalera Fibra de Vidrio - Caballete
+            4: "https://i.imgur.com/aAVZM6S.png", // Escalera Fibra de Vidrio - Sencilla Industrial
+            5: "https://i.imgur.com/aAVZM6S.png", // Escalera Fibra de Vidrio - Sencilla Comercial
+            6: "https://i.imgur.com/Ll9DNdk.jpeg", // Escalera Fibra de Vidrio - Tijera Industrial
+            7: "https://i.imgur.com/iU0aZBs.png", // Escalera Fibra de Vidrio - Tijera Comercial
+            8: "https://i.imgur.com/MZ4Y1BF.png", // Escalera Aluminio - Extensión Dos Cuerpos
+            9: "https://i.imgur.com/cdx39YL.png", // Escalera Aluminio - Sencilla Industrial
+            10: "https://i.imgur.com/6MCwR6H.png", // Escalera Aluminio - Tijera Industrial
+            11: "https://i.imgur.com/yi61plI.png", // Escalera Aluminio - Tijera Comercial
+            12: "https://i.imgur.com/6SrgIgK.png"  // Accesorios para Escaleras
+        };
+
         function createProductCard(producto) {
             if (!producto) {
                 console.error('❌ Producto indefinido en createProductCard');
@@ -2062,11 +2081,12 @@
                 `;
             }
 
+            // Obtener imagen real
+            const imageUrl = imageMapping[producto.id] || 'https://i.imgur.com/6SrgIgK.png'; // fallback a accesorios
+
             card.innerHTML = `
                 <div class="spa-product-image">
-                    <div class="spa-product-placeholder">
-                        <i class="fas fa-industry"></i>
-                    </div>
+                    <img src="${imageUrl}" alt="${producto.type}" class="product-img">
                 </div>
                 <div class="spa-product-info-new">
                     <h3 class="spa-product-name">${producto.type}</h3>
