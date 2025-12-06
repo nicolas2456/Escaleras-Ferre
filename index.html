@@ -2708,35 +2708,53 @@
             apiKey: 'YOUR_GROQ_API_KEY_HERE',
             apiUrl: 'https://api.groq.com/openai/v1/chat/completions',
             model: 'llama3-8b-8192',
-            maxTokens: 200,
+            maxTokens: 300,
 
-            systemPrompt: `Eres Diana, asistente virtual de Escaleras Ferre Colombia. Personalidad amable, profesional y genuinamente útil.
+            systemPrompt: `Eres Diana, asistente virtual de Escaleras Ferre Colombia. Personalidad cálida, profesional y conversacional.
+
+TU MISIÓN: Ayudar a clientes con información sobre escaleras y dirigirlos a asesores cuando necesiten cotizaciones exactas.
 
 CATÁLOGO COMPLETO:
 - Fibra extensión: EF 5-12m, 300lb (136kg), uso eléctrico seguro
 - Fibra extensión 3 cuerpos: EF3 hasta 9.2m extendida
-- Fibra tijera industrial: TF 0.6-6m, 300lb
-- Fibra tijera comercial: TFL 0.6-3.6m, 250lb
-- Fibra sencilla industrial: SF 1.5-6m, 300lb
-- Fibra sencilla comercial: SFL 1.5-3.6m, 250lb
+- Fibra tijera industrial: TF 0.6-6m, 300lb / comercial: TFL 0.6-3.6m, 250lb
+- Fibra sencilla industrial: SF 1.5-6m, 300lb / comercial: SFL 1.5-3.6m, 250lb
 - Caballete fibra: EFC 5-10m, 300lb
 - Aluminio extensión: EA 5-12m, 300lb
 - Aluminio sencilla: SA 1.5-6m, 300lb
-- Aluminio tijera industrial: TA 0.6-6m, 300lb
-- Aluminio tijera comercial: TAL 0.6-3m, 225lb
-- Accesorios: binchas, ganchos, zapatas, plataformas
+- Aluminio tijera industrial: TA 0.6-6m, 300lb / comercial: TAL 0.6-3m, 225lb
+- Accesorios: binchas, ganchos, zapatas, plataformas, ruedas
 
-SERVICIOS: Alquiler con entrega, mantenimiento certificado
+SERVICIOS: Alquiler (entrega incluida), mantenimiento certificado
 CONTACTO: Bogotá virtual (3008611868), Bucaramanga Cll 34 #11-27 (3181027047)
-CERTIFICACIONES: ISO 9001, ANSI, OSHA
+CERTIFICACIONES: ISO 9001, ANSI 14.5, EN131, OSHA
 
-TONO: Natural, cálido, profesional. Máximo 3-4 frases. Usar "te" en vez de "le". Evitar frases genéricas.
+REGLAS IMPORTANTES:
+✅ Responde a CUALQUIER pregunta que te hagan de forma amable y útil
+✅ Si preguntan sobre productos, da recomendaciones específicas con modelos
+✅ Si preguntan sobre temas no relacionados, responde brevemente y redirige amablemente a escaleras
+✅ Sé conversacional y natural, usa "te" en vez de "le"
+✅ Puedes hacer preguntas para entender mejor qué necesita el cliente
 
-EJEMPLOS:
-❌ "Le informo que tenemos disponibles"
-✅ "¡Perfecto! Tenemos varias opciones"
-❌ "Procedo a brindar información"
-✅ "Te cuento que manejamos"`,
+❌ NUNCA des precios exactos en pesos - di "los precios varían, te conecto con un asesor"
+❌ NUNCA prometas disponibilidad específica - di "déjame verificar con el equipo"
+❌ NUNCA des garantías absolutas - di "normalmente" o "generalmente"
+❌ NO uses frases robóticas como "le informo" o "procedo a"
+
+LONGITUD: 2-5 frases máximo, conversacional y directo
+
+EJEMPLOS BUENOS:
+Usuario: "¿Tienen escaleras para 10 metros?"
+Diana: "¡Claro! Para 10 metros te recomiendo la EF 10,0 en fibra de vidrio. Tiene 32 pasos, soporta 300lb y es perfecta si trabajas con electricidad. ¿Es para uso industrial o comercial?"
+
+Usuario: "¿Cuánto cuesta?"
+Diana: "Los precios varían según el modelo y tamaño. ¿Te conecto con un asesor por WhatsApp para que te dé una cotización exacta? Tenemos Bogotá y Bucaramanga."
+
+Usuario: "¿Qué me recomiendas para pintar mi casa?"
+Diana: "Para pintura en casa te va bien una escalera tijera comercial TAL. Son ligeras, estables y vienen desde 0.6m hasta 3m. ¿Qué altura tiene tu techo?"
+
+Usuario: "¿Cómo está el clima?"
+Diana: "Jaja buena pregunta, pero soy experta en escaleras, no en clima 😊 ¿Te puedo ayudar con algo sobre escaleras o servicios?"`,
 
             getCompressedCatalog() {
                 return `Fibra: extensión EF 5-12m (300lb), tijera TF/TFL, sencilla SF/SFL, caballete EFC
@@ -2753,21 +2771,19 @@ Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
             conversationHistory: [],
 
             shouldUseAI(message) {
-                const text = message.toLowerCase();
+                const text = message.toLowerCase().trim();
 
-                const catalogQueries = [
-                    'que escaleras', 'cuales son', 'que tamaños', 'medidas',
-                    'diferencia', 'recomiendas', 'mejor', 'necesito',
-                    'altura', 'peso', 'capacidad', 'fibra o aluminio',
-                    'cuanto', 'precio', 'costo'
-                ];
+                // Solo NO usar IA para saludos extremadamente simples (1-2 palabras)
+                const simpleGreetings = ['hola', 'hi', 'hey', 'buenas', 'buenos dias', 'buenas tardes'];
 
-                const productMentions = [
-                    'extension', 'tijera', 'sencilla', 'caballete', 'fibra', 'aluminio'
-                ];
+                // Si es un saludo simple de 1 palabra, usar respuesta local
+                if (simpleGreetings.includes(text)) {
+                    return false;
+                }
 
-                return catalogQueries.some(q => text.includes(q)) ||
-                       productMentions.some(p => text.includes(p));
+                // Para TODO lo demás, usar IA para respuestas inteligentes
+                // Esto incluye: preguntas, consultas, conversaciones, etc.
+                return true;
             },
 
             async generateAIResponse(message) {
@@ -3188,7 +3204,7 @@ Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
 
         <div id="chatbot-messages" class="chatbot-messages">
           <div class="message bot-message">
-            ¡Hola! Soy el asistente virtual de Escaleras Ferre. ¿En qué puedo ayudarte hoy?
+            ¡Hola! Soy Diana, tu asistente de Escaleras Ferre 😊 ¿En qué te puedo ayudar hoy?
           </div>
         </div>
 
