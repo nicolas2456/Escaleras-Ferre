@@ -2568,6 +2568,279 @@
         // ===================================
         // CHATBOT AI - Sistema de Inteligencia Artificial Simulada
         // ===================================
+        // ESCALERAS FERRE - BASE DE CONOCIMIENTOS COMPLETA
+        // ===================================
+
+        const EscalerasFerreCatalog = {
+            products: {
+                fibraExtensionDos: {
+                    name: "Escalera Fibra de Vidrio - Extensión Dos Cuerpos",
+                    category: "Fibra de Vidrio",
+                    type: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D",
+                    references: [
+                        "EF 5,00 (16 pasos - 5.00m - Peso: 18.5kg)",
+                        "EF 6,00 (20 pasos - 6.00m - Peso: 22.0kg)",
+                        "EF 7,40 (24 pasos - 7.40m - Peso: 26.0kg)",
+                        "EF 8,60 (28 pasos - 8.60m - Peso: 30.0kg)",
+                        "EF 10,0 (32 pasos - 10.0m - Peso: 33.0kg)",
+                        "EF 11,0 (36 pasos - 11.0m - Peso: 35.0kg)",
+                        "EF 12,0 (40 pasos - 12.0m - Peso: 36.0kg)"
+                    ],
+                    features: "Aislamiento eléctrico, resistente a corrosión y UV, peldaños antideslizantes"
+                },
+
+                fibraExtensionTres: {
+                    name: "Escalera Fibra de Vidrio - Extensión Tres Cuerpos",
+                    category: "Fibra de Vidrio",
+                    type: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D",
+                    references: [
+                        "EF3 2.40/7.20 (24 pasos - 2.40m cerrada/7.20m extendida)",
+                        "EF3 3.00/9.20 (30 pasos - 3.00m cerrada/9.20m extendida)"
+                    ],
+                    features: "Máximo alcance, sistema de poleas triple, ideal para alturas extremas"
+                },
+
+                fibraSencillaIndustrial: {
+                    name: "Escalera Fibra de Vidrio - Sencilla Industrial",
+                    category: "Fibra de Vidrio",
+                    type: "Industrial - Capacidad 136kg (300 libras) - Tipo IA - Peldaños Tipo D - 1 Solo Cuerpo",
+                    references: [
+                        "SF 1,50 (5 pasos - 1.50m)", "SF 1,80 (6 pasos - 1.80m)",
+                        "SF 2,10 (7 pasos - 2.10m)", "SF 2,40 (8 pasos - 2.40m)",
+                        "SF 2,70 (9 pasos - 2.70m)", "SF 3,00 (10 pasos - 3.00m)",
+                        "SF 3,60 (12 pasos - 3.60m)", "SF 4,20 (14 pasos - 4.20m)",
+                        "SF 4,80 (16 pasos - 4.80m)", "SF 6,00 (20 pasos - 6.00m)"
+                    ]
+                },
+
+                fibraSencillaComercial: {
+                    name: "Escalera Fibra de Vidrio - Sencilla Comercial",
+                    category: "Fibra de Vidrio",
+                    type: "Comercial - Capacidad 114kg (250 libras) - Tipo I - Peldaños Tipo D",
+                    references: [
+                        "SFL 1,50 a SFL 3,60 (5 a 12 pasos - 1.50m a 3.60m)"
+                    ]
+                },
+
+                fibraTijeraIndustrial: {
+                    name: "Escalera Fibra de Vidrio - Tijera Industrial",
+                    category: "Fibra de Vidrio",
+                    type: "Industrial - Capacidad 136kg (300 libras) - Tipo IA",
+                    references: [
+                        "TF 0,60 a TF 6,00 (2 a 20 pasos - 0.60m a 6.00m)"
+                    ]
+                },
+
+                fibraTijeraComercial: {
+                    name: "Escalera Fibra de Vidrio - Tijera Comercial",
+                    category: "Fibra de Vidrio",
+                    type: "Comercial - Capacidad 114kg (250 libras) - Tipo I",
+                    references: [
+                        "TFL 0,60 a TFL 3,60 (2 a 12 pasos - 0.60m a 3.60m)"
+                    ]
+                },
+
+                fibraCaballete: {
+                    name: "Escalera Fibra de Vidrio - Caballete",
+                    category: "Fibra de Vidrio",
+                    type: "Industrial - Capacidad 136kg (300 libras) - Tipo IA",
+                    references: [
+                        "EFC 5,00 a EFC 10,0 (16 a 32 pasos - 5.00m a 10.0m)"
+                    ]
+                },
+
+                aluminioExtension: {
+                    name: "Escalera Aluminio - Extensión Dos Cuerpos",
+                    category: "Aluminio",
+                    type: "Industrial - Capacidad 136kg (300 libras) - Tipo IA",
+                    references: [
+                        "EA 5,00 a EA 12,0 (16 a 40 pasos - 5.00m a 12.0m)"
+                    ]
+                },
+
+                aluminioSencilla: {
+                    name: "Escalera Aluminio - Sencilla Industrial",
+                    category: "Aluminio",
+                    type: "Industrial - Capacidad 136kg (300 libras) - Tipo IA",
+                    references: [
+                        "SA 1,50 a SA 6,00 (5 a 20 pasos - 1.50m a 6.00m)"
+                    ]
+                },
+
+                aluminioTijeraIndustrial: {
+                    name: "Escalera Aluminio - Tijera Industrial",
+                    category: "Aluminio",
+                    type: "Industrial - Capacidad 136kg (300 libras) - Tipo IA",
+                    references: [
+                        "TA 0,60 a TA 6,00 (2 a 20 pasos - 0.60m a 6.00m)"
+                    ]
+                },
+
+                aluminioTijeraComercial: {
+                    name: "Escalera Aluminio - Tijera Comercial",
+                    category: "Aluminio",
+                    type: "Comercial - Capacidad 102kg (225 libras) - Tipo II",
+                    references: [
+                        "TAL 0,60 a TAL 3,00 (2 a 10 pasos - 0.60m a 3.00m)"
+                    ]
+                },
+
+                accesorios: {
+                    name: "Accesorios para Escaleras",
+                    category: "Accesorios",
+                    items: [
+                        "Bincha en fibra/hierro", "Gancho bomberos", "Zapata niveladora",
+                        "Plataforma aluminio", "Zapata planchón", "Porta herramienta", "Ruedas traseras"
+                    ]
+                }
+            },
+
+            certifications: "ISO 9001, ANSI 14.5, EN131, OSHA"
+        };
+
+        // ===================================
+        // GROQ AI CONFIGURATION
+        // ===================================
+
+        const GroqConfig = {
+            // CONFIGURACIÓN: Reemplaza 'YOUR_GROQ_API_KEY_HERE' con tu API key de Groq
+            // Obtén tu API key gratis en: https://console.groq.com
+            apiKey: 'YOUR_GROQ_API_KEY_HERE',
+            apiUrl: 'https://api.groq.com/openai/v1/chat/completions',
+            model: 'llama3-8b-8192',
+            maxTokens: 200,
+
+            systemPrompt: `Eres Diana, asistente virtual de Escaleras Ferre Colombia. Personalidad amable, profesional y genuinamente útil.
+
+CATÁLOGO COMPLETO:
+- Fibra extensión: EF 5-12m, 300lb (136kg), uso eléctrico seguro
+- Fibra extensión 3 cuerpos: EF3 hasta 9.2m extendida
+- Fibra tijera industrial: TF 0.6-6m, 300lb
+- Fibra tijera comercial: TFL 0.6-3.6m, 250lb
+- Fibra sencilla industrial: SF 1.5-6m, 300lb
+- Fibra sencilla comercial: SFL 1.5-3.6m, 250lb
+- Caballete fibra: EFC 5-10m, 300lb
+- Aluminio extensión: EA 5-12m, 300lb
+- Aluminio sencilla: SA 1.5-6m, 300lb
+- Aluminio tijera industrial: TA 0.6-6m, 300lb
+- Aluminio tijera comercial: TAL 0.6-3m, 225lb
+- Accesorios: binchas, ganchos, zapatas, plataformas
+
+SERVICIOS: Alquiler con entrega, mantenimiento certificado
+CONTACTO: Bogotá virtual (3008611868), Bucaramanga Cll 34 #11-27 (3181027047)
+CERTIFICACIONES: ISO 9001, ANSI, OSHA
+
+TONO: Natural, cálido, profesional. Máximo 3-4 frases. Usar "te" en vez de "le". Evitar frases genéricas.
+
+EJEMPLOS:
+❌ "Le informo que tenemos disponibles"
+✅ "¡Perfecto! Tenemos varias opciones"
+❌ "Procedo a brindar información"
+✅ "Te cuento que manejamos"`,
+
+            getCompressedCatalog() {
+                return `Fibra: extensión EF 5-12m (300lb), tijera TF/TFL, sencilla SF/SFL, caballete EFC
+Aluminio: extensión EA, tijera TA/TAL, sencilla SA
+Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
+            }
+        };
+
+        // ===================================
+        // HUMANIZED CHATBOT AI
+        // ===================================
+
+        const HumanizedChatbotAI = {
+            conversationHistory: [],
+
+            shouldUseAI(message) {
+                const text = message.toLowerCase();
+
+                const catalogQueries = [
+                    'que escaleras', 'cuales son', 'que tamaños', 'medidas',
+                    'diferencia', 'recomiendas', 'mejor', 'necesito',
+                    'altura', 'peso', 'capacidad', 'fibra o aluminio',
+                    'cuanto', 'precio', 'costo'
+                ];
+
+                const productMentions = [
+                    'extension', 'tijera', 'sencilla', 'caballete', 'fibra', 'aluminio'
+                ];
+
+                return catalogQueries.some(q => text.includes(q)) ||
+                       productMentions.some(p => text.includes(p));
+            },
+
+            async generateAIResponse(message) {
+                try {
+                    this.conversationHistory.push({ role: 'user', content: message });
+
+                    const messages = [
+                        { role: 'system', content: GroqConfig.systemPrompt },
+                        ...this.conversationHistory.slice(-4)
+                    ];
+
+                    const response = await fetch(GroqConfig.apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${GroqConfig.apiKey}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            model: GroqConfig.model,
+                            messages: messages,
+                            max_tokens: GroqConfig.maxTokens,
+                            temperature: 0.8,
+                            stream: false
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Groq API error');
+                    }
+
+                    const data = await response.json();
+                    const aiResponse = data.choices[0]?.message?.content || this.getFallbackResponse();
+
+                    this.conversationHistory.push({ role: 'assistant', content: aiResponse });
+
+                    return aiResponse;
+
+                } catch (error) {
+                    console.error('Error Groq AI:', error);
+                    return this.getFallbackResponse();
+                }
+            },
+
+            getHumanizedLocalResponse(intent) {
+                const humanResponses = {
+                    greetings: [
+                        '¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar hoy?',
+                        '¡Buenos días! Te saluda Diana, ¿qué escalera estás buscando?',
+                        '¡Hola! Aquí Diana para ayudarte. ¿Qué necesitas?'
+                    ],
+                    contact: [
+                        'Te puedo conectar con nuestros asesores. Tenemos sede virtual en Bogotá y sede física en Bucaramanga (Cll 34 #11-27). ¿Cuál prefieres?',
+                        '¡Claro! ¿Te va mejor Bogotá (virtual) o prefieres visitar Bucaramanga (Cll 34 #11-27)?'
+                    ]
+                };
+
+                const responses = humanResponses[intent];
+                return responses ? responses[Math.floor(Math.random() * responses.length)] : null;
+            },
+
+            getFallbackResponse() {
+                const fallbacks = [
+                    '¿Podrías darme más detalles? Te puedo ayudar con escaleras de fibra, aluminio, alquiler o mantenimiento.',
+                    'Hmm, no estoy segura de entender. ¿Buscas escaleras industriales o comerciales?',
+                    '¿Me cuentas un poco más? Puedo asesorarte sobre nuestros productos y servicios.'
+                ];
+                return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            }
+        };
+
+        // ===================================
+        // CHATBOT AI - Sistema de Inteligencia Artificial Simulada
+        // ===================================
 
         const ChatbotAI = {
             conversationState: {
@@ -2653,25 +2926,32 @@
                 return maxMatches > 0 ? bestMatch : 'unknown';
             },
 
-            // Generar respuesta inteligente
-            generateResponse(message) {
+            // Generar respuesta inteligente con IA
+            async generateResponse(message) {
                 const intent = this.analyzeMessage(message);
                 this.conversationState.messagesCount++;
 
+                // Usar IA para consultas específicas del catálogo
+                if (HumanizedChatbotAI.shouldUseAI(message)) {
+                    console.log('🤖 Usando Groq AI para respuesta humanizada');
+                    return await HumanizedChatbotAI.generateAIResponse(message);
+                }
+
+                // Respuestas locales humanizadas para intents simples
+                if (intent === 'greetings' || intent === 'contact') {
+                    const localResponse = HumanizedChatbotAI.getHumanizedLocalResponse(intent);
+                    if (localResponse) return localResponse;
+                }
+
+                // Respuestas locales para otros intents conocidos
                 if (intent !== 'unknown') {
                     this.conversationState.currentTopic = intent;
                     const responses = this.knowledge[intent].responses;
                     return responses[Math.floor(Math.random() * responses.length)];
                 }
 
-                // Respuestas para mensajes no reconocidos
-                const fallbacks = [
-                    'Interesante pregunta. ¿Podrías ser más específico? Puedo ayudarte con información sobre escaleras, precios, alquiler o contacto.',
-                    'No estoy seguro de entender completamente. ¿Te refieres a algún tipo específico de escalera o servicio?',
-                    'Hmm, déjame pensar... ¿Podrías reformular tu pregunta? Estoy aquí para ayudarte con todo sobre escaleras.'
-                ];
-
-                return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+                // Fallback humanizado
+                return HumanizedChatbotAI.getFallbackResponse();
             },
 
             // Determinar si debe ofrecer WhatsApp
@@ -2754,8 +3034,8 @@
                 // Simular typing
                 await this.simulateTyping();
 
-                // Generar y mostrar respuesta
-                const response = ChatbotAI.generateResponse(message);
+                // Generar y mostrar respuesta (con IA si es necesario)
+                const response = await ChatbotAI.generateResponse(message);
                 this.addMessage(response, 'bot');
 
                 // Ofrecer WhatsApp si corresponde
