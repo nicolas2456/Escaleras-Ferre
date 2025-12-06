@@ -2698,519 +2698,470 @@
             certifications: "ISO 9001, ANSI 14.5, EN131, OSHA"
         };
 
-        // ===================================
-        // GROQ AI CONFIGURATION
-        // ===================================
+       // ===================================
+// RENDER API CONFIGURATION (Reemplaza GROQ AI)
+// ===================================
 
-        const GroqConfig = {
-            // CONFIGURACIÓN: Reemplaza 'YOUR_GROQ_API_KEY_HERE' con tu API key de Groq
-            // Obtén tu API key gratis en: https://console.groq.com
-            apiKey: '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',
-            apiUrl: 'https://api.groq.com/openai/v1/chat/completions',
-            model: 'mixtral-8x7b-32768', // Mejor modelo para español
-            maxTokens: 400,
-            temperature: 0.9, // Más creatividad y variación
-
-            systemPrompt: `Eres Diana, asistente amigable de Escaleras Ferre Colombia.
-
-PRODUCTOS:
-- FIBRA DE VIDRIO: Extensión 5-12m, Tijera 0.6-6m, Sencilla 1.5-6m, Caballete 5-10m (Capacidad: 300lb industrial, 250lb comercial)
-- ALUMINIO: Extensión 5-12m, Tijera 0.6-6m, Sencilla 1.5-6m (Capacidad: 300lb industrial, 225lb comercial)
-- ACCESORIOS: Binchas, ganchos, zapatas, plataformas
-
-SERVICIOS:
-- Venta con certificación ISO/ANSI/OSHA
-- Alquiler con entrega e instalación
-- Mantenimiento especializado
-
-CONTACTO:
-- Bogotá: 3008611868 (virtual)
-- Bucaramanga: 3181027047 (Cll 34 #11-27)
-
-TU PERSONALIDAD:
-- Amable, conversacional y natural
-- Responde TODO con buena onda, incluso preguntas casuales
-- Mantén conversación antes de dirigir a WhatsApp
-- Da 2-4 frases por respuesta
-- Usa lenguaje colombiano natural
-
-REGLAS:
-✅ Responde "¿Cómo estás?" con calidez
-✅ Conversa sobre el tema del cliente
-✅ Recomienda productos específicos (EF 8,60, TA 2.40, etc.)
-✅ Haz preguntas para entender necesidades
-
-❌ NO des precios exactos → "Te paso con asesor para cotización"
-❌ NO prometas stock → "Verifico disponibilidad"
-
-EJEMPLOS:
-Usuario: "¿Cómo estás?"
-Tú: "¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas hoy?"
-
-Usuario: "Busco alquilar una escalera"
-Tú: "¡Perfecto! Tenemos servicio de alquiler con entrega incluida. ¿Qué altura necesitas y para qué tipo de trabajo? Así te recomiendo la mejor opción."
-
-Usuario: "Necesito una de 8 metros"
-Tú: "Para 8 metros te recomiendo la extensión EF 8,60 en fibra de vidrio (28 pasos, 300lb) o EA 8,60 en aluminio (más liviana). ¿Es para trabajo eléctrico o altura?"`,
-
-            // Test de conectividad
-            async testConnection() {
-                try {
-                    console.log('🔗 Probando conexión con Groq...');
-                    const response = await fetch(this.apiUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${this.apiKey}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            model: this.model,
-                            messages: [
-                                { role: 'user', content: 'Di solo "OK"' }
-                            ],
-                            max_tokens: 10
-                        })
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log('✅ Groq conectado:', data.choices[0]?.message?.content);
-                        return true;
-                    } else {
-                        const errorText = await response.text();
-                        console.error('❌ Error Groq:', response.status, errorText);
-                        return false;
-                    }
-                } catch (error) {
-                    console.error('❌ Error de red Groq:', error);
-                    return false;
-                }
-            }
-        };
-
-        // ===================================
-        // HUMANIZED CHATBOT AI
-        // ===================================
-
-        const HumanizedChatbotAI = {
-            conversationHistory: [],
-
-            shouldUseAI(message) {
-                const text = message.toLowerCase().trim();
-
-                // Solo NO usar IA para saludos MUY simples de 1 palabra
-                const simpleGreetings = ['hola', 'hi', 'hey'];
-
-                if (simpleGreetings.includes(text)) {
-                    console.log('💬 Usando respuesta local para saludo simple');
-                    return false;
-                }
-
-                // Para TODO lo demás, usar IA
-                console.log('🤖 Usando IA para:', message);
+const RenderAPIConfig = {
+    apiUrl: 'https://escaleras-ferre-chatbot-api.onrender.com/chat',
+    
+    async testConnection() {
+        try {
+            console.log('🔗 Probando conexión con Render API...');
+            const response = await fetch('https://escaleras-ferre-chatbot-api.onrender.com');
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('✅ Render API conectada:', data.message);
                 return true;
-            },
-
-            async generateAIResponse(message) {
-                try {
-                    console.log('📤 Enviando a Groq:', message);
-
-                    // Verificar API key
-                    if (!GroqConfig.apiKey || GroqConfig.apiKey === 'YOUR_GROQ_API_KEY_HERE') {
-                        console.error('❌ API KEY NO CONFIGURADA');
-                        return this.getSmartFallback(message);
-                    }
-
-                    this.conversationHistory.push({ role: 'user', content: message });
-
-                    const messages = [
-                        { role: 'system', content: GroqConfig.systemPrompt },
-                        ...this.conversationHistory.slice(-6) // Más contexto
-                    ];
-
-                    const response = await fetch(GroqConfig.apiUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${GroqConfig.apiKey}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            model: GroqConfig.model,
-                            messages: messages,
-                            max_tokens: GroqConfig.maxTokens,
-                            temperature: GroqConfig.temperature,
-                            stream: false
-                        })
-                    });
-
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        console.error('❌ Error Groq HTTP:', response.status, errorText);
-                        return this.getSmartFallback(message);
-                    }
-
-                    const data = await response.json();
-                    const aiResponse = data.choices[0]?.message?.content;
-
-                    if (!aiResponse) {
-                        console.error('❌ Respuesta vacía de Groq');
-                        return this.getSmartFallback(message);
-                    }
-
-                    console.log('✅ Respuesta Groq:', aiResponse);
-
-                    this.conversationHistory.push({ role: 'assistant', content: aiResponse });
-
-                    return aiResponse;
-
-                } catch (error) {
-                    console.error('❌ Error Groq:', error.message, error);
-                    return this.getSmartFallback(message);
-                }
-            },
-
-            getHumanizedLocalResponse(intent) {
-                const humanResponses = {
-                    greetings: [
-                        '¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar hoy?',
-                        '¡Buenas! Aquí Diana. ¿Qué necesitas?',
-                        '¡Hola! ¿Qué escalera estás buscando?'
-                    ],
-                    contact: [
-                        'Te conecto con nuestros asesores. ¿Prefieres Bogotá (virtual) o Bucaramanga (Cll 34 #11-27)?',
-                        '¡Claro! Tenemos Bogotá (3008611868) y Bucaramanga (3181027047). ¿Cuál te queda mejor?'
-                    ]
-                };
-
-                const responses = humanResponses[intent];
-                return responses ? responses[Math.floor(Math.random() * responses.length)] : null;
-            },
-
-            // Fallback inteligente basado en palabras clave
-            getSmartFallback(message) {
-                console.log('⚠️ Usando fallback inteligente');
-                const text = message.toLowerCase();
-
-                if (text.includes('alquiler') || text.includes('alquilar') || text.includes('rentar')) {
-                    return '¡Perfecto! Tenemos servicio de alquiler con entrega incluida. ¿Qué altura necesitas y para qué tipo de trabajo? Así te recomiendo la mejor opción.';
-                }
-
-                if (text.includes('metro') || text.includes('altura')) {
-                    return 'Te ayudo con escaleras. Tenemos desde 1.5m hasta 12m en fibra de vidrio y aluminio. ¿Qué altura específica necesitas?';
-                }
-
-                if (text.includes('fibra') || text.includes('aluminio')) {
-                    return 'Manejamos escaleras en fibra de vidrio (ideal para trabajo eléctrico) y aluminio (más livianas). ¿Para qué tipo de trabajo las vas a usar?';
-                }
-
-                if (text.includes('precio') || text.includes('costo') || text.includes('cuanto')) {
-                    return 'Los precios varían según modelo y tamaño. ¿Te conecto con un asesor por WhatsApp para una cotización exacta? Tenemos Bogotá y Bucaramanga.';
-                }
-
-                if (text.includes('como estas') || text.includes('cómo estás') || text.includes('que tal')) {
-                    return '¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas hoy?';
-                }
-
-                return 'Disculpa, cuéntame mejor qué tipo de escalera necesitas o para qué trabajo. También puedo conectarte directo con WhatsApp si prefieres. 😊';
+            } else {
+                console.error('❌ Error Render API:', response.status);
+                return false;
             }
-        };
+        } catch (error) {
+            console.error('❌ Error de red Render API:', error);
+            return false;
+        }
+    }
+};
 
-        // ===================================
-        // CHATBOT AI - Sistema de Inteligencia Artificial Simulada
-        // ===================================
+// ===================================
+// HUMANIZED CHATBOT AI (Actualizado para Render)
+// ===================================
 
-        const ChatbotAI = {
-            conversationState: {
-                userName: null,
-                currentTopic: null,
-                askedWhatsApp: false,
-                messagesCount: 0
-            },
+const HumanizedChatbotAI = {
+    conversationHistory: [],
 
-            // Base de conocimientos con keywords y respuestas variables
-            knowledge: {
-                greetings: {
-                    keywords: ['hola', 'buenos', 'buenas', 'hi', 'hey', 'saludos'],
-                    responses: [
-                        '¡Hola! Bienvenido a Escaleras Ferre. ¿En qué puedo ayudarte?',
-                        '¡Buenos días! Soy el asistente de Escaleras Ferre. ¿Qué necesitas saber?',
-                        '¡Hola! ¿Tienes alguna pregunta sobre nuestras escaleras?'
-                    ]
+    shouldUseAI(message) {
+        const text = message.toLowerCase().trim();
+        
+        // Solo NO usar IA para saludos MUY simples de 1 palabra
+        const simpleGreetings = ['hola', 'hi', 'hey'];
+        
+        if (simpleGreetings.includes(text)) {
+            console.log('💬 Usando respuesta local para saludo simple');
+            return false;
+        }
+        
+        // Para TODO lo demás, usar IA
+        console.log('🤖 Usando IA para:', message);
+        return true;
+    },
+
+    async generateAIResponse(message) {
+        try {
+            console.log('📤 Enviando a Render API:', message);
+            
+            this.conversationHistory.push({ role: 'user', content: message });
+            
+            const response = await fetch(RenderAPIConfig.apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
+                body: JSON.stringify({
+                    message: message,
+                    history: this.conversationHistory.slice(-6) // Últimos 6 mensajes
+                })
+            });
 
-                prices: {
-                    keywords: ['precio', 'costo', 'valor', 'cuanto', '$$', 'pesos', 'cotizar', 'cotizacion'],
-                    responses: [
-                        'Nuestros precios varían según el tipo y tamaño de escalera. ¿Te interesa algún tipo específico? (Fibra de vidrio, Aluminio, etc.)',
-                        'Para darte un precio exacto necesito saber qué tipo de escalera buscas. ¿Es para uso industrial o comercial?',
-                        'Los precios dependen del modelo y especificaciones. ¿Podrías decirme qué tipo de escalera necesitas?'
-                    ]
-                },
+            if (!response.ok) {
+                console.error('❌ Error Render API HTTP:', response.status);
+                return this.getSmartFallback(message);
+            }
 
-                products: {
-                    keywords: ['escalera', 'escaleras', 'fibra', 'aluminio', 'extension', 'tijera', 'sencilla', 'caballete'],
-                    responses: [
-                        'Tenemos escaleras en fibra de vidrio y aluminio: extensión, tijera, sencillas, caballetes y más. ¿Qué tipo específico te interesa?',
-                        'Nuestro catálogo incluye escaleras industriales y comerciales. ¿Buscas algo para uso eléctrico o industrial pesado?',
-                        'Manejamos escaleras certificadas ISO, ANSI y OSHA. ¿Para qué tipo de trabajo las necesitas?'
-                    ]
-                },
+            const data = await response.json();
+            const aiResponse = data.response;
 
-                rental: {
-                    keywords: ['alquiler', 'alquilar', 'rentar', 'arrendar', 'temporal'],
-                    responses: [
-                        'Ofrecemos alquiler de escaleras en extensión, tijera, sencilla y tijera plataforma. ¿Para qué proyecto las necesitas?',
-                        'Nuestro servicio de alquiler incluye entrega, instalación y recogida. ¿En qué ciudad estás ubicado?',
-                        'Tenemos escaleras disponibles para alquiler con diferentes capacidades. ¿Qué altura necesitas alcanzar?'
-                    ]
-                },
+            if (!aiResponse) {
+                console.error('❌ Respuesta vacía de Render API');
+                return this.getSmartFallback(message);
+            }
 
-                contact: {
-                    keywords: ['contacto', 'telefono', 'direccion', 'ubicacion', 'sede', 'whatsapp', 'llamar'],
-                    responses: [
-                        'Tenemos sedes en Bogotá y Bucaramanga. ¿Te gustaría que te conecte con alguna sede específica?',
-                        'Puedes contactarnos por WhatsApp. ¿Prefieres hablar con nuestra sede de Bogotá o Bucaramanga?',
-                        '¿Te gustaría hablar directamente con uno de nuestros asesores por WhatsApp?'
-                    ]
-                }
-            },
+            console.log('✅ Respuesta Render API:', aiResponse);
+            
+            this.conversationHistory.push({ role: 'assistant', content: aiResponse });
+            
+            return aiResponse;
 
-            // Respuestas de seguimiento inteligentes
-            followUps: [
-                '¿Hay algo más en lo que pueda ayudarte?',
-                '¿Te gustaría saber algo más sobre nuestros productos?',
-                '¿Necesitas información adicional?'
+        } catch (error) {
+            console.error('❌ Error Render API:', error.message, error);
+            return this.getSmartFallback(message);
+        }
+    },
+
+    getHumanizedLocalResponse(intent) {
+        const humanResponses = {
+            greetings: [
+                '¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar hoy?',
+                '¡Buenas! Aquí Diana. ¿Qué necesitas?',
+                '¡Hola! ¿Qué escalera estás buscando?'
             ],
+            contact: [
+                'Te conecto con nuestros asesores. ¿Prefieres Bogotá (virtual) o Bucaramanga (Cll 34 #11-27)?',
+                '¡Claro! Tenemos Bogotá (3008611868) y Bucaramanga (3181027047). ¿Cuál te queda mejor?'
+            ]
+        };
 
-            // Detectar intent del mensaje
-            analyzeMessage(message) {
-                const text = message.toLowerCase();
-                let bestMatch = null;
-                let maxMatches = 0;
+        const responses = humanResponses[intent];
+        return responses ? responses[Math.floor(Math.random() * responses.length)] : null;
+    },
 
-                for (let [category, data] of Object.entries(this.knowledge)) {
-                    let matches = 0;
-                    data.keywords.forEach(keyword => {
-                        if (text.includes(keyword)) matches++;
-                    });
+    // Fallback inteligente basado en palabras clave
+    getSmartFallback(message) {
+        console.log('⚠️ Usando fallback inteligente');
+        const text = message.toLowerCase();
 
-                    if (matches > maxMatches) {
-                        maxMatches = matches;
-                        bestMatch = category;
-                    }
-                }
+        if (text.includes('alquiler') || text.includes('alquilar') || text.includes('rentar')) {
+            return '¡Perfecto! Tenemos servicio de alquiler con entrega incluida. ¿Qué altura necesitas y para qué tipo de trabajo? Así te recomiendo la mejor opción.';
+        }
 
-                return maxMatches > 0 ? bestMatch : 'unknown';
-            },
+        if (text.includes('metro') || text.includes('altura')) {
+            return 'Te ayudo con escaleras. Tenemos desde 1.5m hasta 12m en fibra de vidrio y aluminio. ¿Qué altura específica necesitas?';
+        }
 
-            // Generar respuesta inteligente con IA
-            async generateResponse(message) {
-                const intent = this.analyzeMessage(message);
-                this.conversationState.messagesCount++;
+        if (text.includes('fibra') || text.includes('aluminio')) {
+            return 'Manejamos escaleras en fibra de vidrio (ideal para trabajo eléctrico) y aluminio (más livianas). ¿Para qué tipo de trabajo las vas a usar?';
+        }
 
-                // Usar IA para consultas específicas del catálogo
-                if (HumanizedChatbotAI.shouldUseAI(message)) {
-                    console.log('🤖 Usando Groq AI para respuesta humanizada');
-                    return await HumanizedChatbotAI.generateAIResponse(message);
-                }
+        if (text.includes('precio') || text.includes('costo') || text.includes('cuanto')) {
+            return 'Los precios varían según modelo y tamaño. ¿Te conecto con un asesor por WhatsApp para una cotización exacta? Tenemos Bogotá y Bucaramanga.';
+        }
 
-                // Respuestas locales humanizadas para intents simples
-                if (intent === 'greetings' || intent === 'contact') {
-                    const localResponse = HumanizedChatbotAI.getHumanizedLocalResponse(intent);
-                    if (localResponse) return localResponse;
-                }
+        if (text.includes('como estas') || text.includes('cómo estás') || text.includes('que tal')) {
+            return '¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas hoy?';
+        }
 
-                // Respuestas locales para otros intents conocidos
-                if (intent !== 'unknown') {
-                    this.conversationState.currentTopic = intent;
-                    const responses = this.knowledge[intent].responses;
-                    return responses[Math.floor(Math.random() * responses.length)];
-                }
+        return 'Disculpa, cuéntame mejor qué tipo de escalera necesitas o para qué trabajo. También puedo conectarte directo con WhatsApp si prefieres. 😊';
+    }
+};
 
-                // Fallback humanizado
-                return HumanizedChatbotAI.getFallbackResponse();
-            },
+// ===================================
+// CHATBOT AI - Sistema de Inteligencia Artificial
+// ===================================
 
-            // Determinar si debe ofrecer WhatsApp
-            shouldOfferWhatsApp() {
-                return this.conversationState.messagesCount >= 3 && !this.conversationState.askedWhatsApp;
+const ChatbotAI = {
+    conversationState: {
+        userName: null,
+        currentTopic: null,
+        askedWhatsApp: false,
+        messagesCount: 0
+    },
+
+    // Base de conocimientos con keywords y respuestas variables
+    knowledge: {
+        greetings: {
+            keywords: ['hola', 'buenos', 'buenas', 'hi', 'hey', 'saludos'],
+            responses: [
+                '¡Hola! Bienvenido a Escaleras Ferre. ¿En qué puedo ayudarte?',
+                '¡Buenos días! Soy el asistente de Escaleras Ferre. ¿Qué necesitas saber?',
+                '¡Hola! ¿Tienes alguna pregunta sobre nuestras escaleras?'
+            ]
+        },
+
+        prices: {
+            keywords: ['precio', 'costo', 'valor', 'cuanto', '$$', 'pesos', 'cotizar', 'cotizacion'],
+            responses: [
+                'Nuestros precios varían según el tipo y tamaño de escalera. ¿Te interesa algún tipo específico? (Fibra de vidrio, Aluminio, etc.)',
+                'Para darte un precio exacto necesito saber qué tipo de escalera buscas. ¿Es para uso industrial o comercial?',
+                'Los precios dependen del modelo y especificaciones. ¿Podrías decirme qué tipo de escalera necesitas?'
+            ]
+        },
+
+        products: {
+            keywords: ['escalera', 'escaleras', 'fibra', 'aluminio', 'extension', 'tijera', 'sencilla', 'caballete'],
+            responses: [
+                'Tenemos escaleras en fibra de vidrio y aluminio: extensión, tijera, sencillas, caballetes y más. ¿Qué tipo específico te interesa?',
+                'Nuestro catálogo incluye escaleras industriales y comerciales. ¿Buscas algo para uso eléctrico o industrial pesado?',
+                'Manejamos escaleras certificadas ISO, ANSI y OSHA. ¿Para qué tipo de trabajo las necesitas?'
+            ]
+        },
+
+        rental: {
+            keywords: ['alquiler', 'alquilar', 'rentar', 'arrendar', 'temporal'],
+            responses: [
+                'Ofrecemos alquiler de escaleras en extensión, tijera, sencilla y tijera plataforma. ¿Para qué proyecto las necesitas?',
+                'Nuestro servicio de alquiler incluye entrega, instalación y recogida. ¿En qué ciudad estás ubicado?',
+                'Tenemos escaleras disponibles para alquiler con diferentes capacidades. ¿Qué altura necesitas alcanzar?'
+            ]
+        },
+
+        contact: {
+            keywords: ['contacto', 'telefono', 'direccion', 'ubicacion', 'sede', 'whatsapp', 'llamar'],
+            responses: [
+                'Tenemos sedes en Bogotá y Bucaramanga. ¿Te gustaría que te conecte con alguna sede específica?',
+                'Puedes contactarnos por WhatsApp. ¿Prefieres hablar con nuestra sede de Bogotá o Bucaramanga?',
+                '¿Te gustaría hablar directamente con uno de nuestros asesores por WhatsApp?'
+            ]
+        }
+    },
+
+    // Respuestas de seguimiento inteligentes
+    followUps: [
+        '¿Hay algo más en lo que pueda ayudarte?',
+        '¿Te gustaría saber algo más sobre nuestros productos?',
+        '¿Necesitas información adicional?'
+    ],
+
+    // Detectar intent del mensaje
+    analyzeMessage(message) {
+        const text = message.toLowerCase();
+        let bestMatch = null;
+        let maxMatches = 0;
+
+        for (let [category, data] of Object.entries(this.knowledge)) {
+            let matches = 0;
+            data.keywords.forEach(keyword => {
+                if (text.includes(keyword)) matches++;
+            });
+
+            if (matches > maxMatches) {
+                maxMatches = matches;
+                bestMatch = category;
             }
+        }
+
+        return maxMatches > 0 ? bestMatch : 'unknown';
+    },
+
+    // Generar respuesta inteligente con IA
+    async generateResponse(message) {
+        const intent = this.analyzeMessage(message);
+        this.conversationState.messagesCount++;
+
+        // Usar IA para consultas específicas del catálogo
+        if (HumanizedChatbotAI.shouldUseAI(message)) {
+            console.log('🤖 Usando Render API para respuesta humanizada');
+            return await HumanizedChatbotAI.generateAIResponse(message);
+        }
+
+        // Respuestas locales humanizadas para intents simples
+        if (intent === 'greetings' || intent === 'contact') {
+            const localResponse = HumanizedChatbotAI.getHumanizedLocalResponse(intent);
+            if (localResponse) return localResponse;
+        }
+
+        // Respuestas locales para otros intents conocidos
+        if (intent !== 'unknown') {
+            this.conversationState.currentTopic = intent;
+            const responses = this.knowledge[intent].responses;
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // Fallback humanizado
+        return HumanizedChatbotAI.getSmartFallback(message);
+    },
+
+    // Determinar si debe ofrecer WhatsApp
+    shouldOfferWhatsApp() {
+        return this.conversationState.messagesCount >= 3 && !this.conversationState.askedWhatsApp;
+    }
+};
+
+// ===================================
+// CHATBOT CONTROLLER - Controlador Principal
+// ===================================
+
+const ChatbotController = {
+    isOpen: false,
+    isTyping: false,
+
+    init() {
+        this.bindEvents();
+    },
+
+    bindEvents() {
+        // Toggle chatbot
+        document.getElementById('chatbot-toggle').addEventListener('click', () => {
+            this.toggleChatbot();
+        });
+
+        // Cerrar chatbot
+        document.getElementById('chatbot-close').addEventListener('click', () => {
+            this.closeChatbot();
+        });
+
+        // Enviar mensaje
+        document.getElementById('chatbot-send').addEventListener('click', () => {
+            this.sendMessage();
+        });
+
+        // Enter para enviar
+        document.getElementById('chatbot-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.sendMessage();
+        });
+
+        // Preguntas rápidas
+        document.querySelectorAll('.quick-question').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.handleQuickQuestion(e.target.dataset.question);
+            });
+        });
+    },
+
+    toggleChatbot() {
+        this.isOpen = !this.isOpen;
+        const window = document.getElementById('chatbot-window');
+        const toggle = document.getElementById('chatbot-toggle');
+
+        if (this.isOpen) {
+            window.classList.add('active');
+            toggle.classList.add('active');
+        } else {
+            window.classList.remove('active');
+            toggle.classList.remove('active');
+        }
+    },
+
+    closeChatbot() {
+        this.isOpen = false;
+        document.getElementById('chatbot-window').classList.remove('active');
+        document.getElementById('chatbot-toggle').classList.remove('active');
+    },
+
+    async sendMessage() {
+        const input = document.getElementById('chatbot-input');
+        const message = input.value.trim();
+
+        if (!message) return;
+
+        // Mostrar mensaje del usuario
+        this.addMessage(message, 'user');
+        input.value = '';
+
+        // Simular typing
+        await this.simulateTyping();
+
+        // Generar y mostrar respuesta (con IA si es necesario)
+        const response = await ChatbotAI.generateResponse(message);
+        this.addMessage(response, 'bot');
+
+        // Ofrecer WhatsApp si corresponde
+        if (ChatbotAI.shouldOfferWhatsApp()) {
+            await this.simulateTyping(1000);
+            this.offerWhatsAppContact();
+        }
+    },
+
+    async simulateTyping(delay = 1500) {
+        this.isTyping = true;
+        this.addTypingIndicator();
+
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        this.removeTypingIndicator();
+        this.isTyping = false;
+    },
+
+    addMessage(text, sender) {
+        const messagesContainer = document.getElementById('chatbot-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+        messageDiv.textContent = text;
+
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    },
+
+    addTypingIndicator() {
+        const messagesContainer = document.getElementById('chatbot-messages');
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot-message typing-indicator';
+        typingDiv.innerHTML = '<span>Escribiendo</span><span class="dots">...</span>';
+        typingDiv.id = 'typing-indicator';
+
+        messagesContainer.appendChild(typingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    },
+
+    removeTypingIndicator() {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+    },
+
+    offerWhatsAppContact() {
+        ChatbotAI.conversationState.askedWhatsApp = true;
+
+        const messagesContainer = document.getElementById('chatbot-messages');
+        const contactDiv = document.createElement('div');
+        contactDiv.className = 'message bot-message contact-options';
+        contactDiv.innerHTML = `
+            <p>¿Te gustaría hablar directamente con uno de nuestros asesores?</p>
+            <div class="whatsapp-options">
+                <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn bogota">
+                    <i class="fab fa-whatsapp"></i> Bogotá (Virtual)
+                </button>
+                <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn bucaramanga">
+                    <i class="fab fa-whatsapp"></i> Bucaramanga (Cll 34 # 11-27)
+                </button>
+            </div>
+        `;
+
+        messagesContainer.appendChild(contactDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    },
+
+    handleQuickQuestion(type) {
+        const questions = {
+            precios: '¿Cuáles son los precios de las escaleras?',
+            catalogo: 'Quiero ver el catálogo completo',
+            alquiler: 'Me interesa el servicio de alquiler',
+            contacto: 'Necesito información de contacto'
         };
 
-        // ===================================
-        // CHATBOT CONTROLLER - Controlador Principal
-        // ===================================
+        const input = document.getElementById('chatbot-input');
+        input.value = questions[type];
+        this.sendMessage();
+    }
+};
 
-        const ChatbotController = {
-            isOpen: false,
-            isTyping: false,
+// Función global para WhatsApp desde chatbot
+window.openWhatsAppSede = function(sede) {
+    const phones = {
+        bogota: '573008611868',
+        bucaramanga: '573181027047'
+    };
 
-            init() {
-                this.bindEvents();
-            },
+    const addresses = {
+        bogota: 'sede virtual',
+        bucaramanga: 'Cll 34 # 11-27'
+    };
 
-            bindEvents() {
-                // Toggle chatbot
-                document.getElementById('chatbot-toggle').addEventListener('click', () => {
-                    this.toggleChatbot();
-                });
+    const message = `Hola, me gustaría recibir asesoría sobre escaleras. Me contacto desde la página web con la ${sede === 'bogota' ? 'sede virtual de Bogotá' : 'sede física de Bucaramanga (' + addresses[sede] + ')'}`;
 
-                // Cerrar chatbot
-                document.getElementById('chatbot-close').addEventListener('click', () => {
-                    this.closeChatbot();
-                });
+    const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+};
 
-                // Enviar mensaje
-                document.getElementById('chatbot-send').addEventListener('click', () => {
-                    this.sendMessage();
-                });
+// Inicialización cuando se carga la página
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 Página cargada, inicializando...');
+    
+    console.log(`✅ Chatbot configurado con Render API`);
 
-                // Enter para enviar
-                document.getElementById('chatbot-input').addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') this.sendMessage();
-                });
+    // Test de conectividad Render API
+    async function debugChatbot() {
+        console.log('🔍 INICIANDO DEBUG DEL CHATBOT');
+        
+        const connected = await RenderAPIConfig.testConnection();
+        if (connected) {
+            console.log('✅ Render API FUNCIONANDO CORRECTAMENTE');
+        } else {
+            console.warn('⚠️ No se pudo conectar a Render API - Usando fallbacks');
+        }
+        
+        console.log('✅ DEBUG COMPLETADO');
+    }
 
-                // Preguntas rápidas
-                document.querySelectorAll('.quick-question').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        this.handleQuickQuestion(e.target.dataset.question);
-                    });
-                });
-            },
+    // Inicializar chatbot
+    ChatbotController.init();
+    console.log('💬 Chatbot inicializado');
 
-            toggleChatbot() {
-                this.isOpen = !this.isOpen;
-                const window = document.getElementById('chatbot-window');
-                const toggle = document.getElementById('chatbot-toggle');
+    // Ejecutar debug en segundo plano
+    debugChatbot();
 
-                if (this.isOpen) {
-                    window.classList.add('active');
-                    toggle.classList.add('active');
-                } else {
-                    window.classList.remove('active');
-                    toggle.classList.remove('active');
-                }
-            },
-
-            closeChatbot() {
-                this.isOpen = false;
-                document.getElementById('chatbot-window').classList.remove('active');
-                document.getElementById('chatbot-toggle').classList.remove('active');
-            },
-
-            async sendMessage() {
-                const input = document.getElementById('chatbot-input');
-                const message = input.value.trim();
-
-                if (!message) return;
-
-                // Mostrar mensaje del usuario
-                this.addMessage(message, 'user');
-                input.value = '';
-
-                // Simular typing
-                await this.simulateTyping();
-
-                // Generar y mostrar respuesta (con IA si es necesario)
-                const response = await ChatbotAI.generateResponse(message);
-                this.addMessage(response, 'bot');
-
-                // Ofrecer WhatsApp si corresponde
-                if (ChatbotAI.shouldOfferWhatsApp()) {
-                    await this.simulateTyping(1000);
-                    this.offerWhatsAppContact();
-                }
-            },
-
-            async simulateTyping(delay = 1500) {
-                this.isTyping = true;
-                this.addTypingIndicator();
-
-                await new Promise(resolve => setTimeout(resolve, delay));
-
-                this.removeTypingIndicator();
-                this.isTyping = false;
-            },
-
-            addMessage(text, sender) {
-                const messagesContainer = document.getElementById('chatbot-messages');
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${sender}-message`;
-                messageDiv.textContent = text;
-
-                messagesContainer.appendChild(messageDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            },
-
-            addTypingIndicator() {
-                const messagesContainer = document.getElementById('chatbot-messages');
-                const typingDiv = document.createElement('div');
-                typingDiv.className = 'message bot-message typing-indicator';
-                typingDiv.innerHTML = '<span>Escribiendo</span><span class="dots">...</span>';
-                typingDiv.id = 'typing-indicator';
-
-                messagesContainer.appendChild(typingDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            },
-
-            removeTypingIndicator() {
-                const indicator = document.getElementById('typing-indicator');
-                if (indicator) indicator.remove();
-            },
-
-            offerWhatsAppContact() {
-                ChatbotAI.conversationState.askedWhatsApp = true;
-
-                const messagesContainer = document.getElementById('chatbot-messages');
-                const contactDiv = document.createElement('div');
-                contactDiv.className = 'message bot-message contact-options';
-                contactDiv.innerHTML = `
-                    <p>¿Te gustaría hablar directamente con uno de nuestros asesores?</p>
-                    <div class="whatsapp-options">
-                        <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn bogota">
-                            <i class="fab fa-whatsapp"></i> Bogotá (Virtual)
-                        </button>
-                        <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn bucaramanga">
-                            <i class="fab fa-whatsapp"></i> Bucaramanga (Cll 34 # 11-27)
-                        </button>
-                    </div>
-                `;
-
-                messagesContainer.appendChild(contactDiv);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            },
-
-            handleQuickQuestion(type) {
-                const questions = {
-                    precios: '¿Cuáles son los precios de las escaleras?',
-                    catalogo: 'Quiero ver el catálogo completo',
-                    alquiler: 'Me interesa el servicio de alquiler',
-                    contacto: 'Necesito información de contacto'
-                };
-
-                const input = document.getElementById('chatbot-input');
-                input.value = questions[type];
-                this.sendMessage();
-            }
-        };
-
-        // Función global para WhatsApp desde chatbot
-        window.openWhatsAppSede = function(sede) {
-            const phones = {
-                bogota: '573008611868',
-                bucaramanga: '573181027047'
-            };
-
-            const addresses = {
-                bogota: 'sede virtual',
-                bucaramanga: 'Cll 34 # 11-27'
-            };
-
-            const message = `Hola, me gustaría recibir asesoría sobre escaleras. Me contacto desde la página web con la ${sede === 'bogota' ? 'sede virtual de Bogotá' : 'sede física de Bucaramanga (' + addresses[sede] + ')'}`;
-
-            const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappURL, '_blank');
-        };
+    console.log('🎉 Inicialización completa');
+});
 
         // Animaciones de scroll
         const observerOptions = {
