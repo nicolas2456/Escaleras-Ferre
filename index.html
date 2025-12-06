@@ -3176,48 +3176,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }, observerOptions);
-
-        // Inicialización cuando se carga la página
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('🚀 Página cargada, inicializando...');
-            
-            // Observar elementos animados
-            const animatedElements = document.querySelectorAll('.fade-in');
-            animatedElements.forEach(el => observer.observe(el));
-            
-            console.log(`✅ Base de datos de productos lista: ${catalogoEscaleras.length} productos`);
-
-            // Test de conectividad Groq
-            async function debugChatbot() {
-                console.log('🔍 INICIANDO DEBUG DEL CHATBOT');
-
-                // 1. Verificar API Key
-                if (!GroqConfig.apiKey || GroqConfig.apiKey === 'YOUR_GROQ_API_KEY_HERE') {
-                    console.warn('⚠️ API KEY NO CONFIGURADA - Chatbot usará fallbacks inteligentes');
-                } else {
-                    console.log('✅ API Key configurada');
-
-                    // 2. Test de conectividad
-                    const connected = await GroqConfig.testConnection();
-                    if (connected) {
-                        console.log('✅ Groq AI FUNCIONANDO CORRECTAMENTE');
-                    } else {
-                        console.warn('⚠️ No se pudo conectar a Groq - Usando fallbacks');
-                    }
-                }
-
-                console.log('✅ DEBUG COMPLETADO');
-            }
-
-            // Inicializar chatbot
-            ChatbotController.init();
-            console.log('💬 Chatbot inicializado');
-
-            // Ejecutar debug en segundo plano
-            debugChatbot();
-
-            console.log('🎉 Inicialización completa');
-        });
     </script>
 
 
