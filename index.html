@@ -2707,59 +2707,84 @@
             // Obtén tu API key gratis en: https://console.groq.com
             apiKey: 'YOUR_GROQ_API_KEY_HERE',
             apiUrl: 'https://api.groq.com/openai/v1/chat/completions',
-            model: 'llama3-8b-8192',
-            maxTokens: 300,
+            model: 'mixtral-8x7b-32768', // Mejor modelo para español
+            maxTokens: 400,
+            temperature: 0.9, // Más creatividad y variación
 
-            systemPrompt: `Eres Diana, asistente virtual de Escaleras Ferre Colombia. Personalidad cálida, profesional y conversacional.
+            systemPrompt: `Eres Diana, asistente amigable de Escaleras Ferre Colombia.
 
-TU MISIÓN: Ayudar a clientes con información sobre escaleras y dirigirlos a asesores cuando necesiten cotizaciones exactas.
+PRODUCTOS:
+- FIBRA DE VIDRIO: Extensión 5-12m, Tijera 0.6-6m, Sencilla 1.5-6m, Caballete 5-10m (Capacidad: 300lb industrial, 250lb comercial)
+- ALUMINIO: Extensión 5-12m, Tijera 0.6-6m, Sencilla 1.5-6m (Capacidad: 300lb industrial, 225lb comercial)
+- ACCESORIOS: Binchas, ganchos, zapatas, plataformas
 
-CATÁLOGO COMPLETO:
-- Fibra extensión: EF 5-12m, 300lb (136kg), uso eléctrico seguro
-- Fibra extensión 3 cuerpos: EF3 hasta 9.2m extendida
-- Fibra tijera industrial: TF 0.6-6m, 300lb / comercial: TFL 0.6-3.6m, 250lb
-- Fibra sencilla industrial: SF 1.5-6m, 300lb / comercial: SFL 1.5-3.6m, 250lb
-- Caballete fibra: EFC 5-10m, 300lb
-- Aluminio extensión: EA 5-12m, 300lb
-- Aluminio sencilla: SA 1.5-6m, 300lb
-- Aluminio tijera industrial: TA 0.6-6m, 300lb / comercial: TAL 0.6-3m, 225lb
-- Accesorios: binchas, ganchos, zapatas, plataformas, ruedas
+SERVICIOS:
+- Venta con certificación ISO/ANSI/OSHA
+- Alquiler con entrega e instalación
+- Mantenimiento especializado
 
-SERVICIOS: Alquiler (entrega incluida), mantenimiento certificado
-CONTACTO: Bogotá virtual (3008611868), Bucaramanga Cll 34 #11-27 (3181027047)
-CERTIFICACIONES: ISO 9001, ANSI 14.5, EN131, OSHA
+CONTACTO:
+- Bogotá: 3008611868 (virtual)
+- Bucaramanga: 3181027047 (Cll 34 #11-27)
 
-REGLAS IMPORTANTES:
-✅ Responde a CUALQUIER pregunta que te hagan de forma amable y útil
-✅ Si preguntan sobre productos, da recomendaciones específicas con modelos
-✅ Si preguntan sobre temas no relacionados, responde brevemente y redirige amablemente a escaleras
-✅ Sé conversacional y natural, usa "te" en vez de "le"
-✅ Puedes hacer preguntas para entender mejor qué necesita el cliente
+TU PERSONALIDAD:
+- Amable, conversacional y natural
+- Responde TODO con buena onda, incluso preguntas casuales
+- Mantén conversación antes de dirigir a WhatsApp
+- Da 2-4 frases por respuesta
+- Usa lenguaje colombiano natural
 
-❌ NUNCA des precios exactos en pesos - di "los precios varían, te conecto con un asesor"
-❌ NUNCA prometas disponibilidad específica - di "déjame verificar con el equipo"
-❌ NUNCA des garantías absolutas - di "normalmente" o "generalmente"
-❌ NO uses frases robóticas como "le informo" o "procedo a"
+REGLAS:
+✅ Responde "¿Cómo estás?" con calidez
+✅ Conversa sobre el tema del cliente
+✅ Recomienda productos específicos (EF 8,60, TA 2.40, etc.)
+✅ Haz preguntas para entender necesidades
 
-LONGITUD: 2-5 frases máximo, conversacional y directo
+❌ NO des precios exactos → "Te paso con asesor para cotización"
+❌ NO prometas stock → "Verifico disponibilidad"
 
-EJEMPLOS BUENOS:
-Usuario: "¿Tienen escaleras para 10 metros?"
-Diana: "¡Claro! Para 10 metros te recomiendo la EF 10,0 en fibra de vidrio. Tiene 32 pasos, soporta 300lb y es perfecta si trabajas con electricidad. ¿Es para uso industrial o comercial?"
+EJEMPLOS:
+Usuario: "¿Cómo estás?"
+Tú: "¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas hoy?"
 
-Usuario: "¿Cuánto cuesta?"
-Diana: "Los precios varían según el modelo y tamaño. ¿Te conecto con un asesor por WhatsApp para que te dé una cotización exacta? Tenemos Bogotá y Bucaramanga."
+Usuario: "Busco alquilar una escalera"
+Tú: "¡Perfecto! Tenemos servicio de alquiler con entrega incluida. ¿Qué altura necesitas y para qué tipo de trabajo? Así te recomiendo la mejor opción."
 
-Usuario: "¿Qué me recomiendas para pintar mi casa?"
-Diana: "Para pintura en casa te va bien una escalera tijera comercial TAL. Son ligeras, estables y vienen desde 0.6m hasta 3m. ¿Qué altura tiene tu techo?"
+Usuario: "Necesito una de 8 metros"
+Tú: "Para 8 metros te recomiendo la extensión EF 8,60 en fibra de vidrio (28 pasos, 300lb) o EA 8,60 en aluminio (más liviana). ¿Es para trabajo eléctrico o altura?"`,
 
-Usuario: "¿Cómo está el clima?"
-Diana: "Jaja buena pregunta, pero soy experta en escaleras, no en clima 😊 ¿Te puedo ayudar con algo sobre escaleras o servicios?"`,
+            // Test de conectividad
+            async testConnection() {
+                try {
+                    console.log('🔗 Probando conexión con Groq...');
+                    const response = await fetch(this.apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${this.apiKey}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            model: this.model,
+                            messages: [
+                                { role: 'user', content: 'Di solo "OK"' }
+                            ],
+                            max_tokens: 10
+                        })
+                    });
 
-            getCompressedCatalog() {
-                return `Fibra: extensión EF 5-12m (300lb), tijera TF/TFL, sencilla SF/SFL, caballete EFC
-Aluminio: extensión EA, tijera TA/TAL, sencilla SA
-Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('✅ Groq conectado:', data.choices[0]?.message?.content);
+                        return true;
+                    } else {
+                        const errorText = await response.text();
+                        console.error('❌ Error Groq:', response.status, errorText);
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('❌ Error de red Groq:', error);
+                    return false;
+                }
             }
         };
 
@@ -2773,26 +2798,34 @@ Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
             shouldUseAI(message) {
                 const text = message.toLowerCase().trim();
 
-                // Solo NO usar IA para saludos extremadamente simples (1-2 palabras)
-                const simpleGreetings = ['hola', 'hi', 'hey', 'buenas', 'buenos dias', 'buenas tardes'];
+                // Solo NO usar IA para saludos MUY simples de 1 palabra
+                const simpleGreetings = ['hola', 'hi', 'hey'];
 
-                // Si es un saludo simple de 1 palabra, usar respuesta local
                 if (simpleGreetings.includes(text)) {
+                    console.log('💬 Usando respuesta local para saludo simple');
                     return false;
                 }
 
-                // Para TODO lo demás, usar IA para respuestas inteligentes
-                // Esto incluye: preguntas, consultas, conversaciones, etc.
+                // Para TODO lo demás, usar IA
+                console.log('🤖 Usando IA para:', message);
                 return true;
             },
 
             async generateAIResponse(message) {
                 try {
+                    console.log('📤 Enviando a Groq:', message);
+
+                    // Verificar API key
+                    if (!GroqConfig.apiKey || GroqConfig.apiKey === 'YOUR_GROQ_API_KEY_HERE') {
+                        console.error('❌ API KEY NO CONFIGURADA');
+                        return this.getSmartFallback(message);
+                    }
+
                     this.conversationHistory.push({ role: 'user', content: message });
 
                     const messages = [
                         { role: 'system', content: GroqConfig.systemPrompt },
-                        ...this.conversationHistory.slice(-4)
+                        ...this.conversationHistory.slice(-6) // Más contexto
                     ];
 
                     const response = await fetch(GroqConfig.apiUrl, {
@@ -2805,25 +2838,34 @@ Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
                             model: GroqConfig.model,
                             messages: messages,
                             max_tokens: GroqConfig.maxTokens,
-                            temperature: 0.8,
+                            temperature: GroqConfig.temperature,
                             stream: false
                         })
                     });
 
                     if (!response.ok) {
-                        throw new Error('Groq API error');
+                        const errorText = await response.text();
+                        console.error('❌ Error Groq HTTP:', response.status, errorText);
+                        return this.getSmartFallback(message);
                     }
 
                     const data = await response.json();
-                    const aiResponse = data.choices[0]?.message?.content || this.getFallbackResponse();
+                    const aiResponse = data.choices[0]?.message?.content;
+
+                    if (!aiResponse) {
+                        console.error('❌ Respuesta vacía de Groq');
+                        return this.getSmartFallback(message);
+                    }
+
+                    console.log('✅ Respuesta Groq:', aiResponse);
 
                     this.conversationHistory.push({ role: 'assistant', content: aiResponse });
 
                     return aiResponse;
 
                 } catch (error) {
-                    console.error('Error Groq AI:', error);
-                    return this.getFallbackResponse();
+                    console.error('❌ Error Groq:', error.message, error);
+                    return this.getSmartFallback(message);
                 }
             },
 
@@ -2831,12 +2873,12 @@ Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
                 const humanResponses = {
                     greetings: [
                         '¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar hoy?',
-                        '¡Buenos días! Te saluda Diana, ¿qué escalera estás buscando?',
-                        '¡Hola! Aquí Diana para ayudarte. ¿Qué necesitas?'
+                        '¡Buenas! Aquí Diana. ¿Qué necesitas?',
+                        '¡Hola! ¿Qué escalera estás buscando?'
                     ],
                     contact: [
-                        'Te puedo conectar con nuestros asesores. Tenemos sede virtual en Bogotá y sede física en Bucaramanga (Cll 34 #11-27). ¿Cuál prefieres?',
-                        '¡Claro! ¿Te va mejor Bogotá (virtual) o prefieres visitar Bucaramanga (Cll 34 #11-27)?'
+                        'Te conecto con nuestros asesores. ¿Prefieres Bogotá (virtual) o Bucaramanga (Cll 34 #11-27)?',
+                        '¡Claro! Tenemos Bogotá (3008611868) y Bucaramanga (3181027047). ¿Cuál te queda mejor?'
                     ]
                 };
 
@@ -2844,13 +2886,32 @@ Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
                 return responses ? responses[Math.floor(Math.random() * responses.length)] : null;
             },
 
-            getFallbackResponse() {
-                const fallbacks = [
-                    '¿Podrías darme más detalles? Te puedo ayudar con escaleras de fibra, aluminio, alquiler o mantenimiento.',
-                    'Hmm, no estoy segura de entender. ¿Buscas escaleras industriales o comerciales?',
-                    '¿Me cuentas un poco más? Puedo asesorarte sobre nuestros productos y servicios.'
-                ];
-                return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            // Fallback inteligente basado en palabras clave
+            getSmartFallback(message) {
+                console.log('⚠️ Usando fallback inteligente');
+                const text = message.toLowerCase();
+
+                if (text.includes('alquiler') || text.includes('alquilar') || text.includes('rentar')) {
+                    return '¡Perfecto! Tenemos servicio de alquiler con entrega incluida. ¿Qué altura necesitas y para qué tipo de trabajo? Así te recomiendo la mejor opción.';
+                }
+
+                if (text.includes('metro') || text.includes('altura')) {
+                    return 'Te ayudo con escaleras. Tenemos desde 1.5m hasta 12m en fibra de vidrio y aluminio. ¿Qué altura específica necesitas?';
+                }
+
+                if (text.includes('fibra') || text.includes('aluminio')) {
+                    return 'Manejamos escaleras en fibra de vidrio (ideal para trabajo eléctrico) y aluminio (más livianas). ¿Para qué tipo de trabajo las vas a usar?';
+                }
+
+                if (text.includes('precio') || text.includes('costo') || text.includes('cuanto')) {
+                    return 'Los precios varían según modelo y tamaño. ¿Te conecto con un asesor por WhatsApp para una cotización exacta? Tenemos Bogotá y Bucaramanga.';
+                }
+
+                if (text.includes('como estas') || text.includes('cómo estás') || text.includes('que tal')) {
+                    return '¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas hoy?';
+                }
+
+                return 'Disculpa, cuéntame mejor qué tipo de escalera necesitas o para qué trabajo. También puedo conectarte directo con WhatsApp si prefieres. 😊';
             }
         };
 
@@ -3175,9 +3236,34 @@ Servicios: alquiler, mantenimiento. Bogotá 3008611868, Bucaramanga 3181027047`;
             
             console.log(`✅ Base de datos de productos lista: ${catalogoEscaleras.length} productos`);
 
+            // Test de conectividad Groq
+            async function debugChatbot() {
+                console.log('🔍 INICIANDO DEBUG DEL CHATBOT');
+
+                // 1. Verificar API Key
+                if (!GroqConfig.apiKey || GroqConfig.apiKey === 'YOUR_GROQ_API_KEY_HERE') {
+                    console.warn('⚠️ API KEY NO CONFIGURADA - Chatbot usará fallbacks inteligentes');
+                } else {
+                    console.log('✅ API Key configurada');
+
+                    // 2. Test de conectividad
+                    const connected = await GroqConfig.testConnection();
+                    if (connected) {
+                        console.log('✅ Groq AI FUNCIONANDO CORRECTAMENTE');
+                    } else {
+                        console.warn('⚠️ No se pudo conectar a Groq - Usando fallbacks');
+                    }
+                }
+
+                console.log('✅ DEBUG COMPLETADO');
+            }
+
             // Inicializar chatbot
             ChatbotController.init();
             console.log('💬 Chatbot inicializado');
+
+            // Ejecutar debug en segundo plano
+            debugChatbot();
 
             console.log('🎉 Inicialización completa');
         });
