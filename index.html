@@ -783,6 +783,299 @@
             }
         }
 
+        /* ===================================
+           CHATBOT STYLES - Fixed Position
+           =================================== */
+
+        /* Chatbot Fixed Position - No Intrusivo pero Visible */
+        .chatbot-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .chatbot-toggle {
+            background: linear-gradient(135deg, #2d5016, #4a7028);
+            color: white;
+            border-radius: 50px;
+            padding: 15px 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(45, 80, 22, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 200px;
+        }
+
+        .chatbot-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(45, 80, 22, 0.4);
+        }
+
+        .chatbot-toggle.active {
+            border-radius: 15px;
+        }
+
+        .chat-notification {
+            font-size: 14px;
+            font-weight: 500;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #2d5016, #4a7028);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .chatbot-close {
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .chatbot-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            background: #2d5016;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        .typing-indicator {
+            background: #e3f2fd !important;
+            border-color: #90caf9 !important;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .typing-indicator .dots {
+            animation: blink 1.4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 20% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+
+        .contact-options {
+            max-width: 100% !important;
+            background: #f0f7ed !important;
+            border-color: #2d5016 !important;
+        }
+
+        .contact-options p {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+
+        .whatsapp-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1da851;
+            transform: translateY(-2px);
+        }
+
+        .chatbot-input-area {
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+            display: flex;
+            gap: 10px;
+        }
+
+        #chatbot-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #chatbot-input:focus {
+            border-color: #2d5016;
+        }
+
+        .chatbot-send-btn {
+            background: #2d5016;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .chatbot-send-btn:hover {
+            background: #1a2e0c;
+            transform: scale(1.1);
+        }
+
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px 15px;
+            background: #f1f3f4;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .quick-question {
+            background: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            transition: all 0.2s;
+        }
+
+        .quick-question:hover {
+            background: #2d5016;
+            color: white;
+            border-color: #2d5016;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Chatbot */
+        @media (max-width: 768px) {
+            .chatbot-window {
+                width: calc(100vw - 40px);
+                height: 400px;
+            }
+
+            .chatbot-fixed {
+                right: 10px;
+                bottom: 10px;
+            }
+
+            .chatbot-toggle {
+                max-width: 60px;
+                padding: 12px;
+            }
+
+            .chat-notification {
+                display: none;
+            }
+        }
+
         /* Services Grid */
         .services-grid {
             display: grid;
@@ -2278,6 +2571,296 @@
             }
         });
 
+        // ===================================
+        // CHATBOT AI - Sistema de Inteligencia Artificial Simulada
+        // ===================================
+
+        const ChatbotAI = {
+            conversationState: {
+                userName: null,
+                currentTopic: null,
+                askedWhatsApp: false,
+                messagesCount: 0
+            },
+
+            // Base de conocimientos con keywords y respuestas variables
+            knowledge: {
+                greetings: {
+                    keywords: ['hola', 'buenos', 'buenas', 'hi', 'hey', 'saludos'],
+                    responses: [
+                        '¡Hola! Bienvenido a Escaleras Ferre. ¿En qué puedo ayudarte?',
+                        '¡Buenos días! Soy el asistente de Escaleras Ferre. ¿Qué necesitas saber?',
+                        '¡Hola! ¿Tienes alguna pregunta sobre nuestras escaleras?'
+                    ]
+                },
+
+                prices: {
+                    keywords: ['precio', 'costo', 'valor', 'cuanto', '$$', 'pesos', 'cotizar', 'cotizacion'],
+                    responses: [
+                        'Nuestros precios varían según el tipo y tamaño de escalera. ¿Te interesa algún tipo específico? (Fibra de vidrio, Aluminio, etc.)',
+                        'Para darte un precio exacto necesito saber qué tipo de escalera buscas. ¿Es para uso industrial o comercial?',
+                        'Los precios dependen del modelo y especificaciones. ¿Podrías decirme qué tipo de escalera necesitas?'
+                    ]
+                },
+
+                products: {
+                    keywords: ['escalera', 'escaleras', 'fibra', 'aluminio', 'extension', 'tijera', 'sencilla', 'caballete'],
+                    responses: [
+                        'Tenemos escaleras en fibra de vidrio y aluminio: extensión, tijera, sencillas, caballetes y más. ¿Qué tipo específico te interesa?',
+                        'Nuestro catálogo incluye escaleras industriales y comerciales. ¿Buscas algo para uso eléctrico o industrial pesado?',
+                        'Manejamos escaleras certificadas ISO, ANSI y OSHA. ¿Para qué tipo de trabajo las necesitas?'
+                    ]
+                },
+
+                rental: {
+                    keywords: ['alquiler', 'alquilar', 'rentar', 'arrendar', 'temporal'],
+                    responses: [
+                        'Ofrecemos alquiler de escaleras en extensión, tijera, sencilla y tijera plataforma. ¿Para qué proyecto las necesitas?',
+                        'Nuestro servicio de alquiler incluye entrega, instalación y recogida. ¿En qué ciudad estás ubicado?',
+                        'Tenemos escaleras disponibles para alquiler con diferentes capacidades. ¿Qué altura necesitas alcanzar?'
+                    ]
+                },
+
+                contact: {
+                    keywords: ['contacto', 'telefono', 'direccion', 'ubicacion', 'sede', 'whatsapp', 'llamar'],
+                    responses: [
+                        'Tenemos sedes en Bogotá y Bucaramanga. ¿Te gustaría que te conecte con alguna sede específica?',
+                        'Puedes contactarnos por WhatsApp. ¿Prefieres hablar con nuestra sede de Bogotá o Bucaramanga?',
+                        '¿Te gustaría hablar directamente con uno de nuestros asesores por WhatsApp?'
+                    ]
+                }
+            },
+
+            // Respuestas de seguimiento inteligentes
+            followUps: [
+                '¿Hay algo más en lo que pueda ayudarte?',
+                '¿Te gustaría saber algo más sobre nuestros productos?',
+                '¿Necesitas información adicional?'
+            ],
+
+            // Detectar intent del mensaje
+            analyzeMessage(message) {
+                const text = message.toLowerCase();
+                let bestMatch = null;
+                let maxMatches = 0;
+
+                for (let [category, data] of Object.entries(this.knowledge)) {
+                    let matches = 0;
+                    data.keywords.forEach(keyword => {
+                        if (text.includes(keyword)) matches++;
+                    });
+
+                    if (matches > maxMatches) {
+                        maxMatches = matches;
+                        bestMatch = category;
+                    }
+                }
+
+                return maxMatches > 0 ? bestMatch : 'unknown';
+            },
+
+            // Generar respuesta inteligente
+            generateResponse(message) {
+                const intent = this.analyzeMessage(message);
+                this.conversationState.messagesCount++;
+
+                if (intent !== 'unknown') {
+                    this.conversationState.currentTopic = intent;
+                    const responses = this.knowledge[intent].responses;
+                    return responses[Math.floor(Math.random() * responses.length)];
+                }
+
+                // Respuestas para mensajes no reconocidos
+                const fallbacks = [
+                    'Interesante pregunta. ¿Podrías ser más específico? Puedo ayudarte con información sobre escaleras, precios, alquiler o contacto.',
+                    'No estoy seguro de entender completamente. ¿Te refieres a algún tipo específico de escalera o servicio?',
+                    'Hmm, déjame pensar... ¿Podrías reformular tu pregunta? Estoy aquí para ayudarte con todo sobre escaleras.'
+                ];
+
+                return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            },
+
+            // Determinar si debe ofrecer WhatsApp
+            shouldOfferWhatsApp() {
+                return this.conversationState.messagesCount >= 3 && !this.conversationState.askedWhatsApp;
+            }
+        };
+
+        // ===================================
+        // CHATBOT CONTROLLER - Controlador Principal
+        // ===================================
+
+        const ChatbotController = {
+            isOpen: false,
+            isTyping: false,
+
+            init() {
+                this.bindEvents();
+            },
+
+            bindEvents() {
+                // Toggle chatbot
+                document.getElementById('chatbot-toggle').addEventListener('click', () => {
+                    this.toggleChatbot();
+                });
+
+                // Cerrar chatbot
+                document.getElementById('chatbot-close').addEventListener('click', () => {
+                    this.closeChatbot();
+                });
+
+                // Enviar mensaje
+                document.getElementById('chatbot-send').addEventListener('click', () => {
+                    this.sendMessage();
+                });
+
+                // Enter para enviar
+                document.getElementById('chatbot-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.sendMessage();
+                });
+
+                // Preguntas rápidas
+                document.querySelectorAll('.quick-question').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.handleQuickQuestion(e.target.dataset.question);
+                    });
+                });
+            },
+
+            toggleChatbot() {
+                this.isOpen = !this.isOpen;
+                const window = document.getElementById('chatbot-window');
+                const toggle = document.getElementById('chatbot-toggle');
+
+                if (this.isOpen) {
+                    window.classList.add('active');
+                    toggle.classList.add('active');
+                } else {
+                    window.classList.remove('active');
+                    toggle.classList.remove('active');
+                }
+            },
+
+            closeChatbot() {
+                this.isOpen = false;
+                document.getElementById('chatbot-window').classList.remove('active');
+                document.getElementById('chatbot-toggle').classList.remove('active');
+            },
+
+            async sendMessage() {
+                const input = document.getElementById('chatbot-input');
+                const message = input.value.trim();
+
+                if (!message) return;
+
+                // Mostrar mensaje del usuario
+                this.addMessage(message, 'user');
+                input.value = '';
+
+                // Simular typing
+                await this.simulateTyping();
+
+                // Generar y mostrar respuesta
+                const response = ChatbotAI.generateResponse(message);
+                this.addMessage(response, 'bot');
+
+                // Ofrecer WhatsApp si corresponde
+                if (ChatbotAI.shouldOfferWhatsApp()) {
+                    await this.simulateTyping(1000);
+                    this.offerWhatsAppContact();
+                }
+            },
+
+            async simulateTyping(delay = 1500) {
+                this.isTyping = true;
+                this.addTypingIndicator();
+
+                await new Promise(resolve => setTimeout(resolve, delay));
+
+                this.removeTypingIndicator();
+                this.isTyping = false;
+            },
+
+            addMessage(text, sender) {
+                const messagesContainer = document.getElementById('chatbot-messages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                messageDiv.textContent = text;
+
+                messagesContainer.appendChild(messageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            },
+
+            addTypingIndicator() {
+                const messagesContainer = document.getElementById('chatbot-messages');
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message bot-message typing-indicator';
+                typingDiv.innerHTML = '<span>Escribiendo</span><span class="dots">...</span>';
+                typingDiv.id = 'typing-indicator';
+
+                messagesContainer.appendChild(typingDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            },
+
+            removeTypingIndicator() {
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) indicator.remove();
+            },
+
+            offerWhatsAppContact() {
+                ChatbotAI.conversationState.askedWhatsApp = true;
+
+                const messagesContainer = document.getElementById('chatbot-messages');
+                const contactDiv = document.createElement('div');
+                contactDiv.className = 'message bot-message contact-options';
+                contactDiv.innerHTML = `
+                    <p>¿Te gustaría hablar directamente con uno de nuestros asesores?</p>
+                    <div class="whatsapp-options">
+                        <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn bogota">
+                            <i class="fab fa-whatsapp"></i> Bogotá (Virtual)
+                        </button>
+                        <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn bucaramanga">
+                            <i class="fab fa-whatsapp"></i> Bucaramanga (Cll 34 # 11-27)
+                        </button>
+                    </div>
+                `;
+
+                messagesContainer.appendChild(contactDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            },
+
+            handleQuickQuestion(type) {
+                const questions = {
+                    precios: '¿Cuáles son los precios de las escaleras?',
+                    catalogo: 'Quiero ver el catálogo completo',
+                    alquiler: 'Me interesa el servicio de alquiler',
+                    contacto: 'Necesito información de contacto'
+                };
+
+                const input = document.getElementById('chatbot-input');
+                input.value = questions[type];
+                this.sendMessage();
+            }
+        };
+
+        // Función global para WhatsApp desde chatbot
+        window.openWhatsAppSede = function(sede) {
+            const phones = {
+                bogota: '573008611868',
+                bucaramanga: '573181027047'
+            };
+
+            const addresses = {
+                bogota: 'sede virtual',
+                bucaramanga: 'Cll 34 # 11-27'
+            };
+
+            const message = `Hola, me gustaría recibir asesoría sobre escaleras. Me contacto desde la página web con la ${sede === 'bogota' ? 'sede virtual de Bogotá' : 'sede física de Bucaramanga (' + addresses[sede] + ')'}`;
+
+            const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        };
+
         // Animaciones de scroll
         const observerOptions = {
             threshold: 0.1,
@@ -2301,12 +2884,54 @@
             animatedElements.forEach(el => observer.observe(el));
             
             console.log(`✅ Base de datos de productos lista: ${catalogoEscaleras.length} productos`);
+
+            // Inicializar chatbot
+            ChatbotController.init();
+            console.log('💬 Chatbot inicializado');
+
             console.log('🎉 Inicialización completa');
         });
     </script>
 
 
             <script>// Write JavaScript here</script>
-        
-    
+
+    <!-- Chatbot Container -->
+    <div id="chatbot-container" class="chatbot-fixed">
+      <div id="chatbot-toggle" class="chatbot-toggle">
+        <i class="fas fa-comments"></i>
+        <span class="chat-notification">¿Necesitas ayuda?</span>
+      </div>
+
+      <div id="chatbot-window" class="chatbot-window">
+        <div class="chatbot-header">
+          <div class="chatbot-title">
+            <i class="fas fa-robot"></i>
+            Asistente Virtual - Escaleras Ferre
+          </div>
+          <button id="chatbot-close" class="chatbot-close">×</button>
+        </div>
+
+        <div id="chatbot-messages" class="chatbot-messages">
+          <div class="message bot-message">
+            ¡Hola! Soy el asistente virtual de Escaleras Ferre. ¿En qué puedo ayudarte hoy?
+          </div>
+        </div>
+
+        <div class="chatbot-input-area">
+          <input type="text" id="chatbot-input" placeholder="Escribe tu pregunta aquí..." maxlength="200">
+          <button id="chatbot-send" class="chatbot-send-btn">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+
+        <div class="quick-questions">
+          <div class="quick-question" data-question="precios">Ver precios</div>
+          <div class="quick-question" data-question="catalogo">Ver catálogo</div>
+          <div class="quick-question" data-question="alquiler">Alquiler</div>
+          <div class="quick-question" data-question="contacto">Contacto</div>
+        </div>
+      </div>
+    </div>
+
 </body>
