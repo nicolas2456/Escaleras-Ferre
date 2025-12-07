@@ -2698,418 +2698,408 @@
             certifications: "ISO 9001, ANSI 14.5, EN131, OSHA"
         };
 
-      // ============================================
-// CHATBOT INTELIGENTE 100% LOCAL
-// Sistema Avanzado de Detección y Respuesta
+     // ============================================
+// CHATBOT ULTRA INTELIGENTE CON NLP
+// Sistema Avanzado que Entiende Escritura Real
 // ============================================
 
-const ChatbotInteligente = {
+const ChatbotUltraInteligente = {
     conversationHistory: [],
     context: {
         lastTopic: null,
-        mentionedHeight: null,
-        mentionedMaterial: null,
-        mentionedType: null,
-        messageCount: 0
+        extractedHeight: null,
+        extractedMaterial: null,
+        extractedType: null,
+        extractedTime: null,
+        messageCount: 0,
+        waitingForDetails: false
     },
 
     // ============================================
-    // PATRONES DE DETECCIÓN INTELIGENTE
+    // NORMALIZACIÓN DE TEXTO
     // ============================================
-    patterns: {
-        // SALUDOS
-        greetings: {
-            keywords: ['hola', 'buenos', 'buenas', 'hey', 'hi', 'saludos', 'que tal', 'qué tal'],
-            responses: [
-                '¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar hoy?',
-                '¡Buenas! Soy Diana, tu asistente de escaleras. ¿Qué necesitas?',
-                '¡Hola! Aquí Diana de Escaleras Ferre. ¿Buscas alguna escalera en particular?'
-            ]
-        },
+    normalizeText(text) {
+        return text
+            .toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quitar tildes
+            .replace(/[¿?¡!.,;:]/g, '') // Quitar puntuación
+            .trim();
+    },
 
-        // ESTADO DE ÁNIMO
-        howAreYou: {
-            keywords: ['como estas', 'cómo estás', 'como va', 'todo bien', 'que tal estas'],
-            responses: [
-                '¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas?',
-                '¡Genial! Gracias por preguntar. ¿En qué puedo ayudarte con escaleras hoy?',
-                '¡Todo perfecto! 😊 ¿Qué escalera estás buscando?'
-            ]
-        },
+    // ============================================
+    // EXTRACTOR DE ENTIDADES
+    // ============================================
+    extractEntities(text) {
+        const normalized = this.normalizeText(text);
+        const entities = {
+            height: null,
+            material: null,
+            type: null,
+            time: null,
+            action: null
+        };
 
-        // TIPOS DE ESCALERA
-        tiposGenerales: {
-            keywords: ['que tipo', 'qué tipo', 'cuales tienen', 'cuáles tienen', 'que escaleras', 'tipos de escalera'],
-            response: 'Tenemos varios tipos de escaleras:\n\n🔸 **Extensión** (2 o 3 cuerpos, hasta 12m)\n🔸 **Tijera** (plegable, 0.6m - 6m)\n🔸 **Sencilla** (1 cuerpo, 1.5m - 6m)\n🔸 **Caballete** (doble acceso, 5m - 10m)\n\nTodas en fibra de vidrio o aluminio. ¿Qué altura necesitas o para qué tipo de trabajo?'
-        },
+        // ALTURA: 10m, 10 m, 10 metros, diez metros
+        const heightPatterns = [
+            /(\d+)\s*m(?:etros?)?/,
+            /(\d+)\s*mts?/,
+            /altura.*?(\d+)/,
+            /(uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce)\s*m/
+        ];
 
-        // ESCALERA TIJERA
-        tipoTijera: {
-            keywords: ['tijera', 'tijeras', 'plegable', 'tipo tijera'],
-            response: 'Las escaleras **tipo tijera** son plegables e ideales para trabajos en espacios reducidos:\n\n✅ Desde 0.6m hasta 6m\n✅ Peldaños planos antideslizantes\n✅ Autosoportadas (no necesitan pared)\n✅ Industrial (300lb) o Comercial (250lb)\n\n¿Qué altura necesitas? Así te recomiendo el modelo exacto.'
-        },
-
-        // ESCALERA EXTENSIÓN
-        tipoExtension: {
-            keywords: ['extension', 'extensión', 'extensible', 'extender', 'dos cuerpos', 'tres cuerpos'],
-            response: 'Las escaleras **extensión** son perfectas para grandes alturas:\n\n✅ 2 cuerpos: 5m a 12m\n✅ 3 cuerpos: hasta 9.2m (más compacta)\n✅ Sistema de poleas y seguros\n✅ Capacidad industrial 300lb\n\n¿Qué altura necesitas alcanzar?'
-        },
-
-        // ESCALERA SENCILLA
-        tipoSencilla: {
-            keywords: ['sencilla', 'simple', 'recta', 'un cuerpo', '1 cuerpo'],
-            response: 'Las escaleras **sencillas** son ideales para alturas fijas:\n\n✅ Desde 1.5m hasta 6m\n✅ Livianas y fáciles de transportar\n✅ Perfectas para acceso a techos o entrepisos\n✅ Industrial o comercial\n\n¿Para qué altura la necesitas?'
-        },
-
-        // ESCALERA CABALLETE
-        tipoCaballete: {
-            keywords: ['caballete', 'doble', 'doble acceso', 'dos lados'],
-            response: 'Las escaleras **caballete** tienen acceso por ambos lados:\n\n✅ Desde 5m hasta 10m\n✅ Ideal para trabajos de dos personas\n✅ Muy estable, no necesita apoyo\n✅ Capacidad industrial 300lb\n\n¿Qué altura necesitas?'
-        },
-
-        // DIFERENCIAS TIJERA VS EXTENSIÓN
-        diferenciasTipos: {
-            keywords: ['diferencia entre', 'diferencias', 'tijera o extension', 'cual es mejor'],
-            response: '**Diferencias principales:**\n\n🔸 **Tijera**: Plegable, autosoportada, para alturas bajas (hasta 6m). Ideal para interiores.\n\n🔸 **Extensión**: Se extiende, necesita apoyarse, para grandes alturas (hasta 12m). Ideal para exteriores.\n\n¿Para qué tipo de trabajo la vas a usar? Así te recomiendo la mejor opción.'
-        },
-
-        // ALTURAS ESPECÍFICAS
-        altura: {
-            patterns: [/(\d+)\s*(m|metro|mts)/i, /altura.*?(\d+)/i, /llegar.*?(\d+)/i, /alcanzar.*?(\d+)/i],
-            handler: (match, message) => {
-                const altura = parseInt(match[1]);
-                this.context.mentionedHeight = altura;
-
-                if (altura <= 2) {
-                    return `Para ${altura} metros te recomiendo una **escalera tijera** o **sencilla**:\n\n🔸 Tijera TF/TA ${altura <= 1.2 ? '1,20' : altura <= 1.8 ? '1,80' : '2,10'}\n🔸 Sencilla SF/SA ${altura <= 1.5 ? '1,50' : altura <= 1.8 ? '1,80' : '2,10'}\n\n¿Es para uso eléctrico (fibra) o general (aluminio)?`;
-                } else if (altura <= 6) {
-                    return `Para ${altura} metros tienes opciones:\n\n🔸 **Extensión**: EF/EA ${altura <= 5 ? '5,00' : '6,00'} (más alcance)\n🔸 **Tijera**: TF/TA hasta 6,00 (autosoportada)\n\n¿Es para trabajo eléctrico o uso general?`;
-                } else if (altura <= 12) {
-                    return `Para ${altura} metros necesitas una **escalera extensión**:\n\n🔸 EF/EA ${altura <= 7.4 ? '7,40' : altura <= 8.6 ? '8,60' : altura <= 10 ? '10,0' : altura <= 11 ? '11,0' : '12,0'}\n\nCapacidad industrial 300lb. ¿Es para trabajo eléctrico (fibra) o uso general (aluminio)?`;
-                } else {
-                    return `Para alturas mayores a 12m te recomiendo la escalera **extensión 3 cuerpos**:\n\n🔸 EF3 3.00/9.20 (alcance máximo 9.2m extendida)\n\nPara proyectos especiales podemos consultar opciones customizadas. ¿Te conecto con un asesor?`;
-                }
+        for (let pattern of heightPatterns) {
+            const match = normalized.match(pattern);
+            if (match) {
+                entities.height = this.convertWordToNumber(match[1]) || match[1];
+                break;
             }
-        },
-
-        // MATERIAL - FIBRA VS ALUMINIO
-        fibraVsAluminio: {
-            keywords: ['mejor fibra o aluminio', 'diferencia fibra aluminio', 'cual material', 'fibra o aluminio'],
-            response: '**Fibra de Vidrio vs Aluminio:**\n\n🔸 **FIBRA DE VIDRIO**\n✅ Aislante eléctrico (NO conduce)\n✅ Ideal para trabajo eléctrico\n✅ Resistente a corrosión y UV\n✅ Más pesada pero más segura\n\n🔸 **ALUMINIO**\n✅ Más liviana (30% menos peso)\n✅ Más económica\n✅ Conductor eléctrico (NO usar cerca de cables)\n✅ Ideal para uso general\n\n¿Es para trabajo eléctrico?'
-        },
-
-        // TRABAJO ELÉCTRICO
-        trabajoElectrico: {
-            keywords: ['electrico', 'eléctrico', 'cables', 'electricidad', 'alta tension', 'alta tensión', 'voltaje'],
-            response: 'Para **trabajo eléctrico** SOLO recomiendo **fibra de vidrio**:\n\n✅ 100% aislante eléctrico\n✅ NO conduce electricidad\n✅ Certificada para trabajo en vivo\n✅ Peldaños tipo D antideslizantes\n\n¿Qué altura necesitas? Te recomiendo el modelo exacto en fibra.'
-        },
-
-        // POR QUÉ FIBRA
-        porQueFibra: {
-            keywords: ['por que fibra', 'por qué fibra', 'ventaja fibra', 'fibra de vidrio'],
-            response: 'La **fibra de vidrio** tiene ventajas clave:\n\n✅ **Seguridad eléctrica**: NO conduce electricidad\n✅ **Durabilidad**: Resistente a corrosión, humedad y UV\n✅ **Certificaciones**: ISO, ANSI, OSHA para trabajo industrial\n✅ **Peldaños reforzados**: Mayor capacidad de carga (300lb)\n\nEs la opción #1 para trabajo eléctrico y ambientes exigentes. ¿Para qué tipo de trabajo la necesitas?'
-        },
-
-        // VENTAJAS ALUMINIO
-        ventajasAluminio: {
-            keywords: ['ventaja aluminio', 'por que aluminio', 'aluminio mejor'],
-            response: '**Ventajas del aluminio:**\n\n✅ **Más liviana**: 30-40% menos peso que fibra\n✅ **Más económica**: Precio más accesible\n✅ **Fácil transporte**: Ideal para movilidad\n✅ **Resistente**: Larga vida útil sin corrosión\n\n⚠️ **NO usar cerca de cables eléctricos** (conduce electricidad)\n\nIdeal para construcción, mantenimiento general, pintura. ¿Para qué la vas a usar?'
-        },
-
-        // CUÁL ES MÁS LIVIANA
-        masLiviana: {
-            keywords: ['mas liviana', 'más liviana', 'cual pesa menos', 'mas ligera'],
-            response: 'El **aluminio es más liviano**:\n\n• Aluminio 5m: ~14kg\n• Fibra 5m: ~18kg\n\n**Diferencia de 30-40% en peso**\n\nSi la vas a mover constantemente, aluminio es mejor opción. ¿Es para trabajo eléctrico o uso general?'
-        },
-
-        // ALUMINIO MÁS BARATA
-        aluminioBarata: {
-            keywords: ['aluminio mas barata', 'aluminio más barata', 'aluminio mas economica', 'precio aluminio'],
-            response: 'Sí, el **aluminio es más económico**:\n\n• Diferencia de ~15-20% vs fibra\n• Mismo rendimiento para uso general\n• Ideal si NO es trabajo eléctrico\n\n¿Te interesa aluminio? ¿Qué altura necesitas?'
-        },
-
-        // DIFERENCIAS MATERIALES
-        diferenciasMateriales: {
-            keywords: ['diferencia material', 'diferencias materiales', 'fibra vs aluminio'],
-            response: '**Comparación completa:**\n\n🔸 **FIBRA DE VIDRIO**\n• Aislante eléctrico ✅\n• Más pesada\n• Más costosa\n• Uso: Eléctrico, industrial\n\n🔸 **ALUMINIO**\n• Conduce electricidad ⚠️\n• Más liviana\n• Más económica\n• Uso: General, construcción\n\n¿Para qué tipo de trabajo la necesitas?'
-        },
-
-        // NO CONDUCE ELECTRICIDAD
-        noConduceElectricidad: {
-            keywords: ['no conduce', 'no conduce electricidad', 'aislante', 'fibra electricidad'],
-            response: 'Correcto, la **fibra de vidrio NO conduce electricidad**:\n\n✅ Material 100% dieléctrico\n✅ Segura para trabajo en vivo\n✅ Certificada hasta 30kV\n✅ Requerida por normas OSHA para trabajo eléctrico\n\nEs la ÚNICA opción segura cerca de cables. ¿Qué altura necesitas?'
-        },
-
-        // ALQUILER
-        alquiler: {
-            keywords: ['alquiler', 'alquilar', 'rentar', 'renta', 'arrendar', 'temporal'],
-            response: 'Sí, tenemos **servicio de alquiler** completo:\n\n🔸 Extensión, tijera, sencilla, caballete\n🔸 Por día, semana o mes\n🔸 Incluye entrega e instalación\n🔸 Recogida sin costo adicional\n\n¿Qué altura necesitas y por cuánto tiempo? Te conecto con un asesor para cotización exacta.'
-        },
-
-        // ALQUILER TIEMPO
-        alquilerTiempo: {
-            keywords: ['por cuanto tiempo', 'cuánto tiempo', 'dias', 'semanas', 'meses', 'alquiler dia'],
-            response: 'Opciones de alquiler:\n\n🔸 **Por día**: Proyectos cortos\n🔸 **Por semana**: Proyectos medianos\n🔸 **Por mes**: Proyectos largos (mejor tarifa)\n\nIncluye entrega, instalación y recogida. ¿Para cuánto tiempo la necesitas? Te cotizo con un asesor.'
-        },
-
-        // ENTREGA ALQUILER
-        entregaAlquiler: {
-            keywords: ['entregan alquiler', 'llevan la escalera', 'instalacion alquiler', 'domicilio alquiler'],
-            response: 'Sí, el servicio de alquiler **incluye**:\n\n✅ Entrega a domicilio\n✅ Instalación si es necesario\n✅ Recogida sin costo\n\n¿En qué ciudad estás? Bogotá o Bucaramanga tienen cobertura directa.'
-        },
-
-        // SERVICIO INSTALACIÓN
-        servicioInstalacion: {
-            keywords: ['instalacion', 'instalación', 'instalar', 'montar', 'servicio tecnico'],
-            response: 'Sí, ofrecemos **servicio de instalación** para:\n\n✅ Escaleras extensión grandes\n✅ Sistemas de acceso industrial\n✅ Configuraciones especiales\n\nIncluido en alquiler. Para compra, cotizamos según proyecto. ¿En qué ciudad estás?'
-        },
-
-        // MANTENIMIENTO
-        mantenimiento: {
-            keywords: ['mantenimiento', 'reparacion', 'reparación', 'servicio', 'revision'],
-            response: 'Ofrecemos **mantenimiento especializado**:\n\n🔧 Preventivo: Inspección y lubricación\n🔧 Correctivo: Reparación de peldaños, remaches\n🔧 Certificación: Revisión según normas OSHA\n\n¿Qué tipo de escalera tienes y qué necesita? Te conecto con técnico.'
-        },
-
-        // COSTO ALQUILER
-        costoAlquiler: {
-            keywords: ['cuanto alquiler', 'cuánto alquiler', 'precio alquiler', 'costo alquiler'],
-            response: 'El costo de alquiler depende de:\n\n• Tipo de escalera\n• Altura\n• Tiempo de uso\n• Ciudad de entrega\n\n¿Qué escalera necesitas y por cuánto tiempo? Te conecto con un asesor para cotización exacta por WhatsApp.'
-        },
-
-        // PRECIOS
-        precios: {
-            keywords: ['precio', 'cuanto cuesta', 'cuánto cuesta', 'valor', 'cotizacion', 'cotización', 'lista de precios'],
-            response: 'Los precios varían según:\n\n• Material (fibra o aluminio)\n• Tipo (extensión, tijera, sencilla)\n• Altura\n• Capacidad (industrial o comercial)\n\n¿Qué escalera específica te interesa? Te conecto con un asesor para cotización personalizada por WhatsApp 📱'
-        },
-
-        // PRECIO ESPECÍFICO
-        precioEspecifico: {
-            patterns: [/precio.*?(ef|ea|tf|ta|sf|sa)\s*\d+/i, /cuanto.*?(ef|ea|tf|ta|sf|sa)\s*\d+/i, /valor.*?(ef|ea|tf|ta|sf|sa)\s*\d+/i],
-            handler: (match, message) => {
-                return `Para cotización exacta de modelos específicos, te conecto con un asesor por WhatsApp 📱\n\nEllos tienen precios actualizados y pueden ofrecerte:\n✅ Descuentos por volumen\n✅ Opciones de financiamiento\n✅ Disponibilidad inmediata\n\n¿Prefieres Bogotá o Bucaramanga?`;
-            }
-        },
-
-        // DESCUENTOS
-        descuentos: {
-            keywords: ['descuento', 'rebaja', 'oferta', 'promocion', 'promoción'],
-            response: 'Tenemos descuentos según:\n\n💰 Compra de múltiples unidades\n💰 Proyectos corporativos\n💰 Alquiler a largo plazo\n\n¿Cuántas escaleras necesitas? Te conecto con un asesor para ofrecerte la mejor tarifa por WhatsApp.'
-        },
-
-        // MÁS BARATA
-        masBarata: {
-            keywords: ['mas barata', 'más barata', 'mas economica', 'mas económica', 'precio bajo'],
-            response: 'Las opciones más económicas son:\n\n🔸 **Aluminio Comercial** (Tipo II, 225lb)\n🔸 Tijera desde 0.6m\n🔸 Sencilla desde 1.5m\n\n¿Qué altura necesitas? Te recomiendo el modelo exacto y te conecto para cotización.'
-        },
-
-        // FORMAS DE PAGO
-        formasPago: {
-            keywords: ['forma de pago', 'aceptan tarjeta', 'pago', 'transferencia', 'efectivo', 'credito', 'crédito'],
-            response: 'Aceptamos:\n\n💳 Tarjetas débito/crédito\n💵 Efectivo\n🏦 Transferencia bancaria\n📄 Crédito empresarial (para corporativos)\n\n¿Te interesa alguna escalera en particular? Te conecto con asesor para procesar tu compra.'
-        },
-
-        // USO / APLICACIÓN
-        usoGeneral: {
-            keywords: ['para que sirve', 'para qué sirve', 'uso', 'aplicacion', 'aplicación'],
-            response: 'Nuestras escaleras son ideales para:\n\n🏗️ Construcción e industria\n⚡ Trabajo eléctrico (fibra)\n🎨 Pintura y mantenimiento\n📦 Bodegas y almacenes\n🏢 Acceso a alturas\n\n¿Para qué tipo de trabajo la necesitas? Así te recomiendo el modelo perfecto.'
-        },
-
-        // CONSTRUCCIÓN
-        construccion: {
-            keywords: ['construccion', 'construcción', 'obra', 'albañil'],
-            response: 'Para **construcción** recomiendo:\n\n🔸 **Extensión aluminio** (liviana, fácil mover)\n🔸 Capacidad industrial 300lb\n🔸 Altura según necesidad del proyecto\n\n¿Qué altura necesitas en la obra?'
-        },
-
-        // INDUSTRIAL
-        industrial: {
-            keywords: ['industrial', 'industria', 'fabrica', 'fábrica', 'planta'],
-            response: 'Para **uso industrial** todas son:\n\n✅ Capacidad Tipo IA: 300 libras (136kg)\n✅ Certificación ISO, ANSI, OSHA\n✅ Peldaños reforzados tipo D\n✅ Fibra o aluminio según necesidad\n\n¿Es para trabajo eléctrico o uso general?'
-        },
-
-        // PINTURA
-        pintura: {
-            keywords: ['pintar', 'pintura', 'pintor', 'casa', 'hogar'],
-            response: 'Para **pintura** te recomiendo:\n\n🔸 **Tijera** 1.8m - 3m (autosoportada)\n🔸 **Sencilla** si tienes dónde apoyarla\n🔸 Aluminio (más liviana para mover)\n\n¿Qué altura de techos tienes?'
-        },
-
-        // ALTURA TRABAJO
-        alturaTrabajo: {
-            keywords: ['trabajo en altura', 'trabajos en altura', 'altura', 'alto'],
-            response: 'Para **trabajo en altura seguro**:\n\n✅ Todas certificadas OSHA\n✅ Peldaños antideslizantes\n✅ Capacidad industrial 300lb\n✅ Estabilizadores incluidos\n\n¿Qué altura necesitas alcanzar?'
-        },
-
-        // MANTENIMIENTO USO
-        mantenimientoUso: {
-            keywords: ['mantenimiento', 'mantener', 'reparar', 'arreglar'],
-            response: 'Para **mantenimiento** te sirven:\n\n🔸 Tijera (espacios reducidos)\n🔸 Extensión (grandes alturas)\n🔸 Aluminio (fácil mover)\n\n¿Qué tipo de mantenimiento haces y a qué altura?'
-        },
-
-        // BODEGA
-        bodega: {
-            keywords: ['bodega', 'almacen', 'almacén', 'inventario', 'estante'],
-            response: 'Para **bodegas** recomiendo:\n\n🔸 **Tijera plataforma** (más estabilidad)\n🔸 **Sencilla** para accesos frecuentes\n🔸 Aluminio (liviana, mover fácil)\n\n¿Qué altura tienen los estantes?'
-        },
-
-        // COMERCIAL LIVIANO
-        comercialLiviano: {
-            keywords: ['comercial', 'liviano', 'hogar', 'casa', 'domestico', 'doméstico'],
-            response: 'Para **uso comercial liviano** tenemos:\n\n🔸 Tipo II (225lb de capacidad)\n🔸 Más económicas\n🔸 Aluminio liviano\n🔸 Tijera o sencilla\n\n¿Qué altura necesitas?'
-        },
-
-        // ENVÍOS
-        envios: {
-            keywords: ['envio', 'envío', 'envian', 'envían', 'despacho', 'domicilio'],
-            response: 'Sí, hacemos **envíos** a:\n\n📦 Bogotá y alrededores\n📦 Bucaramanga y zona metropolitana\n📦 Otras ciudades (coordinamos transporte)\n\nTiempo: 2-5 días según ciudad. ¿Dónde necesitas la entrega?'
-        },
-
-        // UBICACIÓN
-        ubicacion: {
-            keywords: ['donde estan', 'dónde están', 'ubicacion', 'ubicación', 'direccion', 'dirección'],
-            response: 'Tenemos **2 sedes**:\n\n📍 **Bogotá** (Virtual)\n   📱 300 861 1868\n\n📍 **Bucaramanga**\n   📍 Cll 34 #11-27\n   📱 318 102 7047\n\n¿Cuál te queda más cerca?'
-        },
-
-        // TIENDA FÍSICA
-        tiendaFisica: {
-            keywords: ['tienda fisica', 'tienda física', 'local', 'showroom', 'visitar'],
-            response: 'Nuestra tienda física está en:\n\n📍 **Bucaramanga**\n   Cll 34 #11-27\n   Lun-Vie: 8am-6pm\n   Sáb: 8am-2pm\n\nEn **Bogotá** atendemos virtual con entregas. ¿Quieres visitarnos?'
-        },
-
-        // CÓMO COMPRAR
-        comoComprar: {
-            keywords: ['como comprar', 'cómo comprar', 'proceso compra', 'comprar'],
-            response: '**Proceso de compra:**\n\n1️⃣ Me dices qué escalera necesitas\n2️⃣ Te conecto con asesor por WhatsApp\n3️⃣ Te cotiza y confirmas\n4️⃣ Realizas pago\n5️⃣ Coordinamos entrega\n\n¿Qué escalera te interesa?'
-        },
-
-        // TIEMPO ENVÍO
-        tiempoEnvio: {
-            keywords: ['cuanto tarda', 'cuánto tarda', 'demora', 'tiempo envio', 'cuando llega'],
-            response: '**Tiempos de entrega:**\n\n📦 Bogotá: 1-3 días\n📦 Bucaramanga: 1-2 días\n📦 Otras ciudades: 3-7 días\n\nDepende de disponibilidad en stock. ¿Qué escalera necesitas?'
-        },
-
-        // STOCK
-        stock: {
-            keywords: ['stock', 'disponibilidad', 'disponible', 'hay', 'tienen'],
-            response: 'Tenemos stock permanente de modelos populares. Para confirmar disponibilidad exacta de una escalera específica, ¿qué modelo te interesa? Te verifico con el asesor.'
-        },
-
-        // RECOGER TIENDA
-        recogerTienda: {
-            keywords: ['recoger', 'recojo', 'pasar', 'buscar tienda'],
-            response: 'Sí, puedes **recoger en tienda** Bucaramanga:\n\n📍 Cll 34 #11-27\n🕐 Lun-Vie: 8am-6pm | Sáb: 8am-2pm\n\nEn Bogotá hacemos entregas. ¿Qué escalera te interesa?'
-        },
-
-        // HORARIOS
-        horarios: {
-            keywords: ['horario', 'hora', 'cuando abren', 'hasta que hora'],
-            response: '**Horarios de atención:**\n\n📍 **Bucaramanga** (Cll 34 #11-27)\n   Lun-Vie: 8:00am - 6:00pm\n   Sábados: 8:00am - 2:00pm\n\n📍 **Bogotá** (Virtual)\n   Lun-Vie: 8:00am - 6:00pm\n\n¿Quieres visitarnos o te atendemos por WhatsApp?'
-        },
-
-        // ENTREGAN EN MI CIUDAD
-        entreganCiudad: {
-            keywords: ['entregan en', 'llegan a', 'envian a', 'envían a', 'mi ciudad'],
-            response: 'Hacemos envíos a toda Colombia:\n\n✅ Bogotá y Bucaramanga (directo)\n✅ Otras ciudades (coordinamos transporte)\n\n¿En qué ciudad estás? Te confirmo tiempos y costos de envío.'
-        },
-
-        // FACTURA
-        factura: {
-            keywords: ['factura', 'facturar', 'recibo', 'comprobante'],
-            response: 'Sí, **emitimos factura electrónica** para:\n\n✅ Personas naturales\n✅ Empresas\n✅ Válida para contabilidad\n\n¿Qué escalera te interesa? Te conecto con asesor para procesar tu compra.'
-        },
-
-        // PARA CASA/HOGAR
-        paraCasa: {
-            keywords: ['para casa', 'para el hogar', 'domestica', 'doméstica', 'mi casa'],
-            response: 'Para **uso doméstico** te recomiendo:\n\n🔸 **Tijera comercial** (225lb) desde 1.2m\n🔸 **Aluminio** (más liviana y económica)\n🔸 Ideal para limpieza, pintura, mantenimiento\n\n¿Qué altura de techos tienes en casa?'
         }
+
+        // MATERIAL: aluminio, fibra
+        if (/aluminio|alumino|alumnio/.test(normalized)) {
+            entities.material = 'aluminio';
+        }
+        if (/fibra|fivra|vidrio/.test(normalized)) {
+            entities.material = 'fibra';
+        }
+
+        // TIPO: tijera, extension, sencilla, caballete
+        if (/tijera|tijeras|plegable/.test(normalized)) {
+            entities.type = 'tijera';
+        }
+        if (/extension|extensible|extender|dos cuerpos|tres cuerpos/.test(normalized)) {
+            entities.type = 'extension';
+        }
+        if (/sencilla|simple|recta|un cuerpo/.test(normalized)) {
+            entities.type = 'sencilla';
+        }
+        if (/caballete|doble/.test(normalized)) {
+            entities.type = 'caballete';
+        }
+
+        // TIEMPO: dia, semana, mes, 15 dias
+        const timePatterns = [
+            /(\d+)\s*dia/,
+            /(\d+)\s*semana/,
+            /(\d+)\s*mes/,
+            /por\s+(dia|semana|mes)/
+        ];
+
+        for (let pattern of timePatterns) {
+            const match = normalized.match(pattern);
+            if (match) {
+                entities.time = match[0];
+                break;
+            }
+        }
+
+        // ACCIÓN: comprar, alquilar, ver, contactar
+        if (/comprar|adquirir|conseguir/.test(normalized)) {
+            entities.action = 'comprar';
+        }
+        if (/alquilar|alquiler|rentar|arrendar/.test(normalized)) {
+            entities.action = 'alquilar';
+        }
+        if (/ver|mirar|mostrar|enseñar|catalogo|informacion/.test(normalized)) {
+            entities.action = 'ver_info';
+        }
+        if (/contactar|hablar|comunicar|asesor|vendedor/.test(normalized)) {
+            entities.action = 'contactar';
+        }
+
+        return entities;
+    },
+
+    convertWordToNumber(word) {
+        const numbers = {
+            'uno': 1, 'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5,
+            'seis': 6, 'siete': 7, 'ocho': 8, 'nueve': 9, 'diez': 10,
+            'once': 11, 'doce': 12
+        };
+        return numbers[word] || null;
     },
 
     // ============================================
-    // SISTEMA DE DETECCIÓN INTELIGENTE
+    // DETECTOR DE INTENCIÓN ULTRA INTELIGENTE
     // ============================================
     detectIntent(message) {
-        const text = message.toLowerCase().trim();
-        
-        // 1. Buscar en patterns con regex primero
-        for (let [key, pattern] of Object.entries(this.patterns)) {
-            if (pattern.patterns) {
-                for (let regex of pattern.patterns) {
-                    const match = text.match(regex);
-                    if (match && pattern.handler) {
-                        return pattern.handler(match, message);
-                    }
-                }
+        const normalized = this.normalizeText(message);
+        const entities = this.extractEntities(message);
+
+        // Actualizar contexto con entidades extraídas
+        if (entities.height) this.context.extractedHeight = entities.height;
+        if (entities.material) this.context.extractedMaterial = entities.material;
+        if (entities.type) this.context.extractedType = entities.type;
+        if (entities.time) this.context.extractedTime = entities.time;
+
+        // ========== SALUDOS ==========
+        if (/^(hola|buenas|buenos|hey|hi|alo|que tal)/.test(normalized) && normalized.length < 20) {
+            return this.responses.greeting();
+        }
+
+        // ========== CÓMO ESTÁS ==========
+        if (/como estas|como va|todo bien|que tal/.test(normalized)) {
+            return this.responses.howAreYou();
+        }
+
+        // ========== CONTACTAR / ASESOR ==========
+        if (/contactar|hablar|comunicar|asesor|vendedor|persona/.test(normalized)) {
+            return this.responses.contactar();
+        }
+
+        // ========== VER CATÁLOGO / INFORMACIÓN ==========
+        if (/ver|mostrar|ensenar|catalogo|informacion|productos|tienen que/.test(normalized)) {
+            if (/precio|costo|valor|cuanto/.test(normalized)) {
+                return this.responses.precios(entities);
+            }
+            return this.responses.verCatalogo();
+        }
+
+        // ========== ALQUILER ==========
+        if (/alquil|rent|arren/.test(normalized) || entities.action === 'alquilar') {
+            return this.responses.alquiler(entities);
+        }
+
+        // ========== PRECIOS ==========
+        if (/precio|costo|valor|cuanto|cotiza/.test(normalized)) {
+            return this.responses.precios(entities);
+        }
+
+        // ========== ALTURA ESPECÍFICA ==========
+        if (entities.height && entities.height >= 1) {
+            return this.responses.alturaEspecifica(entities);
+        }
+
+        // ========== MATERIAL ESPECÍFICO ==========
+        if (entities.material && !entities.height) {
+            return this.responses.materialEspecifico(entities);
+        }
+
+        // ========== TIPO ESPECÍFICO ==========
+        if (entities.type && !entities.height) {
+            return this.responses.tipoEspecifico(entities);
+        }
+
+        // ========== CONSTRUCCIÓN / USO ==========
+        if (/construccion|obra|edificio|trabajo/.test(normalized)) {
+            return this.responses.paraConstruccion(entities);
+        }
+
+        if (/electric|cable|tension/.test(normalized)) {
+            return this.responses.trabajoElectrico();
+        }
+
+        // ========== TIPOS DE ESCALERA ==========
+        if (/que tipo|cuales tienen|tipos/.test(normalized)) {
+            return this.responses.tiposGenerales();
+        }
+
+        // ========== DIFERENCIAS ==========
+        if (/diferencia|cual es mejor/.test(normalized)) {
+            if (/fibra.*aluminio|aluminio.*fibra/.test(normalized)) {
+                return this.responses.fibraVsAluminio();
+            }
+            if (/tijera.*extension/.test(normalized)) {
+                return this.responses.tijeraVsExtension();
             }
         }
 
-        // 2. Buscar en keywords
-        for (let [key, pattern] of Object.entries(this.patterns)) {
-            if (pattern.keywords) {
-                for (let keyword of pattern.keywords) {
-                    if (text.includes(keyword)) {
-                        if (pattern.responses) {
-                            return pattern.responses[Math.floor(Math.random() * pattern.responses.length)];
-                        }
-                        return pattern.response;
-                    }
-                }
+        // ========== TAMAÑOS ==========
+        if (/tamano|tamanos|medida|altura|size/.test(normalized)) {
+            return this.responses.tamanos();
+        }
+
+        // ========== FALLBACK INTELIGENTE ==========
+        return this.intelligentFallback(normalized, entities);
+    },
+
+    // ============================================
+    // RESPUESTAS DINÁMICAS
+    // ============================================
+    responses: {
+        greeting() {
+            const greetings = [
+                '¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar?',
+                '¡Buenas! Soy Diana, asistente de Escaleras Ferre. ¿Qué necesitas?',
+                '¡Hola! Aquí Diana. ¿Buscas escaleras? Cuéntame qué necesitas.'
+            ];
+            return greetings[Math.floor(Math.random() * greetings.length)];
+        },
+
+        howAreYou() {
+            return '¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas?';
+        },
+
+        contactar() {
+            return '¡Claro! Te conecto con un asesor experto por WhatsApp 📱\n\nEllos pueden ayudarte con:\n✅ Cotizaciones personalizadas\n✅ Disponibilidad inmediata\n✅ Opciones de pago\n\n¿Prefieres **Bogotá** o **Bucaramanga**?';
+        },
+
+        verCatalogo() {
+            return 'Tenemos **4 tipos principales** de escaleras:\n\n🔸 **EXTENSIÓN** → Hasta 12m (grandes alturas)\n🔸 **TIJERA** → 0.6-6m (plegable, autosoportada)\n🔸 **SENCILLA** → 1.5-6m (ligera, 1 cuerpo)\n🔸 **CABALLETE** → 5-10m (doble acceso)\n\nTodas en **fibra de vidrio** o **aluminio**.\n\n¿Qué altura necesitas?';
+        },
+
+        alquiler(entities) {
+            if (entities.height && entities.time) {
+                return `Perfecto, necesitas una escalera de **${entities.height}m** por **${entities.time}** en alquiler.\n\nEl servicio incluye:\n✅ Entrega e instalación\n✅ Recogida sin costo\n✅ Mantenimiento incluido\n\nTe conecto con un asesor para cotización exacta 📱`;
             }
-        }
+            if (entities.height) {
+                return `Sí, tenemos alquiler de escaleras de **${entities.height}m**.\n\n¿Por cuánto tiempo la necesitas? (días, semanas o meses)`;
+            }
+            return 'Sí, tenemos **servicio de alquiler completo**:\n\n🔸 Por día, semana o mes\n🔸 Incluye entrega e instalación\n🔸 Recogida sin costo adicional\n\n¿Qué altura necesitas y por cuánto tiempo?';
+        },
 
-        // 3. Fallback inteligente
-        return this.intelligentFallback(text);
+        precios(entities) {
+            let response = 'Para darte un precio exacto necesito saber:\n\n';
+            const missing = [];
+
+            if (!entities.material && !ChatbotUltraInteligente.context.extractedMaterial) {
+                missing.push('• Material: **fibra de vidrio** o **aluminio**');
+            }
+            if (!entities.type && !ChatbotUltraInteligente.context.extractedType) {
+                missing.push('• Tipo: **tijera**, **extensión** o **sencilla**');
+            }
+            if (!entities.height && !ChatbotUltraInteligente.context.extractedHeight) {
+                missing.push('• Altura: ¿cuántos metros?');
+            }
+
+            if (missing.length === 0) {
+                const mat = entities.material || ChatbotUltraInteligente.context.extractedMaterial;
+                const tipo = entities.type || ChatbotUltraInteligente.context.extractedType;
+                const altura = entities.height || ChatbotUltraInteligente.context.extractedHeight;
+                
+                return `Perfecto! Buscas:\n\n✅ Material: **${mat}**\n✅ Tipo: **${tipo}**\n✅ Altura: **${altura}m**\n\nTe conecto con un asesor para cotización actualizada por WhatsApp 📱`;
+            }
+
+            response += missing.join('\n');
+            response += '\n\nCuéntame y te ayudo 😊';
+            return response;
+        },
+
+        alturaEspecifica(entities) {
+            const altura = entities.height;
+            const material = entities.material || ChatbotUltraInteligente.context.extractedMaterial;
+            const tipo = entities.type || ChatbotUltraInteligente.context.extractedType;
+
+            let response = '';
+
+            if (altura <= 2) {
+                response = `Para **${altura}m** te recomiendo:\n\n🔸 **Tijera** (plegable, autosoportada)\n🔸 **Sencilla** (liviana, 1 cuerpo)\n\n`;
+            } else if (altura <= 6) {
+                response = `Para **${altura}m** tienes opciones:\n\n🔸 **Extensión** (más alcance)\n🔸 **Tijera** (autosoportada)\n\n`;
+            } else if (altura <= 12) {
+                response = `Para **${altura}m** necesitas **escalera extensión**:\n\n🔸 Capacidad industrial 300lb\n🔸 Sistema de poleas\n\n`;
+            } else {
+                response = `Para **${altura}m** te recomendaría:\n\n🔸 Escalera extensión 3 cuerpos (hasta 9.2m)\n🔸 O consultar opciones especiales\n\n`;
+            }
+
+            if (!material) {
+                response += '¿Prefieres **fibra de vidrio** (trabajo eléctrico) o **aluminio** (más liviana)?';
+            } else {
+                response += `Perfecto, en **${material}**. Te conecto con asesor para cotización 📱`;
+            }
+
+            return response;
+        },
+
+        materialEspecifico(entities) {
+            const material = entities.material;
+            
+            if (material === 'aluminio') {
+                return 'Aluminio es excelente por:\n\n✅ **Más liviana** (30% menos peso)\n✅ **Más económica**\n✅ Fácil transporte\n\n⚠️ NO usar cerca de cables eléctricos\n\n¿Qué **altura** necesitas?';
+            } else {
+                return 'Fibra de vidrio es ideal por:\n\n✅ **Aislante eléctrico** (NO conduce)\n✅ Resistente a corrosión y UV\n✅ Certificada para trabajo eléctrico\n\n¿Qué **altura** necesitas?';
+            }
+        },
+
+        tipoEspecifico(entities) {
+            const tipo = entities.type;
+            
+            const tipos = {
+                'tijera': 'Las **tijeras** son:\n\n✅ Plegables y autosoportadas\n✅ Ideales para espacios reducidos\n✅ Desde 0.6m hasta 6m\n\n¿Qué **altura** necesitas?',
+                'extension': 'Las **extensiones** son:\n\n✅ Para grandes alturas (hasta 12m)\n✅ Sistema de poleas\n✅ Se apoyan en pared\n\n¿Qué **altura** necesitas?',
+                'sencilla': 'Las **sencillas** son:\n\n✅ Livianas y fáciles de mover\n✅ 1 solo cuerpo (1.5m-6m)\n✅ Económicas\n\n¿Qué **altura** necesitas?',
+                'caballete': 'Las **caballetes** son:\n\n✅ Acceso por ambos lados\n✅ Muy estables (5m-10m)\n✅ Ideales para 2 personas\n\n¿Qué **altura** necesitas?'
+            };
+
+            return tipos[tipo] || this.verCatalogo();
+        },
+
+        paraConstruccion(entities) {
+            const altura = entities.height || ChatbotUltraInteligente.context.extractedHeight;
+            
+            let response = 'Para **construcción** recomiendo:\n\n🔸 **Extensión aluminio** (liviana, fácil mover)\n🔸 Capacidad industrial 300lb\n\n';
+            
+            if (altura) {
+                response += `Para **${altura}m** te sirve perfectamente. ¿La necesitas en **fibra** o **aluminio**?`;
+            } else {
+                response += '¿Qué **altura** necesitas en la obra?';
+            }
+            
+            return response;
+        },
+
+        trabajoElectrico() {
+            return 'Para **trabajo eléctrico** SOLO recomiendo **FIBRA DE VIDRIO**:\n\n✅ 100% aislante eléctrico\n✅ NO conduce electricidad\n✅ Certificada para trabajo en vivo\n✅ Segura hasta 30kV\n\n¿Qué **altura** necesitas?';
+        },
+
+        tiposGenerales() {
+            return 'Tenemos **4 tipos** de escaleras:\n\n🔸 **EXTENSIÓN** → Hasta 12m (2 o 3 cuerpos)\n🔸 **TIJERA** → 0.6-6m (plegable)\n🔸 **SENCILLA** → 1.5-6m (1 cuerpo)\n🔸 **CABALLETE** → 5-10m (doble acceso)\n\nTodas en **fibra** o **aluminio**. ¿Cuál te interesa?';
+        },
+
+        fibraVsAluminio() {
+            return '**FIBRA vs ALUMINIO:**\n\n🔸 **FIBRA DE VIDRIO**\n✅ Aislante eléctrico\n✅ Más durable\n✅ Uso eléctrico/industrial\n❌ Más pesada\n\n🔸 **ALUMINIO**\n✅ Más liviana (30%)\n✅ Más económica\n✅ Uso general\n❌ Conduce electricidad\n\n¿Para qué tipo de trabajo?';
+        },
+
+        tijeraVsExtension() {
+            return '**TIJERA vs EXTENSIÓN:**\n\n🔸 **TIJERA**\n✅ Autosoportada\n✅ Plegable\n✅ Hasta 6m\n✅ Ideal interiores\n\n🔸 **EXTENSIÓN**\n✅ Hasta 12m\n✅ Se apoya en pared\n✅ Más alcance\n✅ Ideal exteriores\n\n¿Qué altura necesitas?';
+        },
+
+        tamanos() {
+            return 'Tenemos escaleras desde **0.6m hasta 12m**:\n\n📏 **Chicas**: 0.6-2m (hogar)\n📏 **Medianas**: 2-6m (comercial)\n📏 **Grandes**: 6-12m (industrial)\n\n¿Qué **altura** específica necesitas?';
+        }
     },
 
     // ============================================
-    // FALLBACK INTELIGENTE
+    // FALLBACK ULTRA INTELIGENTE
     // ============================================
-    intelligentFallback(text) {
-        // Si menciona números, probablemente es altura
-        if (/\d+/.test(text) && (text.includes('m') || text.includes('metro'))) {
-            return 'Para recomendarte la escalera perfecta, necesito saber:\n\n• ¿Para qué tipo de trabajo? (eléctrico, construcción, hogar)\n• ¿Prefieres tijera, extensión o sencilla?\n• ¿Fibra de vidrio o aluminio?';
+    intelligentFallback(normalized, entities) {
+        // Si tiene entidades pero mensaje incompleto
+        if (entities.height || entities.material || entities.type) {
+            let response = 'Ok, entiendo que buscas:\n\n';
+            const parts = [];
+            
+            if (entities.height) parts.push(`✅ Altura: **${entities.height}m**`);
+            if (entities.material) parts.push(`✅ Material: **${entities.material}**`);
+            if (entities.type) parts.push(`✅ Tipo: **${entities.type}**`);
+            
+            response += parts.join('\n') + '\n\n';
+            
+            const missing = [];
+            if (!entities.material && !this.context.extractedMaterial) missing.push('el material (fibra o aluminio)');
+            if (!entities.type && !this.context.extractedType) missing.push('el tipo (tijera, extensión, sencilla)');
+            if (!entities.height && !this.context.extractedHeight) missing.push('la altura');
+            
+            if (missing.length > 0) {
+                response += `Solo me falta saber **${missing.join(' y ')}** para recomendarte la mejor opción 😊`;
+            } else {
+                response += 'Te conecto con un asesor para cotización exacta 📱';
+            }
+            
+            return response;
         }
 
-        // Si es muy corto, pedir más info
-        if (text.split(' ').length <= 3) {
-            return 'Cuéntame un poco más:\n\n• ¿Qué altura necesitas?\n• ¿Para qué tipo de trabajo?\n• ¿Algún tipo específico en mente?\n\nAsí te recomiendo la mejor opción 😊';
-        }
-
-        // Fallback general amigable
-        return 'Disculpa, no entendí bien tu pregunta 😅\n\nPuedo ayudarte con:\n• Tipos de escaleras (tijera, extensión, sencilla)\n• Alturas disponibles\n• Materiales (fibra o aluminio)\n• Precios y cotizaciones\n• Alquiler y servicios\n\n¿Sobre qué quieres saber?';
-    },
-
-    // ============================================
-    // MANEJO DE CONTEXTO
-    // ============================================
-    updateContext(message, response) {
-        this.context.messageCount++;
-        
-        // Extraer altura si la mencionan
-        const alturaMatch = message.match(/(\d+)\s*(m|metro)/i);
-        if (alturaMatch) {
-            this.context.mentionedHeight = parseInt(alturaMatch[1]);
-        }
-
-        // Detectar material mencionado
-        if (/fibra/i.test(message)) this.context.mentionedMaterial = 'fibra';
-        if (/aluminio/i.test(message)) this.context.mentionedMaterial = 'aluminio';
-
-        // Detectar tipo mencionado
-        if (/tijera/i.test(message)) this.context.mentionedType = 'tijera';
-        if (/extension|extensión/i.test(message)) this.context.mentionedType = 'extension';
-        if (/sencilla/i.test(message)) this.context.mentionedType = 'sencilla';
+        // Fallback general
+        return 'Puedo ayudarte con:\n\n📏 **Alturas** disponibles\n🔧 **Tipos** (tijera, extensión, sencilla)\n⚙️ **Materiales** (fibra o aluminio)\n💰 **Precios** y cotizaciones\n🏢 **Alquiler** completo\n\n¿Qué te interesa saber?';
     },
 
     // ============================================
     // FUNCIÓN PRINCIPAL
     // ============================================
     async generateResponse(message) {
-        // Actualizar contexto
-        this.updateContext(message, null);
-
-        // Detectar intención y generar respuesta
+        this.context.messageCount++;
+        
         const response = this.detectIntent(message);
-
-        // Guardar en historial
+        
         this.conversationHistory.push({
             role: 'user',
             content: message
@@ -3122,16 +3112,13 @@ const ChatbotInteligente = {
         return response;
     },
 
-    // ============================================
-    // DEBE OFRECER WHATSAPP
-    // ============================================
     shouldOfferWhatsApp() {
         return this.context.messageCount >= 3;
     }
 };
 
 // ============================================
-// CONTROLADOR DEL CHATBOT (UI)
+// CONTROLADOR UI
 // ============================================
 const ChatbotController = {
     isOpen: false,
@@ -3196,16 +3183,16 @@ const ChatbotController = {
 
         await this.simulateTyping();
 
-        const response = await ChatbotInteligente.generateResponse(message);
+        const response = await ChatbotUltraInteligente.generateResponse(message);
         this.addMessage(response, 'bot');
 
-        if (ChatbotInteligente.shouldOfferWhatsApp()) {
+        if (ChatbotUltraInteligente.shouldOfferWhatsApp()) {
             await this.simulateTyping(1000);
             this.offerWhatsAppContact();
         }
     },
 
-    async simulateTyping(delay = 1500) {
+    async simulateTyping(delay = 1200) {
         this.isTyping = true;
         this.addTypingIndicator();
 
@@ -3220,7 +3207,6 @@ const ChatbotController = {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}-message`;
         
-        // Convertir markdown básico a HTML
         const htmlText = text
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\n/g, '<br>');
@@ -3235,7 +3221,7 @@ const ChatbotController = {
         const messagesContainer = document.getElementById('chatbot-messages');
         const typingDiv = document.createElement('div');
         typingDiv.className = 'message bot-message typing-indicator';
-        typingDiv.innerHTML = '<span>Diana está escribiendo</span><span class="dots">...</span>';
+        typingDiv.innerHTML = '<span>Diana escribe</span><span class="dots">...</span>';
         typingDiv.id = 'typing-indicator';
 
         messagesContainer.appendChild(typingDiv);
@@ -3252,10 +3238,10 @@ const ChatbotController = {
         const contactDiv = document.createElement('div');
         contactDiv.className = 'message bot-message contact-options';
         contactDiv.innerHTML = `
-            <p>¿Te gustaría hablar con un asesor para cotización exacta?</p>
+            <p>¿Te conecto con un asesor para cotización exacta?</p>
             <div class="whatsapp-options">
                 <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Bogotá (Virtual)
+                    <i class="fab fa-whatsapp"></i> Bogotá
                 </button>
                 <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn">
                     <i class="fab fa-whatsapp"></i> Bucaramanga
@@ -3272,7 +3258,7 @@ const ChatbotController = {
             precios: '¿Cuáles son los precios?',
             catalogo: '¿Qué tipos de escaleras tienen?',
             alquiler: '¿Hacen alquiler?',
-            contacto: 'Quiero contactar con un asesor'
+            contacto: 'Quiero hablar con un asesor'
         };
 
         const input = document.getElementById('chatbot-input');
@@ -3281,23 +3267,16 @@ const ChatbotController = {
     }
 };
 
-// Función global para WhatsApp
 window.openWhatsAppSede = function(sede) {
-    const phones = {
-        bogota: '573008611868',
-        bucaramanga: '573181027047'
-    };
-
-    const message = `Hola, me gustaría recibir asesoría sobre escaleras. Me contacto desde la página web.`;
-    const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappURL, '_blank');
+    const phones = { bogota: '573008611868', bucaramanga: '573181027047' };
+    const message = `Hola, me gustaría recibir asesoría sobre escaleras. Vengo desde la web.`;
+    window.open(`https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`, '_blank');
 };
 
-// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🤖 Chatbot Inteligente LOCAL inicializado');
+    console.log('🤖 Chatbot Ultra Inteligente inicializado');
     ChatbotController.init();
-}); 
+});
 
         // Animaciones de scroll
         const observerOptions = {
