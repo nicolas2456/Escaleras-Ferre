@@ -2698,270 +2698,441 @@
             certifications: "ISO 9001, ANSI 14.5, EN131, OSHA"
         };
 
-       // ===================================
-// RENDER API CONFIGURATION (Reemplaza GROQ AI)
-// ===================================
+      // ============================================
+// CHATBOT INTELIGENTE 100% LOCAL
+// Sistema Avanzado de Detección y Respuesta
+// ============================================
 
-const RenderAPIConfig = {
-    apiUrl: 'https://escaleras-ferre-chatbot-api.onrender.com/chat',
-    
-    async testConnection() {
-        try {
-            console.log('🔗 Probando conexión con Render API...');
-            const response = await fetch('https://escaleras-ferre-chatbot-api.onrender.com');
-            
-            if (response.ok) {
-                const data = await response.json();
-                console.log('✅ Render API conectada:', data.message);
-                return true;
-            } else {
-                console.error('❌ Error Render API:', response.status);
-                return false;
-            }
-        } catch (error) {
-            console.error('❌ Error de red Render API:', error);
-            return false;
-        }
-    }
-};
-
-// ===================================
-// HUMANIZED CHATBOT AI (Actualizado para Render)
-// ===================================
-
-const HumanizedChatbotAI = {
+const ChatbotInteligente = {
     conversationHistory: [],
+    context: {
+        lastTopic: null,
+        mentionedHeight: null,
+        mentionedMaterial: null,
+        mentionedType: null,
+        messageCount: 0
+    },
 
-    shouldUseAI(message) {
+    // ============================================
+    // PATRONES DE DETECCIÓN INTELIGENTE
+    // ============================================
+    patterns: {
+        // SALUDOS
+        greetings: {
+            keywords: ['hola', 'buenos', 'buenas', 'hey', 'hi', 'saludos', 'que tal', 'qué tal'],
+            responses: [
+                '¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar hoy?',
+                '¡Buenas! Soy Diana, tu asistente de escaleras. ¿Qué necesitas?',
+                '¡Hola! Aquí Diana de Escaleras Ferre. ¿Buscas alguna escalera en particular?'
+            ]
+        },
+
+        // ESTADO DE ÁNIMO
+        howAreYou: {
+            keywords: ['como estas', 'cómo estás', 'como va', 'todo bien', 'que tal estas'],
+            responses: [
+                '¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas?',
+                '¡Genial! Gracias por preguntar. ¿En qué puedo ayudarte con escaleras hoy?',
+                '¡Todo perfecto! 😊 ¿Qué escalera estás buscando?'
+            ]
+        },
+
+        // TIPOS DE ESCALERA
+        tiposGenerales: {
+            keywords: ['que tipo', 'qué tipo', 'cuales tienen', 'cuáles tienen', 'que escaleras', 'tipos de escalera'],
+            response: 'Tenemos varios tipos de escaleras:\n\n🔸 **Extensión** (2 o 3 cuerpos, hasta 12m)\n🔸 **Tijera** (plegable, 0.6m - 6m)\n🔸 **Sencilla** (1 cuerpo, 1.5m - 6m)\n🔸 **Caballete** (doble acceso, 5m - 10m)\n\nTodas en fibra de vidrio o aluminio. ¿Qué altura necesitas o para qué tipo de trabajo?'
+        },
+
+        // ESCALERA TIJERA
+        tipoTijera: {
+            keywords: ['tijera', 'tijeras', 'plegable', 'tipo tijera'],
+            response: 'Las escaleras **tipo tijera** son plegables e ideales para trabajos en espacios reducidos:\n\n✅ Desde 0.6m hasta 6m\n✅ Peldaños planos antideslizantes\n✅ Autosoportadas (no necesitan pared)\n✅ Industrial (300lb) o Comercial (250lb)\n\n¿Qué altura necesitas? Así te recomiendo el modelo exacto.'
+        },
+
+        // ESCALERA EXTENSIÓN
+        tipoExtension: {
+            keywords: ['extension', 'extensión', 'extensible', 'extender', 'dos cuerpos', 'tres cuerpos'],
+            response: 'Las escaleras **extensión** son perfectas para grandes alturas:\n\n✅ 2 cuerpos: 5m a 12m\n✅ 3 cuerpos: hasta 9.2m (más compacta)\n✅ Sistema de poleas y seguros\n✅ Capacidad industrial 300lb\n\n¿Qué altura necesitas alcanzar?'
+        },
+
+        // ESCALERA SENCILLA
+        tipoSencilla: {
+            keywords: ['sencilla', 'simple', 'recta', 'un cuerpo', '1 cuerpo'],
+            response: 'Las escaleras **sencillas** son ideales para alturas fijas:\n\n✅ Desde 1.5m hasta 6m\n✅ Livianas y fáciles de transportar\n✅ Perfectas para acceso a techos o entrepisos\n✅ Industrial o comercial\n\n¿Para qué altura la necesitas?'
+        },
+
+        // ESCALERA CABALLETE
+        tipoCaballete: {
+            keywords: ['caballete', 'doble', 'doble acceso', 'dos lados'],
+            response: 'Las escaleras **caballete** tienen acceso por ambos lados:\n\n✅ Desde 5m hasta 10m\n✅ Ideal para trabajos de dos personas\n✅ Muy estable, no necesita apoyo\n✅ Capacidad industrial 300lb\n\n¿Qué altura necesitas?'
+        },
+
+        // DIFERENCIAS TIJERA VS EXTENSIÓN
+        diferenciasTipos: {
+            keywords: ['diferencia entre', 'diferencias', 'tijera o extension', 'cual es mejor'],
+            response: '**Diferencias principales:**\n\n🔸 **Tijera**: Plegable, autosoportada, para alturas bajas (hasta 6m). Ideal para interiores.\n\n🔸 **Extensión**: Se extiende, necesita apoyarse, para grandes alturas (hasta 12m). Ideal para exteriores.\n\n¿Para qué tipo de trabajo la vas a usar? Así te recomiendo la mejor opción.'
+        },
+
+        // ALTURAS ESPECÍFICAS
+        altura: {
+            patterns: [/(\d+)\s*(m|metro|mts)/i, /altura.*?(\d+)/i, /llegar.*?(\d+)/i, /alcanzar.*?(\d+)/i],
+            handler: (match, message) => {
+                const altura = parseInt(match[1]);
+                this.context.mentionedHeight = altura;
+
+                if (altura <= 2) {
+                    return `Para ${altura} metros te recomiendo una **escalera tijera** o **sencilla**:\n\n🔸 Tijera TF/TA ${altura <= 1.2 ? '1,20' : altura <= 1.8 ? '1,80' : '2,10'}\n🔸 Sencilla SF/SA ${altura <= 1.5 ? '1,50' : altura <= 1.8 ? '1,80' : '2,10'}\n\n¿Es para uso eléctrico (fibra) o general (aluminio)?`;
+                } else if (altura <= 6) {
+                    return `Para ${altura} metros tienes opciones:\n\n🔸 **Extensión**: EF/EA ${altura <= 5 ? '5,00' : '6,00'} (más alcance)\n🔸 **Tijera**: TF/TA hasta 6,00 (autosoportada)\n\n¿Es para trabajo eléctrico o uso general?`;
+                } else if (altura <= 12) {
+                    return `Para ${altura} metros necesitas una **escalera extensión**:\n\n🔸 EF/EA ${altura <= 7.4 ? '7,40' : altura <= 8.6 ? '8,60' : altura <= 10 ? '10,0' : altura <= 11 ? '11,0' : '12,0'}\n\nCapacidad industrial 300lb. ¿Es para trabajo eléctrico (fibra) o uso general (aluminio)?`;
+                } else {
+                    return `Para alturas mayores a 12m te recomiendo la escalera **extensión 3 cuerpos**:\n\n🔸 EF3 3.00/9.20 (alcance máximo 9.2m extendida)\n\nPara proyectos especiales podemos consultar opciones customizadas. ¿Te conecto con un asesor?`;
+                }
+            }
+        },
+
+        // MATERIAL - FIBRA VS ALUMINIO
+        fibraVsAluminio: {
+            keywords: ['mejor fibra o aluminio', 'diferencia fibra aluminio', 'cual material', 'fibra o aluminio'],
+            response: '**Fibra de Vidrio vs Aluminio:**\n\n🔸 **FIBRA DE VIDRIO**\n✅ Aislante eléctrico (NO conduce)\n✅ Ideal para trabajo eléctrico\n✅ Resistente a corrosión y UV\n✅ Más pesada pero más segura\n\n🔸 **ALUMINIO**\n✅ Más liviana (30% menos peso)\n✅ Más económica\n✅ Conductor eléctrico (NO usar cerca de cables)\n✅ Ideal para uso general\n\n¿Es para trabajo eléctrico?'
+        },
+
+        // TRABAJO ELÉCTRICO
+        trabajoElectrico: {
+            keywords: ['electrico', 'eléctrico', 'cables', 'electricidad', 'alta tension', 'alta tensión', 'voltaje'],
+            response: 'Para **trabajo eléctrico** SOLO recomiendo **fibra de vidrio**:\n\n✅ 100% aislante eléctrico\n✅ NO conduce electricidad\n✅ Certificada para trabajo en vivo\n✅ Peldaños tipo D antideslizantes\n\n¿Qué altura necesitas? Te recomiendo el modelo exacto en fibra.'
+        },
+
+        // POR QUÉ FIBRA
+        porQueFibra: {
+            keywords: ['por que fibra', 'por qué fibra', 'ventaja fibra', 'fibra de vidrio'],
+            response: 'La **fibra de vidrio** tiene ventajas clave:\n\n✅ **Seguridad eléctrica**: NO conduce electricidad\n✅ **Durabilidad**: Resistente a corrosión, humedad y UV\n✅ **Certificaciones**: ISO, ANSI, OSHA para trabajo industrial\n✅ **Peldaños reforzados**: Mayor capacidad de carga (300lb)\n\nEs la opción #1 para trabajo eléctrico y ambientes exigentes. ¿Para qué tipo de trabajo la necesitas?'
+        },
+
+        // VENTAJAS ALUMINIO
+        ventajasAluminio: {
+            keywords: ['ventaja aluminio', 'por que aluminio', 'aluminio mejor'],
+            response: '**Ventajas del aluminio:**\n\n✅ **Más liviana**: 30-40% menos peso que fibra\n✅ **Más económica**: Precio más accesible\n✅ **Fácil transporte**: Ideal para movilidad\n✅ **Resistente**: Larga vida útil sin corrosión\n\n⚠️ **NO usar cerca de cables eléctricos** (conduce electricidad)\n\nIdeal para construcción, mantenimiento general, pintura. ¿Para qué la vas a usar?'
+        },
+
+        // CUÁL ES MÁS LIVIANA
+        masLiviana: {
+            keywords: ['mas liviana', 'más liviana', 'cual pesa menos', 'mas ligera'],
+            response: 'El **aluminio es más liviano**:\n\n• Aluminio 5m: ~14kg\n• Fibra 5m: ~18kg\n\n**Diferencia de 30-40% en peso**\n\nSi la vas a mover constantemente, aluminio es mejor opción. ¿Es para trabajo eléctrico o uso general?'
+        },
+
+        // ALUMINIO MÁS BARATA
+        aluminioBarata: {
+            keywords: ['aluminio mas barata', 'aluminio más barata', 'aluminio mas economica', 'precio aluminio'],
+            response: 'Sí, el **aluminio es más económico**:\n\n• Diferencia de ~15-20% vs fibra\n• Mismo rendimiento para uso general\n• Ideal si NO es trabajo eléctrico\n\n¿Te interesa aluminio? ¿Qué altura necesitas?'
+        },
+
+        // DIFERENCIAS MATERIALES
+        diferenciasMateriales: {
+            keywords: ['diferencia material', 'diferencias materiales', 'fibra vs aluminio'],
+            response: '**Comparación completa:**\n\n🔸 **FIBRA DE VIDRIO**\n• Aislante eléctrico ✅\n• Más pesada\n• Más costosa\n• Uso: Eléctrico, industrial\n\n🔸 **ALUMINIO**\n• Conduce electricidad ⚠️\n• Más liviana\n• Más económica\n• Uso: General, construcción\n\n¿Para qué tipo de trabajo la necesitas?'
+        },
+
+        // NO CONDUCE ELECTRICIDAD
+        noConduceElectricidad: {
+            keywords: ['no conduce', 'no conduce electricidad', 'aislante', 'fibra electricidad'],
+            response: 'Correcto, la **fibra de vidrio NO conduce electricidad**:\n\n✅ Material 100% dieléctrico\n✅ Segura para trabajo en vivo\n✅ Certificada hasta 30kV\n✅ Requerida por normas OSHA para trabajo eléctrico\n\nEs la ÚNICA opción segura cerca de cables. ¿Qué altura necesitas?'
+        },
+
+        // ALQUILER
+        alquiler: {
+            keywords: ['alquiler', 'alquilar', 'rentar', 'renta', 'arrendar', 'temporal'],
+            response: 'Sí, tenemos **servicio de alquiler** completo:\n\n🔸 Extensión, tijera, sencilla, caballete\n🔸 Por día, semana o mes\n🔸 Incluye entrega e instalación\n🔸 Recogida sin costo adicional\n\n¿Qué altura necesitas y por cuánto tiempo? Te conecto con un asesor para cotización exacta.'
+        },
+
+        // ALQUILER TIEMPO
+        alquilerTiempo: {
+            keywords: ['por cuanto tiempo', 'cuánto tiempo', 'dias', 'semanas', 'meses', 'alquiler dia'],
+            response: 'Opciones de alquiler:\n\n🔸 **Por día**: Proyectos cortos\n🔸 **Por semana**: Proyectos medianos\n🔸 **Por mes**: Proyectos largos (mejor tarifa)\n\nIncluye entrega, instalación y recogida. ¿Para cuánto tiempo la necesitas? Te cotizo con un asesor.'
+        },
+
+        // ENTREGA ALQUILER
+        entregaAlquiler: {
+            keywords: ['entregan alquiler', 'llevan la escalera', 'instalacion alquiler', 'domicilio alquiler'],
+            response: 'Sí, el servicio de alquiler **incluye**:\n\n✅ Entrega a domicilio\n✅ Instalación si es necesario\n✅ Recogida sin costo\n\n¿En qué ciudad estás? Bogotá o Bucaramanga tienen cobertura directa.'
+        },
+
+        // SERVICIO INSTALACIÓN
+        servicioInstalacion: {
+            keywords: ['instalacion', 'instalación', 'instalar', 'montar', 'servicio tecnico'],
+            response: 'Sí, ofrecemos **servicio de instalación** para:\n\n✅ Escaleras extensión grandes\n✅ Sistemas de acceso industrial\n✅ Configuraciones especiales\n\nIncluido en alquiler. Para compra, cotizamos según proyecto. ¿En qué ciudad estás?'
+        },
+
+        // MANTENIMIENTO
+        mantenimiento: {
+            keywords: ['mantenimiento', 'reparacion', 'reparación', 'servicio', 'revision'],
+            response: 'Ofrecemos **mantenimiento especializado**:\n\n🔧 Preventivo: Inspección y lubricación\n🔧 Correctivo: Reparación de peldaños, remaches\n🔧 Certificación: Revisión según normas OSHA\n\n¿Qué tipo de escalera tienes y qué necesita? Te conecto con técnico.'
+        },
+
+        // COSTO ALQUILER
+        costoAlquiler: {
+            keywords: ['cuanto alquiler', 'cuánto alquiler', 'precio alquiler', 'costo alquiler'],
+            response: 'El costo de alquiler depende de:\n\n• Tipo de escalera\n• Altura\n• Tiempo de uso\n• Ciudad de entrega\n\n¿Qué escalera necesitas y por cuánto tiempo? Te conecto con un asesor para cotización exacta por WhatsApp.'
+        },
+
+        // PRECIOS
+        precios: {
+            keywords: ['precio', 'cuanto cuesta', 'cuánto cuesta', 'valor', 'cotizacion', 'cotización', 'lista de precios'],
+            response: 'Los precios varían según:\n\n• Material (fibra o aluminio)\n• Tipo (extensión, tijera, sencilla)\n• Altura\n• Capacidad (industrial o comercial)\n\n¿Qué escalera específica te interesa? Te conecto con un asesor para cotización personalizada por WhatsApp 📱'
+        },
+
+        // PRECIO ESPECÍFICO
+        precioEspecifico: {
+            patterns: [/precio.*?(ef|ea|tf|ta|sf|sa)\s*\d+/i, /cuanto.*?(ef|ea|tf|ta|sf|sa)\s*\d+/i, /valor.*?(ef|ea|tf|ta|sf|sa)\s*\d+/i],
+            handler: (match, message) => {
+                return `Para cotización exacta de modelos específicos, te conecto con un asesor por WhatsApp 📱\n\nEllos tienen precios actualizados y pueden ofrecerte:\n✅ Descuentos por volumen\n✅ Opciones de financiamiento\n✅ Disponibilidad inmediata\n\n¿Prefieres Bogotá o Bucaramanga?`;
+            }
+        },
+
+        // DESCUENTOS
+        descuentos: {
+            keywords: ['descuento', 'rebaja', 'oferta', 'promocion', 'promoción'],
+            response: 'Tenemos descuentos según:\n\n💰 Compra de múltiples unidades\n💰 Proyectos corporativos\n💰 Alquiler a largo plazo\n\n¿Cuántas escaleras necesitas? Te conecto con un asesor para ofrecerte la mejor tarifa por WhatsApp.'
+        },
+
+        // MÁS BARATA
+        masBarata: {
+            keywords: ['mas barata', 'más barata', 'mas economica', 'mas económica', 'precio bajo'],
+            response: 'Las opciones más económicas son:\n\n🔸 **Aluminio Comercial** (Tipo II, 225lb)\n🔸 Tijera desde 0.6m\n🔸 Sencilla desde 1.5m\n\n¿Qué altura necesitas? Te recomiendo el modelo exacto y te conecto para cotización.'
+        },
+
+        // FORMAS DE PAGO
+        formasPago: {
+            keywords: ['forma de pago', 'aceptan tarjeta', 'pago', 'transferencia', 'efectivo', 'credito', 'crédito'],
+            response: 'Aceptamos:\n\n💳 Tarjetas débito/crédito\n💵 Efectivo\n🏦 Transferencia bancaria\n📄 Crédito empresarial (para corporativos)\n\n¿Te interesa alguna escalera en particular? Te conecto con asesor para procesar tu compra.'
+        },
+
+        // USO / APLICACIÓN
+        usoGeneral: {
+            keywords: ['para que sirve', 'para qué sirve', 'uso', 'aplicacion', 'aplicación'],
+            response: 'Nuestras escaleras son ideales para:\n\n🏗️ Construcción e industria\n⚡ Trabajo eléctrico (fibra)\n🎨 Pintura y mantenimiento\n📦 Bodegas y almacenes\n🏢 Acceso a alturas\n\n¿Para qué tipo de trabajo la necesitas? Así te recomiendo el modelo perfecto.'
+        },
+
+        // CONSTRUCCIÓN
+        construccion: {
+            keywords: ['construccion', 'construcción', 'obra', 'albañil'],
+            response: 'Para **construcción** recomiendo:\n\n🔸 **Extensión aluminio** (liviana, fácil mover)\n🔸 Capacidad industrial 300lb\n🔸 Altura según necesidad del proyecto\n\n¿Qué altura necesitas en la obra?'
+        },
+
+        // INDUSTRIAL
+        industrial: {
+            keywords: ['industrial', 'industria', 'fabrica', 'fábrica', 'planta'],
+            response: 'Para **uso industrial** todas son:\n\n✅ Capacidad Tipo IA: 300 libras (136kg)\n✅ Certificación ISO, ANSI, OSHA\n✅ Peldaños reforzados tipo D\n✅ Fibra o aluminio según necesidad\n\n¿Es para trabajo eléctrico o uso general?'
+        },
+
+        // PINTURA
+        pintura: {
+            keywords: ['pintar', 'pintura', 'pintor', 'casa', 'hogar'],
+            response: 'Para **pintura** te recomiendo:\n\n🔸 **Tijera** 1.8m - 3m (autosoportada)\n🔸 **Sencilla** si tienes dónde apoyarla\n🔸 Aluminio (más liviana para mover)\n\n¿Qué altura de techos tienes?'
+        },
+
+        // ALTURA TRABAJO
+        alturaTrabajo: {
+            keywords: ['trabajo en altura', 'trabajos en altura', 'altura', 'alto'],
+            response: 'Para **trabajo en altura seguro**:\n\n✅ Todas certificadas OSHA\n✅ Peldaños antideslizantes\n✅ Capacidad industrial 300lb\n✅ Estabilizadores incluidos\n\n¿Qué altura necesitas alcanzar?'
+        },
+
+        // MANTENIMIENTO USO
+        mantenimientoUso: {
+            keywords: ['mantenimiento', 'mantener', 'reparar', 'arreglar'],
+            response: 'Para **mantenimiento** te sirven:\n\n🔸 Tijera (espacios reducidos)\n🔸 Extensión (grandes alturas)\n🔸 Aluminio (fácil mover)\n\n¿Qué tipo de mantenimiento haces y a qué altura?'
+        },
+
+        // BODEGA
+        bodega: {
+            keywords: ['bodega', 'almacen', 'almacén', 'inventario', 'estante'],
+            response: 'Para **bodegas** recomiendo:\n\n🔸 **Tijera plataforma** (más estabilidad)\n🔸 **Sencilla** para accesos frecuentes\n🔸 Aluminio (liviana, mover fácil)\n\n¿Qué altura tienen los estantes?'
+        },
+
+        // COMERCIAL LIVIANO
+        comercialLiviano: {
+            keywords: ['comercial', 'liviano', 'hogar', 'casa', 'domestico', 'doméstico'],
+            response: 'Para **uso comercial liviano** tenemos:\n\n🔸 Tipo II (225lb de capacidad)\n🔸 Más económicas\n🔸 Aluminio liviano\n🔸 Tijera o sencilla\n\n¿Qué altura necesitas?'
+        },
+
+        // ENVÍOS
+        envios: {
+            keywords: ['envio', 'envío', 'envian', 'envían', 'despacho', 'domicilio'],
+            response: 'Sí, hacemos **envíos** a:\n\n📦 Bogotá y alrededores\n📦 Bucaramanga y zona metropolitana\n📦 Otras ciudades (coordinamos transporte)\n\nTiempo: 2-5 días según ciudad. ¿Dónde necesitas la entrega?'
+        },
+
+        // UBICACIÓN
+        ubicacion: {
+            keywords: ['donde estan', 'dónde están', 'ubicacion', 'ubicación', 'direccion', 'dirección'],
+            response: 'Tenemos **2 sedes**:\n\n📍 **Bogotá** (Virtual)\n   📱 300 861 1868\n\n📍 **Bucaramanga**\n   📍 Cll 34 #11-27\n   📱 318 102 7047\n\n¿Cuál te queda más cerca?'
+        },
+
+        // TIENDA FÍSICA
+        tiendaFisica: {
+            keywords: ['tienda fisica', 'tienda física', 'local', 'showroom', 'visitar'],
+            response: 'Nuestra tienda física está en:\n\n📍 **Bucaramanga**\n   Cll 34 #11-27\n   Lun-Vie: 8am-6pm\n   Sáb: 8am-2pm\n\nEn **Bogotá** atendemos virtual con entregas. ¿Quieres visitarnos?'
+        },
+
+        // CÓMO COMPRAR
+        comoComprar: {
+            keywords: ['como comprar', 'cómo comprar', 'proceso compra', 'comprar'],
+            response: '**Proceso de compra:**\n\n1️⃣ Me dices qué escalera necesitas\n2️⃣ Te conecto con asesor por WhatsApp\n3️⃣ Te cotiza y confirmas\n4️⃣ Realizas pago\n5️⃣ Coordinamos entrega\n\n¿Qué escalera te interesa?'
+        },
+
+        // TIEMPO ENVÍO
+        tiempoEnvio: {
+            keywords: ['cuanto tarda', 'cuánto tarda', 'demora', 'tiempo envio', 'cuando llega'],
+            response: '**Tiempos de entrega:**\n\n📦 Bogotá: 1-3 días\n📦 Bucaramanga: 1-2 días\n📦 Otras ciudades: 3-7 días\n\nDepende de disponibilidad en stock. ¿Qué escalera necesitas?'
+        },
+
+        // STOCK
+        stock: {
+            keywords: ['stock', 'disponibilidad', 'disponible', 'hay', 'tienen'],
+            response: 'Tenemos stock permanente de modelos populares. Para confirmar disponibilidad exacta de una escalera específica, ¿qué modelo te interesa? Te verifico con el asesor.'
+        },
+
+        // RECOGER TIENDA
+        recogerTienda: {
+            keywords: ['recoger', 'recojo', 'pasar', 'buscar tienda'],
+            response: 'Sí, puedes **recoger en tienda** Bucaramanga:\n\n📍 Cll 34 #11-27\n🕐 Lun-Vie: 8am-6pm | Sáb: 8am-2pm\n\nEn Bogotá hacemos entregas. ¿Qué escalera te interesa?'
+        },
+
+        // HORARIOS
+        horarios: {
+            keywords: ['horario', 'hora', 'cuando abren', 'hasta que hora'],
+            response: '**Horarios de atención:**\n\n📍 **Bucaramanga** (Cll 34 #11-27)\n   Lun-Vie: 8:00am - 6:00pm\n   Sábados: 8:00am - 2:00pm\n\n📍 **Bogotá** (Virtual)\n   Lun-Vie: 8:00am - 6:00pm\n\n¿Quieres visitarnos o te atendemos por WhatsApp?'
+        },
+
+        // ENTREGAN EN MI CIUDAD
+        entreganCiudad: {
+            keywords: ['entregan en', 'llegan a', 'envian a', 'envían a', 'mi ciudad'],
+            response: 'Hacemos envíos a toda Colombia:\n\n✅ Bogotá y Bucaramanga (directo)\n✅ Otras ciudades (coordinamos transporte)\n\n¿En qué ciudad estás? Te confirmo tiempos y costos de envío.'
+        },
+
+        // FACTURA
+        factura: {
+            keywords: ['factura', 'facturar', 'recibo', 'comprobante'],
+            response: 'Sí, **emitimos factura electrónica** para:\n\n✅ Personas naturales\n✅ Empresas\n✅ Válida para contabilidad\n\n¿Qué escalera te interesa? Te conecto con asesor para procesar tu compra.'
+        },
+
+        // PARA CASA/HOGAR
+        paraCasa: {
+            keywords: ['para casa', 'para el hogar', 'domestica', 'doméstica', 'mi casa'],
+            response: 'Para **uso doméstico** te recomiendo:\n\n🔸 **Tijera comercial** (225lb) desde 1.2m\n🔸 **Aluminio** (más liviana y económica)\n🔸 Ideal para limpieza, pintura, mantenimiento\n\n¿Qué altura de techos tienes en casa?'
+        }
+    },
+
+    // ============================================
+    // SISTEMA DE DETECCIÓN INTELIGENTE
+    // ============================================
+    detectIntent(message) {
         const text = message.toLowerCase().trim();
         
-        // Solo NO usar IA para saludos MUY simples de 1 palabra
-        const simpleGreetings = ['hola', 'hi', 'hey'];
+        // 1. Buscar en patterns con regex primero
+        for (let [key, pattern] of Object.entries(this.patterns)) {
+            if (pattern.patterns) {
+                for (let regex of pattern.patterns) {
+                    const match = text.match(regex);
+                    if (match && pattern.handler) {
+                        return pattern.handler(match, message);
+                    }
+                }
+            }
+        }
+
+        // 2. Buscar en keywords
+        for (let [key, pattern] of Object.entries(this.patterns)) {
+            if (pattern.keywords) {
+                for (let keyword of pattern.keywords) {
+                    if (text.includes(keyword)) {
+                        if (pattern.responses) {
+                            return pattern.responses[Math.floor(Math.random() * pattern.responses.length)];
+                        }
+                        return pattern.response;
+                    }
+                }
+            }
+        }
+
+        // 3. Fallback inteligente
+        return this.intelligentFallback(text);
+    },
+
+    // ============================================
+    // FALLBACK INTELIGENTE
+    // ============================================
+    intelligentFallback(text) {
+        // Si menciona números, probablemente es altura
+        if (/\d+/.test(text) && (text.includes('m') || text.includes('metro'))) {
+            return 'Para recomendarte la escalera perfecta, necesito saber:\n\n• ¿Para qué tipo de trabajo? (eléctrico, construcción, hogar)\n• ¿Prefieres tijera, extensión o sencilla?\n• ¿Fibra de vidrio o aluminio?';
+        }
+
+        // Si es muy corto, pedir más info
+        if (text.split(' ').length <= 3) {
+            return 'Cuéntame un poco más:\n\n• ¿Qué altura necesitas?\n• ¿Para qué tipo de trabajo?\n• ¿Algún tipo específico en mente?\n\nAsí te recomiendo la mejor opción 😊';
+        }
+
+        // Fallback general amigable
+        return 'Disculpa, no entendí bien tu pregunta 😅\n\nPuedo ayudarte con:\n• Tipos de escaleras (tijera, extensión, sencilla)\n• Alturas disponibles\n• Materiales (fibra o aluminio)\n• Precios y cotizaciones\n• Alquiler y servicios\n\n¿Sobre qué quieres saber?';
+    },
+
+    // ============================================
+    // MANEJO DE CONTEXTO
+    // ============================================
+    updateContext(message, response) {
+        this.context.messageCount++;
         
-        if (simpleGreetings.includes(text)) {
-            console.log('💬 Usando respuesta local para saludo simple');
-            return false;
+        // Extraer altura si la mencionan
+        const alturaMatch = message.match(/(\d+)\s*(m|metro)/i);
+        if (alturaMatch) {
+            this.context.mentionedHeight = parseInt(alturaMatch[1]);
         }
-        
-        // Para TODO lo demás, usar IA
-        console.log('🤖 Usando IA para:', message);
-        return true;
+
+        // Detectar material mencionado
+        if (/fibra/i.test(message)) this.context.mentionedMaterial = 'fibra';
+        if (/aluminio/i.test(message)) this.context.mentionedMaterial = 'aluminio';
+
+        // Detectar tipo mencionado
+        if (/tijera/i.test(message)) this.context.mentionedType = 'tijera';
+        if (/extension|extensión/i.test(message)) this.context.mentionedType = 'extension';
+        if (/sencilla/i.test(message)) this.context.mentionedType = 'sencilla';
     },
 
-    async generateAIResponse(message) {
-        try {
-            console.log('📤 Enviando a Render API:', message);
-            
-            this.conversationHistory.push({ role: 'user', content: message });
-            
-            const response = await fetch(RenderAPIConfig.apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: message,
-                    history: this.conversationHistory.slice(-6) // Últimos 6 mensajes
-                })
-            });
-
-            if (!response.ok) {
-                console.error('❌ Error Render API HTTP:', response.status);
-                return this.getSmartFallback(message);
-            }
-
-            const data = await response.json();
-            const aiResponse = data.response;
-
-            if (!aiResponse) {
-                console.error('❌ Respuesta vacía de Render API');
-                return this.getSmartFallback(message);
-            }
-
-            console.log('✅ Respuesta Render API:', aiResponse);
-            
-            this.conversationHistory.push({ role: 'assistant', content: aiResponse });
-            
-            return aiResponse;
-
-        } catch (error) {
-            console.error('❌ Error Render API:', error.message, error);
-            return this.getSmartFallback(message);
-        }
-    },
-
-    getHumanizedLocalResponse(intent) {
-        const humanResponses = {
-            greetings: [
-                '¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar hoy?',
-                '¡Buenas! Aquí Diana. ¿Qué necesitas?',
-                '¡Hola! ¿Qué escalera estás buscando?'
-            ],
-            contact: [
-                'Te conecto con nuestros asesores. ¿Prefieres Bogotá (virtual) o Bucaramanga (Cll 34 #11-27)?',
-                '¡Claro! Tenemos Bogotá (3008611868) y Bucaramanga (3181027047). ¿Cuál te queda mejor?'
-            ]
-        };
-
-        const responses = humanResponses[intent];
-        return responses ? responses[Math.floor(Math.random() * responses.length)] : null;
-    },
-
-    // Fallback inteligente basado en palabras clave
-    getSmartFallback(message) {
-        console.log('⚠️ Usando fallback inteligente');
-        const text = message.toLowerCase();
-
-        if (text.includes('alquiler') || text.includes('alquilar') || text.includes('rentar')) {
-            return '¡Perfecto! Tenemos servicio de alquiler con entrega incluida. ¿Qué altura necesitas y para qué tipo de trabajo? Así te recomiendo la mejor opción.';
-        }
-
-        if (text.includes('metro') || text.includes('altura')) {
-            return 'Te ayudo con escaleras. Tenemos desde 1.5m hasta 12m en fibra de vidrio y aluminio. ¿Qué altura específica necesitas?';
-        }
-
-        if (text.includes('fibra') || text.includes('aluminio')) {
-            return 'Manejamos escaleras en fibra de vidrio (ideal para trabajo eléctrico) y aluminio (más livianas). ¿Para qué tipo de trabajo las vas a usar?';
-        }
-
-        if (text.includes('precio') || text.includes('costo') || text.includes('cuanto')) {
-            return 'Los precios varían según modelo y tamaño. ¿Te conecto con un asesor por WhatsApp para una cotización exacta? Tenemos Bogotá y Bucaramanga.';
-        }
-
-        if (text.includes('como estas') || text.includes('cómo estás') || text.includes('que tal')) {
-            return '¡Muy bien, gracias! 😊 Lista para ayudarte con escaleras. ¿Qué necesitas hoy?';
-        }
-
-        return 'Disculpa, cuéntame mejor qué tipo de escalera necesitas o para qué trabajo. También puedo conectarte directo con WhatsApp si prefieres. 😊';
-    }
-};
-
-// ===================================
-// CHATBOT AI - Sistema de Inteligencia Artificial
-// ===================================
-
-const ChatbotAI = {
-    conversationState: {
-        userName: null,
-        currentTopic: null,
-        askedWhatsApp: false,
-        messagesCount: 0
-    },
-
-    // Base de conocimientos con keywords y respuestas variables
-    knowledge: {
-        greetings: {
-            keywords: ['hola', 'buenos', 'buenas', 'hi', 'hey', 'saludos'],
-            responses: [
-                '¡Hola! Bienvenido a Escaleras Ferre. ¿En qué puedo ayudarte?',
-                '¡Buenos días! Soy el asistente de Escaleras Ferre. ¿Qué necesitas saber?',
-                '¡Hola! ¿Tienes alguna pregunta sobre nuestras escaleras?'
-            ]
-        },
-
-        prices: {
-            keywords: ['precio', 'costo', 'valor', 'cuanto', '$$', 'pesos', 'cotizar', 'cotizacion'],
-            responses: [
-                'Nuestros precios varían según el tipo y tamaño de escalera. ¿Te interesa algún tipo específico? (Fibra de vidrio, Aluminio, etc.)',
-                'Para darte un precio exacto necesito saber qué tipo de escalera buscas. ¿Es para uso industrial o comercial?',
-                'Los precios dependen del modelo y especificaciones. ¿Podrías decirme qué tipo de escalera necesitas?'
-            ]
-        },
-
-        products: {
-            keywords: ['escalera', 'escaleras', 'fibra', 'aluminio', 'extension', 'tijera', 'sencilla', 'caballete'],
-            responses: [
-                'Tenemos escaleras en fibra de vidrio y aluminio: extensión, tijera, sencillas, caballetes y más. ¿Qué tipo específico te interesa?',
-                'Nuestro catálogo incluye escaleras industriales y comerciales. ¿Buscas algo para uso eléctrico o industrial pesado?',
-                'Manejamos escaleras certificadas ISO, ANSI y OSHA. ¿Para qué tipo de trabajo las necesitas?'
-            ]
-        },
-
-        rental: {
-            keywords: ['alquiler', 'alquilar', 'rentar', 'arrendar', 'temporal'],
-            responses: [
-                'Ofrecemos alquiler de escaleras en extensión, tijera, sencilla y tijera plataforma. ¿Para qué proyecto las necesitas?',
-                'Nuestro servicio de alquiler incluye entrega, instalación y recogida. ¿En qué ciudad estás ubicado?',
-                'Tenemos escaleras disponibles para alquiler con diferentes capacidades. ¿Qué altura necesitas alcanzar?'
-            ]
-        },
-
-        contact: {
-            keywords: ['contacto', 'telefono', 'direccion', 'ubicacion', 'sede', 'whatsapp', 'llamar'],
-            responses: [
-                'Tenemos sedes en Bogotá y Bucaramanga. ¿Te gustaría que te conecte con alguna sede específica?',
-                'Puedes contactarnos por WhatsApp. ¿Prefieres hablar con nuestra sede de Bogotá o Bucaramanga?',
-                '¿Te gustaría hablar directamente con uno de nuestros asesores por WhatsApp?'
-            ]
-        }
-    },
-
-    // Respuestas de seguimiento inteligentes
-    followUps: [
-        '¿Hay algo más en lo que pueda ayudarte?',
-        '¿Te gustaría saber algo más sobre nuestros productos?',
-        '¿Necesitas información adicional?'
-    ],
-
-    // Detectar intent del mensaje
-    analyzeMessage(message) {
-        const text = message.toLowerCase();
-        let bestMatch = null;
-        let maxMatches = 0;
-
-        for (let [category, data] of Object.entries(this.knowledge)) {
-            let matches = 0;
-            data.keywords.forEach(keyword => {
-                if (text.includes(keyword)) matches++;
-            });
-
-            if (matches > maxMatches) {
-                maxMatches = matches;
-                bestMatch = category;
-            }
-        }
-
-        return maxMatches > 0 ? bestMatch : 'unknown';
-    },
-
-    // Generar respuesta inteligente con IA
+    // ============================================
+    // FUNCIÓN PRINCIPAL
+    // ============================================
     async generateResponse(message) {
-        const intent = this.analyzeMessage(message);
-        this.conversationState.messagesCount++;
+        // Actualizar contexto
+        this.updateContext(message, null);
 
-        // Usar IA para consultas específicas del catálogo
-        if (HumanizedChatbotAI.shouldUseAI(message)) {
-            console.log('🤖 Usando Render API para respuesta humanizada');
-            return await HumanizedChatbotAI.generateAIResponse(message);
-        }
+        // Detectar intención y generar respuesta
+        const response = this.detectIntent(message);
 
-        // Respuestas locales humanizadas para intents simples
-        if (intent === 'greetings' || intent === 'contact') {
-            const localResponse = HumanizedChatbotAI.getHumanizedLocalResponse(intent);
-            if (localResponse) return localResponse;
-        }
+        // Guardar en historial
+        this.conversationHistory.push({
+            role: 'user',
+            content: message
+        });
+        this.conversationHistory.push({
+            role: 'assistant',
+            content: response
+        });
 
-        // Respuestas locales para otros intents conocidos
-        if (intent !== 'unknown') {
-            this.conversationState.currentTopic = intent;
-            const responses = this.knowledge[intent].responses;
-            return responses[Math.floor(Math.random() * responses.length)];
-        }
-
-        // Fallback humanizado
-        return HumanizedChatbotAI.getSmartFallback(message);
+        return response;
     },
 
-    // Determinar si debe ofrecer WhatsApp
+    // ============================================
+    // DEBE OFRECER WHATSAPP
+    // ============================================
     shouldOfferWhatsApp() {
-        return this.conversationState.messagesCount >= 3 && !this.conversationState.askedWhatsApp;
+        return this.context.messageCount >= 3;
     }
 };
 
-// ===================================
-// CHATBOT CONTROLLER - Controlador Principal
-// ===================================
-
+// ============================================
+// CONTROLADOR DEL CHATBOT (UI)
+// ============================================
 const ChatbotController = {
     isOpen: false,
     isTyping: false,
@@ -2971,27 +3142,22 @@ const ChatbotController = {
     },
 
     bindEvents() {
-        // Toggle chatbot
         document.getElementById('chatbot-toggle').addEventListener('click', () => {
             this.toggleChatbot();
         });
 
-        // Cerrar chatbot
         document.getElementById('chatbot-close').addEventListener('click', () => {
             this.closeChatbot();
         });
 
-        // Enviar mensaje
         document.getElementById('chatbot-send').addEventListener('click', () => {
             this.sendMessage();
         });
 
-        // Enter para enviar
         document.getElementById('chatbot-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.sendMessage();
         });
 
-        // Preguntas rápidas
         document.querySelectorAll('.quick-question').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 this.handleQuickQuestion(e.target.dataset.question);
@@ -3025,19 +3191,15 @@ const ChatbotController = {
 
         if (!message) return;
 
-        // Mostrar mensaje del usuario
         this.addMessage(message, 'user');
         input.value = '';
 
-        // Simular typing
         await this.simulateTyping();
 
-        // Generar y mostrar respuesta (con IA si es necesario)
-        const response = await ChatbotAI.generateResponse(message);
+        const response = await ChatbotInteligente.generateResponse(message);
         this.addMessage(response, 'bot');
 
-        // Ofrecer WhatsApp si corresponde
-        if (ChatbotAI.shouldOfferWhatsApp()) {
+        if (ChatbotInteligente.shouldOfferWhatsApp()) {
             await this.simulateTyping(1000);
             this.offerWhatsAppContact();
         }
@@ -3057,7 +3219,13 @@ const ChatbotController = {
         const messagesContainer = document.getElementById('chatbot-messages');
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}-message`;
-        messageDiv.textContent = text;
+        
+        // Convertir markdown básico a HTML
+        const htmlText = text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>');
+        
+        messageDiv.innerHTML = htmlText;
 
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -3067,7 +3235,7 @@ const ChatbotController = {
         const messagesContainer = document.getElementById('chatbot-messages');
         const typingDiv = document.createElement('div');
         typingDiv.className = 'message bot-message typing-indicator';
-        typingDiv.innerHTML = '<span>Escribiendo</span><span class="dots">...</span>';
+        typingDiv.innerHTML = '<span>Diana está escribiendo</span><span class="dots">...</span>';
         typingDiv.id = 'typing-indicator';
 
         messagesContainer.appendChild(typingDiv);
@@ -3080,19 +3248,17 @@ const ChatbotController = {
     },
 
     offerWhatsAppContact() {
-        ChatbotAI.conversationState.askedWhatsApp = true;
-
         const messagesContainer = document.getElementById('chatbot-messages');
         const contactDiv = document.createElement('div');
         contactDiv.className = 'message bot-message contact-options';
         contactDiv.innerHTML = `
-            <p>¿Te gustaría hablar directamente con uno de nuestros asesores?</p>
+            <p>¿Te gustaría hablar con un asesor para cotización exacta?</p>
             <div class="whatsapp-options">
-                <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn bogota">
+                <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn">
                     <i class="fab fa-whatsapp"></i> Bogotá (Virtual)
                 </button>
-                <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn bucaramanga">
-                    <i class="fab fa-whatsapp"></i> Bucaramanga (Cll 34 # 11-27)
+                <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> Bucaramanga
                 </button>
             </div>
         `;
@@ -3103,10 +3269,10 @@ const ChatbotController = {
 
     handleQuickQuestion(type) {
         const questions = {
-            precios: '¿Cuáles son los precios de las escaleras?',
-            catalogo: 'Quiero ver el catálogo completo',
-            alquiler: 'Me interesa el servicio de alquiler',
-            contacto: 'Necesito información de contacto'
+            precios: '¿Cuáles son los precios?',
+            catalogo: '¿Qué tipos de escaleras tienen?',
+            alquiler: '¿Hacen alquiler?',
+            contacto: 'Quiero contactar con un asesor'
         };
 
         const input = document.getElementById('chatbot-input');
@@ -3115,53 +3281,23 @@ const ChatbotController = {
     }
 };
 
-// Función global para WhatsApp desde chatbot
+// Función global para WhatsApp
 window.openWhatsAppSede = function(sede) {
     const phones = {
         bogota: '573008611868',
         bucaramanga: '573181027047'
     };
 
-    const addresses = {
-        bogota: 'sede virtual',
-        bucaramanga: 'Cll 34 # 11-27'
-    };
-
-    const message = `Hola, me gustaría recibir asesoría sobre escaleras. Me contacto desde la página web con la ${sede === 'bogota' ? 'sede virtual de Bogotá' : 'sede física de Bucaramanga (' + addresses[sede] + ')'}`;
-
+    const message = `Hola, me gustaría recibir asesoría sobre escaleras. Me contacto desde la página web.`;
     const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, '_blank');
 };
 
-// Inicialización cuando se carga la página
+// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Página cargada, inicializando...');
-    
-    console.log(`✅ Chatbot configurado con Render API`);
-
-    // Test de conectividad Render API
-    async function debugChatbot() {
-        console.log('🔍 INICIANDO DEBUG DEL CHATBOT');
-        
-        const connected = await RenderAPIConfig.testConnection();
-        if (connected) {
-            console.log('✅ Render API FUNCIONANDO CORRECTAMENTE');
-        } else {
-            console.warn('⚠️ No se pudo conectar a Render API - Usando fallbacks');
-        }
-        
-        console.log('✅ DEBUG COMPLETADO');
-    }
-
-    // Inicializar chatbot
+    console.log('🤖 Chatbot Inteligente LOCAL inicializado');
     ChatbotController.init();
-    console.log('💬 Chatbot inicializado');
-
-    // Ejecutar debug en segundo plano
-    debugChatbot();
-
-    console.log('🎉 Inicialización completa');
-});
+}); 
 
         // Animaciones de scroll
         const observerOptions = {
