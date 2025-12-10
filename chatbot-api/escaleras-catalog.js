@@ -71,7 +71,7 @@ const ESCALERAS_CATALOG = {
 
   contact: {
     bogota: {
-      phone: "3008611868",
+      phone: "3008611886",
       type: "Virtual",
       area: "Bogotá y alrededores"
     },

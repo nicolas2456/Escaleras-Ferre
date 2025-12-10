@@ -102,7 +102,7 @@ app.post('/chat', async (req, res) => {
       console.error('❌ GROQ_API_KEY no configurada');
       stats.errors++;
       return res.json({
-        response: 'Disculpa, hay un problema de configuración. Para atención inmediata contacta:\n📱 Bogotá: 3008611868\n📱 Bucaramanga: 3181027047',
+        response: 'Disculpa, hay un problema de configuración. Para atención inmediata contacta:\n📱 Bogotá: 3008611886\n📱 Bucaramanga: 3181027047',
         source: 'error_no_api_key',
         timestamp: new Date().toISOString()
       });
@@ -147,7 +147,7 @@ app.post('/chat', async (req, res) => {
     stats.errors++;
 
     // Respuesta de emergencia
-    const emergencyResponse = 'Disculpa, tuve un problema técnico. Para atención inmediata contacta:\n\n📱 Bogotá: 3008611868 (Virtual)\n📱 Bucaramanga: 3181027047 (Cll 34 #11-27)\n\n¿Con cuál te conecto? 😊';
+    const emergencyResponse = 'Disculpa, tuve un problema técnico. Para atención inmediata contacta:\n\n📱 Bogotá: 3008611886 (Virtual)\n📱 Bucaramanga: 3181027047 (Cll 34 #11-27)\n\n¿Con cuál te conecto? 😊';
 
     res.json({
       response: emergencyResponse,
