@@ -229,11 +229,14 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
+            font-family: inherit;
         }
 
         .cta-primary {
             background: var(--color-accent);
             color: var(--color-primary);
+            border: none;
         }
 
         .cta-primary:hover {
@@ -974,7 +977,7 @@
             padding: 10px 15px;
             border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
             font-size: 13px;
             display: flex;
             align-items: center;
@@ -985,6 +988,55 @@
         .whatsapp-btn:hover {
             background: #1da851;
             transform: translateY(-2px);
+        }
+
+        /* Estilos para selección de sede en chatbot */
+        .sede-selection .whatsapp-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .sede-selection .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .sede-selection .whatsapp-btn:hover {
+            background: #1da851;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .sede-selection .sede-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sede-selection .sede-info strong {
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+
+        .sede-selection .sede-info span {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .sede-selection .whatsapp-btn i {
+            font-size: 1.5rem;
         }
 
         .chatbot-input-area {
@@ -1182,19 +1234,31 @@
             padding: var(--spacing-lg);
             border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-card);
+            transition: transform 0.3s ease;
+        }
+
+        .sede-card:hover {
+            transform: translateY(-5px);
         }
 
         .sede-title {
             font-family: var(--font-heading);
             color: var(--color-primary);
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
         }
 
-        .contact-info {
+        .sede-description {
+            color: #666;
+            font-size: 0.95rem;
             margin-bottom: var(--spacing-md);
+            font-style: italic;
+        }
+
+        .contact-info {
+            margin-bottom: 0;
         }
 
         .contact-item {
@@ -1210,23 +1274,21 @@
             width: 20px;
         }
 
-        .sede-whatsapp {
-            background: #25d366;
-            color: white;
-            padding: 1rem;
-            border-radius: var(--border-radius-lg);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--spacing-sm);
-            font-weight: 600;
-            transition: var(--transition-smooth);
+        .sede-phone {
+            color: var(--color-primary);
+            font-weight: bold;
+            font-size: 1.05rem;
         }
 
-        .sede-whatsapp:hover {
-            background: #20b358;
-            transform: translateY(-2px);
+        .sede-note {
+            color: #666;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-sm);
+            background: #f0f7ed;
+            border-radius: var(--border-radius-md);
+            text-align: center;
         }
 
         /* Footer */
@@ -1350,21 +1412,6 @@
         }
     </style>
 
-
-    <!-- WhatsApp Bar -->
-    <div class="whatsapp-bar">
-        <div class="whatsapp-container">
-            <a href="https://wa.me/573008611868?text=Hola%2C%20necesito%20información%20sobre%20escaleras%20en%20Bogotá" class="whatsapp-btn" target="_blank">
-                <i class="fab fa-whatsapp"></i>
-                <span>WhatsApp Bogotá</span>
-            </a>
-            <a href="https://wa.me/573181027047?text=Hola%2C%20necesito%20información%20sobre%20escaleras%20en%20Bucaramanga" class="whatsapp-btn" target="_blank">
-                <i class="fab fa-whatsapp"></i>
-                <span>WhatsApp Bucaramanga</span>
-            </a>
-        </div>
-    </div>
-
     <!-- Header -->
     <header class="header">
         <div class="nav-container">
@@ -1400,10 +1447,10 @@
                     <i class="fas fa-th-large"></i>
                     Ver Catálogo Completo
                 </a>
-                <a href="#contacto" class="cta-secondary">
+                <button onclick="abrirChatbotContacto()" class="cta-secondary">
                     <i class="fas fa-phone"></i>
                     Contactar
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -1501,11 +1548,13 @@
                 <div class="sede-card fade-in visible">
                     <h3 class="sede-title">
                         <i class="fas fa-map-marker-alt"></i>
-                        Sede Bogotá
+                        Sede Bogotá (Virtual)
                     </h3>
+                    <p class="sede-description">Atención remota especializada</p>
+                    <div class="contact-info">
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
-                            <span>300 861 1868 / 322 708 3115</span>
+                            <span class="sede-phone">300 861 1886 / 322 708 3115</span>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
@@ -1519,28 +1568,20 @@
                             <i class="fas fa-clock"></i>
                             <span>Sáb: 8:00 AM - 2:00 PM</span>
                         </div>
+                        <p class="sede-note">📱 Consultas técnicas y comerciales</p>
                     </div>
-                    
-                    <a href="https://wa.me/573008611868?text=Hola%2C%20necesito%20información%20desde%20Bogotá" class="sede-whatsapp" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        Contactar Bogotá por WhatsApp
-                    </a>
                 </div>
-                
+
                 <div class="sede-card fade-in visible">
                     <h3 class="sede-title">
                         <i class="fas fa-map-marker-alt"></i>
-                        Sede Bucaramanga
+                        Sede Bucaramanga (Física)
                     </h3>
-                    
+                    <p class="sede-description">Cll 34 No 11-27, Bucaramanga</p>
                     <div class="contact-info">
                         <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Cll 34 No 11-27, Bucaramanga</span>
-                        </div>
-                        <div class="contact-item">
                             <i class="fas fa-phone"></i>
-                            <span>318 102 7047 / 322 708 3115</span>
+                            <span class="sede-phone">318 102 7047 / 322 708 3115</span>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
@@ -1554,12 +1595,8 @@
                             <i class="fas fa-clock"></i>
                             <span>Sáb: 8:00 AM - 2:00 PM</span>
                         </div>
+                        <p class="sede-note">🏢 Visitas presenciales y showroom</p>
                     </div>
-                    
-                    <a href="https://wa.me/573181027047?text=Hola%2C%20necesito%20información%20desde%20Bucaramanga" class="sede-whatsapp" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        Contactar Bucaramanga por WhatsApp
-                    </a>
                 </div>
             </div>
         </div>
@@ -2724,7 +2761,7 @@ SERVICIOS:
 - Mantenimiento especializado
 
 CONTACTO:
-- Bogotá: 3008611868 (virtual)
+- Bogotá: 3008611886 (virtual)
 - Bucaramanga: 3181027047 (Cll 34 #11-27)
 
 TU PERSONALIDAD:
@@ -2878,7 +2915,7 @@ Tú: "Para 8 metros te recomiendo la extensión EF 8,60 en fibra de vidrio (28 p
                     ],
                     contact: [
                         'Te conecto con nuestros asesores. ¿Prefieres Bogotá (virtual) o Bucaramanga (Cll 34 #11-27)?',
-                        '¡Claro! Tenemos Bogotá (3008611868) y Bucaramanga (3181027047). ¿Cuál te queda mejor?'
+                        '¡Claro! Tenemos Bogotá (3008611886) y Bucaramanga (3181027047). ¿Cuál te queda mejor?'
                     ]
                 };
 
@@ -3197,7 +3234,7 @@ Tú: "Para 8 metros te recomiendo la extensión EF 8,60 en fibra de vidrio (28 p
         // Función global para WhatsApp desde chatbot
         window.openWhatsAppSede = function(sede) {
             const phones = {
-                bogota: '573008611868',
+                bogota: '573008611886',
                 bucaramanga: '573181027047'
             };
 
@@ -3209,6 +3246,74 @@ Tú: "Para 8 metros te recomiendo la extensión EF 8,60 en fibra de vidrio (28 p
             const message = `Hola, me gustaría recibir asesoría sobre escaleras. Me contacto desde la página web con la ${sede === 'bogota' ? 'sede virtual de Bogotá' : 'sede física de Bucaramanga (' + addresses[sede] + ')'}`;
 
             const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        };
+
+        // Función para abrir chatbot con flujo de contacto
+        window.abrirChatbotContacto = function() {
+            // Abrir chatbot si no está abierto
+            if (!ChatbotController.isOpen) {
+                ChatbotController.toggleChatbot();
+            }
+
+            // Pequeño delay para asegurar que el chatbot está abierto
+            setTimeout(() => {
+                // Limpiar mensajes anteriores
+                const messagesContainer = document.getElementById('chatbot-messages');
+                messagesContainer.innerHTML = '';
+
+                // Mensaje de bienvenida específico para contacto
+                const welcomeDiv = document.createElement('div');
+                welcomeDiv.className = 'message bot-message';
+                welcomeDiv.innerHTML = `
+                    <p>¡Hola! Gracias por contactarnos 😊</p>
+                    <p>¿Con cuál de nuestras sedes te gustaría comunicarte?</p>
+                `;
+                messagesContainer.appendChild(welcomeDiv);
+
+                // Botones de selección de sede
+                const sedeOptionsDiv = document.createElement('div');
+                sedeOptionsDiv.className = 'message bot-message sede-selection';
+                sedeOptionsDiv.innerHTML = `
+                    <div class="whatsapp-options">
+                        <button onclick="contactarSede('bogota')" class="whatsapp-btn bogota">
+                            <i class="fab fa-whatsapp"></i>
+                            <div class="sede-info">
+                                <strong>Bogotá (Virtual)</strong>
+                                <span>Atención remota especializada</span>
+                            </div>
+                        </button>
+                        <button onclick="contactarSede('bucaramanga')" class="whatsapp-btn bucaramanga">
+                            <i class="fab fa-whatsapp"></i>
+                            <div class="sede-info">
+                                <strong>Bucaramanga (Física)</strong>
+                                <span>Cll 34 # 11-27 - Visitas presenciales</span>
+                            </div>
+                        </button>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: #666; text-align: center;">
+                        También puedes continuar chateando aquí para más información 💬
+                    </p>
+                `;
+                messagesContainer.appendChild(sedeOptionsDiv);
+
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+        };
+
+        // Función para contactar sede específica
+        window.contactarSede = function(sede) {
+            const phones = {
+                bogota: '573008611886',
+                bucaramanga: '573181027047'
+            };
+
+            const messages = {
+                bogota: 'Hola, me gustaría recibir información sobre escaleras industriales. Me contacto desde la página web con la sede virtual de Bogotá.',
+                bucaramanga: 'Hola, me gustaría recibir información sobre escaleras industriales. Me contacto desde la página web para la sede física de Bucaramanga (Cll 34 # 11-27).'
+            };
+
+            const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(messages[sede])}`;
             window.open(whatsappURL, '_blank');
         };
 
