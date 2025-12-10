@@ -56,7 +56,6 @@
             right: 0;
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border-bottom: 3px solid var(--color-primary);
         }
 
         .nav-container {
@@ -1220,45 +1219,104 @@
             color: var(--color-primary);
         }
 
-        /* Contact Section */
+        /* Contact Section - Nuestras Sedes */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-xl);
-            margin-top: var(--spacing-xl);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
         }
 
         .sede-card {
             background: white;
-            padding: var(--spacing-lg);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-card);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .sede-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(45, 80, 22, 0.15);
         }
 
         .sede-title {
-            font-family: var(--font-heading);
-            color: var(--color-primary);
-            margin-bottom: var(--spacing-md);
+            color: #2d5016;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            justify-content: center;
+            gap: 10px;
         }
 
         .contact-info {
-            margin-bottom: var(--spacing-md);
+            margin-bottom: 20px;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            margin-bottom: 0.75rem;
-            color: var(--color-text);
+            justify-content: flex-start;
+            gap: 12px;
+            margin: 15px 0;
+            font-size: 1rem;
+            color: #555;
+            text-align: left;
         }
 
         .contact-item i {
-            color: var(--color-primary);
+            color: #2d5016;
             width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* Números de teléfono destacados */
+        .sede-phone {
+            background: linear-gradient(135deg, #2d5016, #4a7028);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 20px 0;
+            display: inline-block;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .sede-phone:hover {
+            transform: scale(1.05);
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Horarios */
+        .sede-horario {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #2d5016;
+            text-align: left;
+        }
+
+        .sede-horario h4 {
+            color: #2d5016;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .sede-horario p {
+            margin: 5px 0;
+            font-size: 0.95rem;
+            color: #666;
         }
 
         .sede-whatsapp {
@@ -1351,6 +1409,12 @@
             .about-content,
             .contact-grid {
                 grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 40px 15px;
+            }
+
+            .sede-card {
+                padding: 30px 20px;
             }
 
             .spa-filters {
@@ -1534,65 +1598,78 @@
                 </p>
             </div>
             <div class="contact-grid">
+                <!-- Sede Bogotá -->
                 <div class="sede-card fade-in visible">
                     <h3 class="sede-title">
                         <i class="fas fa-map-marker-alt"></i>
                         Sede Bogotá
                     </h3>
+
+                    <div class="contact-info">
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
                             <span>300 861 1886 / 322 708 3115</span>
                         </div>
+
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
                             <span>info@escalerasferre.com</span>
                         </div>
+
+                        <div class="sede-horario">
+                            <h4><i class="far fa-clock"></i> Horarios de Atención</h4>
+                            <p>Lun - Vie: 8:00 AM - 6:00 PM</p>
+                            <p>Sáb: 8:00 AM - 2:00 PM</p>
+                        </div>
+
                         <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Lun - Vie: 8:00 AM - 6:00 PM</span>
+                            <i class="fas fa-laptop"></i>
+                            <span>Atención Virtual - Consultas técnicas y comerciales</span>
                         </div>
-                        <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Sáb: 8:00 AM - 2:00 PM</span>
-                        </div>
-                        <div class="contact-item sede-type">
-                            <i class="fas fa-info-circle"></i>
-                            <span style="color: #2d5016; font-weight: 600;">Atención Virtual - Consultas técnicas y comerciales</span>
-                        </div>
+
+                        <a href="tel:3008611886" class="sede-phone">
+                            <i class="fas fa-phone"></i> Llamar Bogotá
+                        </a>
                     </div>
                 </div>
-                
+
+                <!-- Sede Bucaramanga -->
                 <div class="sede-card fade-in visible">
                     <h3 class="sede-title">
                         <i class="fas fa-map-marker-alt"></i>
                         Sede Bucaramanga
                     </h3>
-                    
+
                     <div class="contact-info">
                         <div class="contact-item">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>Cll 34 No 11-27, Bucaramanga</span>
                         </div>
+
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
                             <span>318 102 7047 / 322 708 3115</span>
                         </div>
+
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
                             <span>info@escalerasferre.com</span>
                         </div>
-                        <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Lun - Vie: 8:00 AM - 6:00 PM</span>
+
+                        <div class="sede-horario">
+                            <h4><i class="far fa-clock"></i> Horarios de Atención</h4>
+                            <p>Lun - Vie: 8:00 AM - 6:00 PM</p>
+                            <p>Sáb: 8:00 AM - 2:00 PM</p>
                         </div>
+
                         <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Sáb: 8:00 AM - 2:00 PM</span>
-                        </div>
-                        <div class="contact-item sede-type">
                             <i class="fas fa-store"></i>
-                            <span style="color: #2d5016; font-weight: 600;">Sede Física - Visitas presenciales y showroom</span>
+                            <span>Sede Física - Visitas presenciales y showroom</span>
                         </div>
+
+                        <a href="tel:3181027047" class="sede-phone">
+                            <i class="fas fa-phone"></i> Llamar Bucaramanga
+                        </a>
                     </div>
                 </div>
             </div>
@@ -2412,14 +2489,14 @@
 
         // Mapping de imágenes reales del catálogo
         const imageMapping = {
-            1: "https://i.imgur.com/CP8RsQJ.png", // Escalera Fibra de Vidrio - Extensión Dos Cuerpos
+            1: "https://i.imgur.com/wxfo7mf.png", // Escalera Fibra de Vidrio - Extensión Dos Cuerpos (ACTUALIZADA)
             2: "https://i.imgur.com/Ia8HCVJ.png", // Escalera Fibra de Vidrio - Extensión Tres Cuerpos
             3: "https://i.imgur.com/wgnLz0L.png", // Escalera Fibra de Vidrio - Caballete
             4: "https://i.imgur.com/aAVZM6S.png", // Escalera Fibra de Vidrio - Sencilla Industrial
             5: "https://i.imgur.com/aAVZM6S.png", // Escalera Fibra de Vidrio - Sencilla Comercial
             6: "https://i.imgur.com/Ll9DNdk.jpeg", // Escalera Fibra de Vidrio - Tijera Industrial
-            7: "https://i.imgur.com/iU0aZBs.png", // Escalera Fibra de Vidrio - Tijera Comercial
-            8: "https://i.imgur.com/MZ4Y1BF.png", // Escalera Aluminio - Extensión Dos Cuerpos
+            7: "https://i.imgur.com/yxx6qra.png", // Escalera Fibra de Vidrio - Tijera Comercial (ACTUALIZADA)
+            8: "https://i.imgur.com/6Lnh1gF.png", // Escalera Aluminio - Extensión Dos Cuerpos (ACTUALIZADA)
             9: "https://i.imgur.com/cdx39YL.png", // Escalera Aluminio - Sencilla Industrial
             10: "https://i.imgur.com/6MCwR6H.png", // Escalera Aluminio - Tijera Industrial
             11: "https://i.imgur.com/yi61plI.png", // Escalera Aluminio - Tijera Comercial
