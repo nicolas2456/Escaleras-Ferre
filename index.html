@@ -3325,7 +3325,7 @@ const ChatbotController = {
         messageDiv.innerHTML = htmlText;
 
         messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        messagesContainer.scrollTop = 0;
     },
 
     addTypingIndicator() {
@@ -3336,7 +3336,7 @@ const ChatbotController = {
         typingDiv.id = 'typing-indicator';
 
         messagesContainer.appendChild(typingDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        messagesContainer.scrollTop = 0;
     },
 
     removeTypingIndicator() {
@@ -3361,7 +3361,7 @@ const ChatbotController = {
         `;
 
         messagesContainer.appendChild(contactDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        messagesContainer.scrollTop = 0;
     },
 
     handleQuickQuestion(type) {
@@ -3430,7 +3430,7 @@ window.abrirChatbotContacto = function() {
     `;
     messagesContainer.appendChild(sedeOptionsDiv);
 
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    messagesContainer.scrollTop = 0;
 };
 
 // Función para contactar sede específica
