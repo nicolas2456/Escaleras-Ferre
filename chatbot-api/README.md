@@ -203,7 +203,7 @@ Si Groq falla, el sistema responde automáticamente con:
 
 ```
 "Disculpa, tuve un problema técnico. Para atención inmediata contacta:
-📱 Bogotá: 3008611868 (Virtual)
+📱 Bogotá: 3008611886 (Virtual)
 📱 Bucaramanga: 3181027047 (Cll 34 #11-27)"
 ```
 

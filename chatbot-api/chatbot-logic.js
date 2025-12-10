@@ -67,7 +67,7 @@ class EscalerasChatbot {
 
     // Horarios
     if (text.includes('horario') || text.includes('hora')) {
-      return 'Para conocer horarios de atención, te recomiendo contactar directo:\n\n📱 Bogotá: 3008611868\n📱 Bucaramanga: 3181027047\n\n¿Con cuál te conecto?';
+      return 'Para conocer horarios de atención, te recomiendo contactar directo:\n\n📱 Bogotá: 3008611886\n📱 Bucaramanga: 3181027047\n\n¿Con cuál te conecto?';
     }
 
     return null; // Usar IA
