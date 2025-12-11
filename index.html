@@ -1933,12 +1933,12 @@
             <div class="spa-filters">
                 <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
                 <button class="filter-btn" onclick="filterProducts('fibra-extension')">Extensión Fibra</button>
-                <button class="filter-btn" onclick="filterProducts('fibra-sencilla')">Sencilla Fibra</button>
-                <button class="filter-btn" onclick="filterProducts('fibra-tijera')">Tijera Fibra</button>
-                <button class="filter-btn" onclick="filterProducts('fibra-caballete')">Caballete Fibra</button>
                 <button class="filter-btn" onclick="filterProducts('aluminio-extension')">Extensión Aluminio</button>
-                <button class="filter-btn" onclick="filterProducts('aluminio-sencilla')">Sencilla Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('fibra-tijera')">Tijera Fibra</button>
                 <button class="filter-btn" onclick="filterProducts('aluminio-tijera')">Tijera Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('fibra-sencilla')">Sencilla Fibra</button>
+                <button class="filter-btn" onclick="filterProducts('aluminio-sencilla')">Sencilla Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('fibra-caballete')">Caballete</button>
                 <button class="filter-btn" onclick="filterProducts('accesorios')">Accesorios</button>
             </div>
             
@@ -2636,8 +2636,13 @@
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
-            
+
+            // Activar el botón clickeado
+            const clickedButton = document.querySelector(`[onclick="filterProducts('${category}')"]`);
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+
             // Renderizar productos filtrados
             renderProducts(category);
         }
