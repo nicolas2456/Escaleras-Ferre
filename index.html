@@ -24,6 +24,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            padding-top: 45px;
         }
 
         /* Variables CSS */
@@ -47,11 +48,56 @@
             --border-radius-lg: 15px;
         }
 
+        /* WhatsApp Header Bar */
+        .whatsapp-header-fixed {
+            background: linear-gradient(135deg, #25D366, #1DA851);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            padding: 8px 0;
+            box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .whatsapp-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .whatsapp-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            transform: scale(1.05);
+        }
+
+        .whatsapp-link i {
+            font-size: 1.2rem;
+        }
+
         /* Header */
         .header {
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
             position: fixed;
-            top: 0;
+            top: 45px;
             left: 0;
             right: 0;
             z-index: 1000;
@@ -1386,6 +1432,26 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .header {
+                top: 70px;
+            }
+
+            .whatsapp-container {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .whatsapp-link {
+                justify-content: center;
+                padding: 4px 12px;
+                font-size: 0.8rem;
+            }
+
             .nav-menu {
                 display: none;
             }
@@ -1465,6 +1531,22 @@
         }
     </style>
 
+    <!-- WhatsApp Header Bar -->
+    <div class="whatsapp-header-fixed">
+        <div class="whatsapp-container">
+            <a href="https://wa.me/573008611886?text=Hola,%20me%20interesa%20información%20sobre%20escaleras%20industriales%20desde%20Bogotá"
+               class="whatsapp-link" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp Bogotá</span>
+            </a>
+            <a href="https://wa.me/573181027047?text=Hola,%20me%20interesa%20información%20sobre%20escaleras%20industriales%20desde%20Bucaramanga"
+               class="whatsapp-link" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp Bucaramanga</span>
+            </a>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="nav-container">
@@ -1525,8 +1607,9 @@
                         en el sector, hemos consolidado nuestra presencia en Bogotá y Bucaramanga.
                     </p>
                     <p>
-                        Nuestros productos cumplen con las normativas internacionales ISO 9001:2015, ANSI 14.5, 
-                        EN131 y OSHA, garantizando la máxima seguridad para nuestros clientes en todos sus proyectos 
+                        Nuestros productos cumplen con las normativas internacionales ISO 9001:2015,
+                        <strong>ANSI 14.5 (Fibra de Vidrio)</strong>, <strong>ANSI 14.2 (Aluminio)</strong>,
+                        EN131 y OSHA, garantizando la máxima seguridad para nuestros clientes en todos sus proyectos
                         industriales, comerciales y residenciales.
                     </p>
                 </div>
