@@ -55,7 +55,7 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 9999;
+            z-index: 1000;
             padding: 8px 0;
             box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
         }
@@ -1692,6 +1692,113 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Modal de Selección de Sede */
+        .sede-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .sede-modal-overlay.active {
+            display: flex;
+        }
+
+        .sede-modal {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .sede-modal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .sede-modal-header h3 {
+            color: var(--color-primary);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sede-modal-header p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        .sede-modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .sede-option-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #25D366, #1DA851);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .sede-option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .sede-option-btn i {
+            font-size: 1.5rem;
+        }
+
+        .sede-modal-close {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .sede-modal-close button {
+            background: transparent;
+            border: none;
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: color 0.2s;
+        }
+
+        .sede-modal-close button:hover {
+            color: var(--color-primary);
+        }
     </style>
 
     <!-- WhatsApp Header Bar -->
@@ -2808,6 +2915,31 @@
 
         // Funciones de consulta y cotización
         function consultarProducto(codigo, nombre) {
+            // Guardar datos del producto para consulta
+            pendingContactData = {
+                type: 'consultar',
+                productName: nombre,
+                productPrice: '',
+                productCode: codigo
+            };
+            // Abrir modal de selección de sede
+            openSedeModal();
+        }
+
+        function cotizarProducto(codigo, nombre) {
+            // Guardar datos del producto para cotización
+            pendingContactData = {
+                type: 'cotizar',
+                productName: nombre,
+                productPrice: '',
+                productCode: codigo
+            };
+            // Abrir modal de selección de sede
+            openSedeModal();
+        }
+
+        // LEGACY: Funciones antiguas para compatibilidad con productos estáticos
+        function _legacyConsultarProducto(codigo, nombre) {
             const message = `Hola, estoy interesado en:
 
 📦 *${nombre}*
@@ -2825,7 +2957,7 @@ Gracias.`;
             window.open(whatsappURL, '_blank');
         }
 
-        function cotizarProducto(codigo, nombre) {
+        function _legacyCotizarProducto(codigo, nombre) {
             const message = `Hola, solicito cotización para:
 
 📦 *${nombre}*
@@ -2842,16 +2974,24 @@ Gracias.`;
             const whatsappURL = `https://wa.me/573008611886?text=${encodeURIComponent(message)}`;
             window.open(whatsappURL, '_blank');
         }
+        // Variables globales para el modal de sede
+        let pendingContactData = {
+            type: '', // 'consultar' o 'cotizar'
+            productName: '',
+            productPrice: '',
+            productCode: ''
+        };
+
         function contactProduct(productName, productPrice, productCode) {
-            const message = `Hola, estoy interesado en el producto:
-
-📦 *${productName}*
-💰 Precio: ${productPrice}
-🔑 Código: ${productCode}
-
-¿Podrían darme más información sobre disponibilidad, especificaciones técnicas y opciones de entrega?`;
-            const whatsappURL = `https://wa.me/573008611886?text=${encodeURIComponent(message)}`;
-            window.open(whatsappURL, '_blank');
+            // Guardar datos del producto
+            pendingContactData = {
+                type: 'consultar',
+                productName: productName,
+                productPrice: productPrice,
+                productCode: productCode
+            };
+            // Abrir modal de selección de sede
+            openSedeModal();
         }
 
         function showTechnicalInfo(productId) {
@@ -2915,10 +3055,99 @@ Gracias.`;
             window.open(whatsappURL, '_blank');
         }
 
-        function openChatbot() {
-            // Placeholder para función de chatbot
-            alert('Función de chatbot en desarrollo. Por favor use WhatsApp para cotizaciones.');
+        function openChatbot(productName, productPrice, productCode) {
+            // Guardar datos del producto para cotización
+            pendingContactData = {
+                type: 'cotizar',
+                productName: productName || 'Producto',
+                productPrice: productPrice || '',
+                productCode: productCode || ''
+            };
+            // Abrir modal de selección de sede
+            openSedeModal();
         }
+
+        // Funciones del modal de selección de sede
+        function openSedeModal() {
+            const modal = document.getElementById('sedeModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeSedeModal() {
+            const modal = document.getElementById('sedeModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            // Limpiar datos pendientes
+            pendingContactData = {
+                type: '',
+                productName: '',
+                productPrice: '',
+                productCode: ''
+            };
+        }
+
+        function selectSedeForContact(sede) {
+            const phones = {
+                bogota: '573008611886',
+                bucaramanga: '573181027047'
+            };
+
+            const sedeNames = {
+                bogota: 'Bogotá',
+                bucaramanga: 'Bucaramanga'
+            };
+
+            let message = '';
+
+            if (pendingContactData.type === 'consultar') {
+                message = `Hola, estoy interesado en consultar sobre:
+
+📦 *${pendingContactData.productName}*
+${pendingContactData.productCode ? `🔑 Código: ${pendingContactData.productCode}` : ''}
+${pendingContactData.productPrice ? `💰 Precio: ${pendingContactData.productPrice}` : ''}
+
+¿Podrían enviarme información completa sobre:
+• Especificaciones técnicas detalladas
+• Referencias y medidas disponibles
+• Disponibilidad actual
+• Tiempos de entrega
+
+Gracias.`;
+            } else if (pendingContactData.type === 'cotizar') {
+                message = `Hola, solicito cotización formal para:
+
+📦 *${pendingContactData.productName}*
+${pendingContactData.productCode ? `🔑 Código: ${pendingContactData.productCode}` : ''}
+${pendingContactData.productPrice ? `💰 Precio referencia: ${pendingContactData.productPrice}` : ''}
+
+Por favor, envíenme:
+• Precios por referencia y medida
+• Descuentos por volumen
+• Formas de pago disponibles
+• Costos y tiempos de envío
+
+Gracias.`;
+            }
+
+            const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+
+            // Cerrar el modal
+            closeSedeModal();
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('sedeModal');
+            if (modal && event.target === modal) {
+                closeSedeModal();
+            }
+        });
 
         // Navegación suave
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -3777,6 +4006,29 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="quick-question" data-question="contacto">Contacto</div>
         </div>
       </div>
+    </div>
+
+    <!-- Modal de Selección de Sede -->
+    <div id="sedeModal" class="sede-modal-overlay">
+        <div class="sede-modal">
+            <div class="sede-modal-header">
+                <h3>Selecciona tu Sede</h3>
+                <p>¿Desde qué ciudad deseas contactarnos?</p>
+            </div>
+            <div class="sede-modal-buttons">
+                <button class="sede-option-btn" onclick="selectSedeForContact('bogota')">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Bogotá</span>
+                </button>
+                <button class="sede-option-btn" onclick="selectSedeForContact('bucaramanga')">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>Bucaramanga</span>
+                </button>
+            </div>
+            <div class="sede-modal-close">
+                <button onclick="closeSedeModal()">Cancelar</button>
+            </div>
+        </div>
     </div>
 
 </body>
