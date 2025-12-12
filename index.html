@@ -413,6 +413,12 @@
             border: 2px solid transparent;
             transition: var(--transition-smooth);
             cursor: pointer;
+            line-height: 1.4;
+            text-align: center;
+            min-height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .filter-btn.active {
@@ -1646,8 +1652,9 @@
             }
 
             .filter-btn {
-                white-space: nowrap;
                 flex-shrink: 0;
+                font-size: 0.85rem;
+                padding: 0.6rem 1rem;
             }
 
             .spa-products-grid {
@@ -1932,13 +1939,10 @@
         <div class="spa-content">
             <div class="spa-filters">
                 <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
-                <button class="filter-btn" onclick="filterProducts('fibra-extension')">Extensión Fibra</button>
-                <button class="filter-btn" onclick="filterProducts('aluminio-extension')">Extensión Aluminio</button>
-                <button class="filter-btn" onclick="filterProducts('fibra-tijera')">Tijera Fibra</button>
-                <button class="filter-btn" onclick="filterProducts('aluminio-tijera')">Tijera Aluminio</button>
-                <button class="filter-btn" onclick="filterProducts('fibra-sencilla')">Sencilla Fibra</button>
-                <button class="filter-btn" onclick="filterProducts('aluminio-sencilla')">Sencilla Aluminio</button>
-                <button class="filter-btn" onclick="filterProducts('fibra-caballete')">Caballete</button>
+                <button class="filter-btn" onclick="filterProducts('extension-fibra')">Extensión Fibra<br>Extensión Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('tijera-fibra')">Tijera Fibra<br>Tijera Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('escalera-cuerpo-fibra')">Escalera un cuerpo Fibra<br>Escalera un cuerpo Aluminio</button>
+                <button class="filter-btn" onclick="filterProducts('escalera-plataforma')">Escalera Plataforma Fibra<br>Escalera Plataforma Aluminio</button>
                 <button class="filter-btn" onclick="filterProducts('accesorios')">Accesorios</button>
             </div>
             
@@ -2659,7 +2663,19 @@
             let filteredProducts = catalogoEscaleras;
 
             if (category !== 'todos') {
-                filteredProducts = catalogoEscaleras.filter(producto => producto.category === category);
+                // Mapeo de categorías agrupadas a categorías de productos
+                const categoryMap = {
+                    'extension-fibra': ['fibra-extension', 'aluminio-extension'],
+                    'tijera-fibra': ['fibra-tijera', 'aluminio-tijera'],
+                    'escalera-cuerpo-fibra': ['fibra-sencilla', 'aluminio-sencilla'],
+                    'escalera-plataforma': ['fibra-caballete'],
+                    'accesorios': ['accesorios']
+                };
+
+                const categoriesToFilter = categoryMap[category] || [category];
+                filteredProducts = catalogoEscaleras.filter(producto =>
+                    categoriesToFilter.includes(producto.category)
+                );
                 console.log(`📊 Productos filtrados: ${filteredProducts.length}`);
             } else {
                 console.log(`📊 Mostrando todos los productos: ${filteredProducts.length}`);
