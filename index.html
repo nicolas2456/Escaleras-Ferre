@@ -327,47 +327,41 @@
         margin-bottom: var(--spacing-md);
       }
 
-        .cta-primary {
-            background: rgba(255, 165, 0, 0.95);
-            color: white;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .cta-primary:hover {
-            background: #ff8c00;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 136, 0, 0.5);
-        }
-
-        .cta-secondary {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid white;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .cta-secondary:hover {
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-        }
-
-      .cta-primary:hover {
-        background: #ff8c00;
-        transform: translateY(-2px);
-      }
-
-      .cta-secondary {
-        background: transparent;
-        color: white;
+      /* Hero CTA Buttons */
+      .hero-content .cta-primary,
+      .hero-content .cta-secondary {
+        display: inline-block;
+        padding: 15px 30px;
+        margin: 10px 15px;
         border: 2px solid white;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
       }
 
-      .cta-secondary:hover {
-        background: white;
-        color: var(--color-primary);
+      .hero-content .cta-primary {
+        background: rgba(255, 165, 0, 0.9);
+        color: white;
+      }
+
+      .hero-content .cta-primary:hover {
+        background: rgba(255, 165, 0, 1);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 165, 0, 0.4);
+      }
+
+      .hero-content .cta-secondary {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+      }
+
+      .hero-content .cta-secondary:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
       }
 
       /* Sections */
@@ -482,7 +476,6 @@
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             padding: 20px;
-            justify-content: center;
             align-items: stretch;
         }
 
@@ -495,13 +488,6 @@
       .filter-btn:hover {
         border-color: var(--color-primary);
         transform: translateY(-2px);
-      }
-
-      .spa-products-grid {
-        display: grid;
-        gap: var(--spacing-md);
-        justify-content: center;
-        align-items: stretch;
       }
 
       /* Para una sola tarjeta */
@@ -919,23 +905,11 @@
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
         border: 1px solid #e0e0e0;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        min-height: 600px;
       }
-
-        /* Nuevos estilos para catálogo con tabla de referencias */
-        .spa-product-card-detailed {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 1px solid #e0e0e0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
 
       .spa-product-info-detailed {
         padding: 1.5rem;
@@ -943,14 +917,6 @@
         display: flex;
         flex-direction: column;
       }
-
-        .spa-product-info-detailed {
-            padding: 1.5rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
 
         .product-title {
             color: #2d5016;
@@ -963,8 +929,9 @@
 
       .referencias-table {
         margin: 15px 0;
-        max-height: 300px;
+        flex: 1;
         overflow-y: auto;
+        max-height: 250px;
       }
 
       .referencias-table table {
