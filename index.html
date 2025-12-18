@@ -1162,9 +1162,28 @@
       .chatbot-title {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 12px;
         font-weight: 600;
         font-size: 14px;
+      }
+
+      .chatbot-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid var(--color-accent);
+        overflow: hidden;
+        flex-shrink: 0;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chatbot-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
 
       .chatbot-close {
@@ -1231,6 +1250,32 @@
         border: 1px solid #e0e0e0;
         margin-right: auto;
         border-bottom-left-radius: 5px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .bot-message-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid var(--color-accent);
+        overflow: hidden;
+        flex-shrink: 0;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .bot-message-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .bot-message-content {
+        flex: 1;
       }
 
       .typing-indicator {
@@ -1885,6 +1930,32 @@
             border: 1px solid #e0e0e0;
             margin-right: auto;
             border-bottom-left-radius: 5px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .bot-message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--color-accent);
+            overflow: hidden;
+            flex-shrink: 0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bot-message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bot-message-content {
+            flex: 1;
         }
 
         .typing-indicator {
@@ -5138,7 +5209,16 @@ Gracias.`;
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
             .replace(/\n/g, "<br>");
 
-          messageDiv.innerHTML = htmlText;
+          if (sender === 'bot') {
+            messageDiv.innerHTML = `
+              <div class="bot-message-avatar">
+                <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+              </div>
+              <div class="bot-message-content">${htmlText}</div>
+            `;
+          } else {
+            messageDiv.innerHTML = htmlText;
+          }
 
           messagesContainer.appendChild(messageDiv);
           messagesContainer.scrollTop = 0;
@@ -5148,8 +5228,14 @@ Gracias.`;
           const messagesContainer = document.getElementById("chatbot-messages");
           const typingDiv = document.createElement("div");
           typingDiv.className = "message bot-message typing-indicator";
-          typingDiv.innerHTML =
-            '<span>Diana escribe</span><span class="dots">...</span>';
+          typingDiv.innerHTML = `
+            <div class="bot-message-avatar">
+              <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+            </div>
+            <div class="bot-message-content">
+              <span>Diana escribe</span><span class="dots">...</span>
+            </div>
+          `;
           typingDiv.id = "typing-indicator";
 
           messagesContainer.appendChild(typingDiv);
@@ -5166,14 +5252,19 @@ Gracias.`;
           const contactDiv = document.createElement("div");
           contactDiv.className = "message bot-message contact-options";
           contactDiv.innerHTML = `
-            <p>¿Te conecto con un asesor para cotización exacta?</p>
-            <div class="whatsapp-options">
-                <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Bogotá
-                </button>
-                <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Bucaramanga
-                </button>
+            <div class="bot-message-avatar">
+              <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+            </div>
+            <div class="bot-message-content">
+              <p>¿Te conecto con un asesor para cotización exacta?</p>
+              <div class="whatsapp-options">
+                  <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn">
+                      <i class="fab fa-whatsapp"></i> Bogotá
+                  </button>
+                  <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn">
+                      <i class="fab fa-whatsapp"></i> Bucaramanga
+                  </button>
+              </div>
             </div>
         `;
 
@@ -5219,8 +5310,13 @@ Gracias.`;
         const welcomeDiv = document.createElement("div");
         welcomeDiv.className = "message bot-message";
         welcomeDiv.innerHTML = `
-        <p>¡Hola! Gracias por contactarnos 😊</p>
-        <p>¿Con cuál de nuestras sedes te gustaría comunicarte?</p>
+        <div class="bot-message-avatar">
+          <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+        </div>
+        <div class="bot-message-content">
+          <p>¡Hola! Gracias por contactarnos 😊</p>
+          <p>¿Con cuál de nuestras sedes te gustaría comunicarte?</p>
+        </div>
     `;
         messagesContainer.appendChild(welcomeDiv);
 
@@ -5228,25 +5324,30 @@ Gracias.`;
         const sedeOptionsDiv = document.createElement("div");
         sedeOptionsDiv.className = "message bot-message sede-selection";
         sedeOptionsDiv.innerHTML = `
-        <div class="whatsapp-options">
-            <button onclick="contactarSede('bogota')" class="whatsapp-btn-sede bogota">
-                <i class="fab fa-whatsapp"></i>
-                <div class="sede-info">
-                    <strong>Bogotá (Virtual)</strong>
-                    <span>Atención remota especializada</span>
-                </div>
-            </button>
-            <button onclick="contactarSede('bucaramanga')" class="whatsapp-btn-sede bucaramanga">
+        <div class="bot-message-avatar">
+          <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+        </div>
+        <div class="bot-message-content">
+          <div class="whatsapp-options">
+              <button onclick="contactarSede('bogota')" class="whatsapp-btn-sede bogota">
+                  <i class="fab fa-whatsapp"></i>
+                  <div class="sede-info">
+                      <strong>Bogotá (Virtual)</strong>
+                      <span>Atención remota especializada</span>
+                  </div>
+              </button>
+              <button onclick="contactarSede('bucaramanga')" class="whatsapp-btn-sede bucaramanga">
                 <i class="fab fa-whatsapp"></i>
                 <div class="sede-info">
                     <strong>Bucaramanga (Física)</strong>
                     <span>Cll 34 # 11-27 - Visitas presenciales</span>
                 </div>
             </button>
+          </div>
+          <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+              También puedes continuar chateando aquí para más información 💬
+          </p>
         </div>
-        <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
-            También puedes continuar chateando aquí para más información 💬
-        </p>
     `;
         messagesContainer.appendChild(sedeOptionsDiv);
 
@@ -5307,16 +5408,23 @@ Gracias.`;
       <div id="chatbot-window" class="chatbot-window">
         <div class="chatbot-header">
           <div class="chatbot-title">
-            <i class="fas fa-robot"></i>
-            Asistente Virtual - Escaleras Ferre
+            <div class="chatbot-avatar">
+              <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+            </div>
+            <span>Escaleras Ferre</span>
           </div>
           <button id="chatbot-close" class="chatbot-close">×</button>
         </div>
 
         <div id="chatbot-messages" class="chatbot-messages">
           <div class="message bot-message">
-            ¡Hola! Soy Diana, tu asistente de Escaleras Ferre 😊 ¿En qué te
-            puedo ayudar hoy?
+            <div class="bot-message-avatar">
+              <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+            </div>
+            <div class="bot-message-content">
+              ¡Hola! Soy Diana, tu asistente de Escaleras Ferre 😊 ¿En qué te
+              puedo ayudar hoy?
+            </div>
           </div>
         </div>
 
