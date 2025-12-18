@@ -5212,7 +5212,7 @@ Gracias.`;
 
           // ========== PQRS (Peticiones, Quejas, Reclamos, Sugerencias) ==========
           if (
-            /pqrs|peticion|queja|reclamo|sugerencia|quejarme|reclamar|sugerir|problema|inconveniente|felicitar/.test(
+            /pqrs|pqr|peticion|peticiones|queja|quejas|reclamo|reclamos|reclamacion|sugerencia|sugerencias|quejarme|reclamar|sugerir|problema|problemas|inconveniente|inconvenientes|felicitar|denuncia|denuncias|reclmo|reclamoo|keja|pregunta|recla|quej|sugeren|proble/.test(
               normalized
             )
           ) {
@@ -5298,9 +5298,9 @@ Gracias.`;
         responses: {
           greeting() {
             const greetings = [
-              "¡Hola! Soy Diana de Escaleras Ferre 😊 ¿En qué te puedo ayudar?",
-              "¡Buenas! Soy Diana, asistente de Escaleras Ferre. ¿Qué necesitas?",
-              "¡Hola! Aquí Diana. ¿Buscas escaleras? Cuéntame qué necesitas.",
+              "¡Hola! Soy Lia de Escaleras Ferre 😊 ¿En qué te puedo ayudar?",
+              "¡Buenas! Soy Lia, asistente de Escaleras Ferre. ¿Qué necesitas?",
+              "¡Hola! Aquí Lia. ¿Buscas escaleras? Cuéntame qué necesitas.",
             ];
             return greetings[Math.floor(Math.random() * greetings.length)];
           },
@@ -5338,7 +5338,7 @@ Gracias.`;
                 </div>
               `;
               messagesContainer.appendChild(pqrsDiv);
-              messagesContainer.scrollTop = 0;
+              messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 500);
 
             return "Entiendo que deseas presentar una **Petición, Queja, Reclamo o Sugerencia** 📋\n\nTu opinión es muy importante para nosotros. Te abriremos nuestro formulario oficial PQRS.";
@@ -5369,7 +5369,7 @@ Gracias.`;
                 </div>
               `;
               messagesContainer.appendChild(whatsappDiv);
-              messagesContainer.scrollTop = 0;
+              messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 500);
 
             return `Perfecto, veo que tienes el radicado **${radicado}** 📋\n\nTe conectaré con un asesor por WhatsApp para hacer seguimiento a tu PQRS.\n\n¿A qué sede prefieres contactar?`;
@@ -5706,7 +5706,7 @@ Gracias.`;
           }
 
           messagesContainer.appendChild(messageDiv);
-          messagesContainer.scrollTop = 0;
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
         },
 
         addTypingIndicator() {
@@ -5718,13 +5718,13 @@ Gracias.`;
               <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
             </div>
             <div class="bot-message-content">
-              <span>Diana escribe</span><span class="dots">...</span>
+              <span>Lia escribe</span><span class="dots">...</span>
             </div>
           `;
           typingDiv.id = "typing-indicator";
 
           messagesContainer.appendChild(typingDiv);
-          messagesContainer.scrollTop = 0;
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
         },
 
         removeTypingIndicator() {
@@ -5754,7 +5754,7 @@ Gracias.`;
         `;
 
           messagesContainer.appendChild(contactDiv);
-          messagesContainer.scrollTop = 0;
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
         },
 
         handleQuickQuestion(type) {
@@ -5836,7 +5836,7 @@ Gracias.`;
     `;
         messagesContainer.appendChild(sedeOptionsDiv);
 
-        messagesContainer.scrollTop = 0;
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
       };
 
       // Función para contactar sede específica
@@ -6108,7 +6108,7 @@ Gracias.`;
               <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
             </div>
             <div class="bot-message-content">
-              ¡Hola! Soy Diana, tu asistente de Escaleras Ferre 😊 ¿En qué te
+              ¡Hola! Soy Lia, tu asistente de Escaleras Ferre 😊 ¿En qué te
               puedo ayudar hoy?
             </div>
           </div>
