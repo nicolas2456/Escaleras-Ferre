@@ -18,6 +18,15 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+      (function(){
+        emailjs.init("wqyvyZcOIUOPhuERM");
+      })();
+    </script>
+
     <style>
       /* Reset básico */
       * {
@@ -2614,6 +2623,54 @@
         margin-top: 0.3rem;
       }
 
+      .pqrs-radio-group {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+      }
+
+      .pqrs-radio-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .pqrs-radio-label input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: var(--color-accent);
+      }
+
+      .pqrs-info-message {
+        background: linear-gradient(135deg, #e8f5e9, #f0f7ed);
+        border-left: 4px solid var(--color-accent);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .pqrs-info-message i {
+        font-size: 1.5rem;
+        color: var(--color-accent);
+      }
+
+      .pqrs-info-message p {
+        margin: 0;
+        color: var(--color-primary);
+        font-size: 0.95rem;
+      }
+
+      .pqrs-info-message strong {
+        color: var(--color-accent);
+      }
+
       .pqrs-form-actions {
         display: flex;
         justify-content: flex-end;
@@ -3048,6 +3105,11 @@
               >
             </li>
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            <li>
+              <a href="#" class="nav-link" onclick="openPQRS(); return false;"
+                >PQRS</a
+              >
+            </li>
           </ul>
         </nav>
       </div>
@@ -5818,11 +5880,12 @@ Gracias.`;
       function generateTicketNumber() {
         const date = new Date();
         const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        const random = Math.floor(Math.random() * 9000) + 1000;
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
 
-        return `PQRS-${year}${month}${day}-${random}`;
+        return `EF-${year}-${day}${month}${hours}${minutes}`;
       }
 
       // Validar formulario PQRS
@@ -5866,14 +5929,6 @@ Gracias.`;
           errors.push('La descripción debe tener al menos 20 caracteres');
         }
 
-        // Validar archivo (si existe)
-        if (formData.archivo) {
-          const maxSize = 5 * 1024 * 1024; // 5MB
-          if (formData.archivo.size > maxSize) {
-            errors.push('El archivo no debe superar los 5MB');
-          }
-        }
-
         return errors;
       }
 
@@ -5882,46 +5937,51 @@ Gracias.`;
         event.preventDefault();
 
         const form = document.getElementById('pqrsForm');
+
+        // Obtener el valor del radio button seleccionado
+        const tipoRadio = document.querySelector('input[name="tipo"]:checked');
+
         const formData = {
-          tipo: document.getElementById('pqrsTipo').value,
+          tipo: tipoRadio ? tipoRadio.value : '',
           nombre: document.getElementById('pqrsNombre').value,
           email: document.getElementById('pqrsEmail').value,
           telefono: document.getElementById('pqrsTelefono').value,
           ciudad: document.getElementById('pqrsCiudad').value,
           asunto: document.getElementById('pqrsAsunto').value,
-          descripcion: document.getElementById('pqrsDescripcion').value,
-          archivo: document.getElementById('pqrsArchivo').files[0]
+          descripcion: document.getElementById('pqrsDescripcion').value
         };
 
         // Validar formulario
         const errors = validatePQRS(formData);
 
         if (errors.length > 0) {
-          alert('Por favor corrija los siguientes errores:\\n\\n' + errors.join('\\n'));
+          alert('Por favor corrija los siguientes errores:\n\n' + errors.join('\n'));
           return;
         }
 
         // Generar número de radicado
         const numeroRadicado = generateTicketNumber();
 
+        // Obtener fecha actual formateada
+        const now = new Date();
+        const fecha = now.toLocaleDateString('es-CO') + ' ' + now.toLocaleTimeString('es-CO');
+
         try {
-          // Aquí normalmente se enviaría a un servidor o servicio de email
-          // Por ahora simulamos el envío exitoso
+          // Enviar email con EmailJS
+          const templateParams = {
+            radicado: numeroRadicado,
+            fecha: fecha,
+            tipo: formData.tipo,
+            nombre: formData.nombre,
+            email: formData.email,
+            telefono: formData.telefono,
+            ciudad: formData.ciudad,
+            asunto: formData.asunto,
+            descripcion: formData.descripcion,
+            to_email: 'pqrs.escalerasferre@gmail.com'
+          };
 
-          // Nota: Para integración real con EmailJS, se necesitaría:
-          // emailjs.send('service_id', 'template_id', {
-          //   tipo: formData.tipo,
-          //   nombre: formData.nombre,
-          //   email: formData.email,
-          //   telefono: formData.telefono,
-          //   ciudad: formData.ciudad,
-          //   asunto: formData.asunto,
-          //   descripcion: formData.descripcion,
-          //   radicado: numeroRadicado
-          // });
-
-          // Simular tiempo de envío
-          await new Promise(resolve => setTimeout(resolve, 1500));
+          await emailjs.send('service_o69d2dc', 'template_iy8lt48', templateParams);
 
           // Mostrar confirmación
           form.style.display = 'none';
@@ -5936,16 +5996,21 @@ Gracias.`;
             confirmacion.style.display = 'block';
           }
 
-          // Log para desarrollo
-          console.log('PQRS enviada:', {
-            ...formData,
+          // Cerrar modal automáticamente después de 3 segundos
+          setTimeout(() => {
+            closePQRS();
+          }, 3000);
+
+          console.log('✅ PQRS enviada exitosamente:', {
             radicado: numeroRadicado,
-            fecha: new Date().toISOString()
+            tipo: formData.tipo,
+            nombre: formData.nombre,
+            email: formData.email
           });
 
         } catch (error) {
-          console.error('Error al enviar PQRS:', error);
-          alert('Hubo un error al enviar su solicitud. Por favor intente nuevamente o contáctenos por WhatsApp.');
+          console.error('❌ Error al enviar PQRS:', error);
+          alert('Hubo un error al enviar su solicitud. Por favor intente nuevamente o contáctenos por WhatsApp.\n\nError: ' + error.text);
         }
       }
 
@@ -6065,16 +6130,27 @@ Gracias.`;
           <div class="pqrs-form-grid">
             <!-- Tipo de PQRS -->
             <div class="pqrs-form-group full-width">
-              <label for="pqrsTipo">
+              <label>
                 <i class="fas fa-list"></i> Tipo de Solicitud *
               </label>
-              <select id="pqrsTipo" name="tipo" required>
-                <option value="">Seleccione una opción</option>
-                <option value="peticion">Petición</option>
-                <option value="queja">Queja</option>
-                <option value="reclamo">Reclamo</option>
-                <option value="sugerencia">Sugerencia</option>
-              </select>
+              <div class="pqrs-radio-group">
+                <label class="pqrs-radio-label">
+                  <input type="radio" name="tipo" value="Petición" required>
+                  <span>Petición</span>
+                </label>
+                <label class="pqrs-radio-label">
+                  <input type="radio" name="tipo" value="Queja" required>
+                  <span>Queja</span>
+                </label>
+                <label class="pqrs-radio-label">
+                  <input type="radio" name="tipo" value="Reclamo" required>
+                  <span>Reclamo</span>
+                </label>
+                <label class="pqrs-radio-label">
+                  <input type="radio" name="tipo" value="Sugerencia" required>
+                  <span>Sugerencia</span>
+                </label>
+              </div>
             </div>
 
             <!-- Nombre -->
@@ -6124,13 +6200,12 @@ Gracias.`;
               <label for="pqrsCiudad">
                 <i class="fas fa-map-marker-alt"></i> Ciudad *
               </label>
-              <input
-                type="text"
-                id="pqrsCiudad"
-                name="ciudad"
-                placeholder="Ciudad"
-                required
-              >
+              <select id="pqrsCiudad" name="ciudad" required>
+                <option value="">Seleccione una ciudad</option>
+                <option value="Bogotá">Bogotá</option>
+                <option value="Bucaramanga">Bucaramanga</option>
+                <option value="Otra">Otra</option>
+              </select>
             </div>
 
             <!-- Asunto -->
@@ -6161,18 +6236,12 @@ Gracias.`;
               ></textarea>
             </div>
 
-            <!-- Archivo Adjunto -->
+            <!-- Mensaje informativo -->
             <div class="pqrs-form-group full-width">
-              <label for="pqrsArchivo">
-                <i class="fas fa-paperclip"></i> Archivo Adjunto (Opcional)
-              </label>
-              <input
-                type="file"
-                id="pqrsArchivo"
-                name="archivo"
-                accept="image/*,.pdf,.doc,.docx"
-              >
-              <small class="file-hint">Formatos: PDF, DOC, DOCX, imágenes. Máximo 5MB</small>
+              <div class="pqrs-info-message">
+                <i class="fas fa-info-circle"></i>
+                <p>Su PQRS será enviado a: <strong>pqrs.escalerasferre@gmail.com</strong></p>
+              </div>
             </div>
           </div>
 
