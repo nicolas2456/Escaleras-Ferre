@@ -465,10 +465,69 @@
 
       .spa-filters {
         display: flex;
-        gap: var(--spacing-sm);
+        gap: 1rem;
         margin-bottom: var(--spacing-lg);
         flex-wrap: wrap;
         justify-content: center;
+        background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        padding: 1.5rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        border: 2px solid rgba(255, 165, 0, 0.1);
+      }
+
+      .filter-btn {
+        padding: 1rem 1.8rem;
+        background: white;
+        color: var(--color-primary);
+        border: 2px solid #e0e0e0;
+        border-radius: 15px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        line-height: 1.6;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .filter-btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 165, 0, 0.1);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .filter-btn:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      .filter-btn:hover {
+        border-color: var(--color-accent);
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(255, 165, 0, 0.25);
+      }
+
+      .filter-btn.active {
+        background: linear-gradient(135deg, var(--color-accent), #ff8c00);
+        color: white;
+        border: 3px solid #ffd700;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 165, 0, 0.35);
+      }
+
+      .filter-btn.active:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 12px 30px rgba(255, 165, 0, 0.4);
       }
 
         .spa-products-grid {
@@ -478,17 +537,6 @@
             padding: 20px;
             align-items: stretch;
         }
-
-      .filter-btn.active {
-        background: var(--color-primary);
-        color: white;
-        border-color: var(--color-accent);
-      }
-
-      .filter-btn:hover {
-        border-color: var(--color-primary);
-        transform: translateY(-2px);
-      }
 
       /* Para una sola tarjeta */
       .spa-products-grid.single-item {
@@ -1162,9 +1210,28 @@
       .chatbot-title {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 12px;
         font-weight: 600;
         font-size: 14px;
+      }
+
+      .chatbot-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid var(--color-accent);
+        overflow: hidden;
+        flex-shrink: 0;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chatbot-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
 
       .chatbot-close {
@@ -1231,6 +1298,32 @@
         border: 1px solid #e0e0e0;
         margin-right: auto;
         border-bottom-left-radius: 5px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .bot-message-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid var(--color-accent);
+        overflow: hidden;
+        flex-shrink: 0;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .bot-message-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .bot-message-content {
+        flex: 1;
       }
 
       .typing-indicator {
@@ -1885,6 +1978,32 @@
             border: 1px solid #e0e0e0;
             margin-right: auto;
             border-bottom-left-radius: 5px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .bot-message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--color-accent);
+            overflow: hidden;
+            flex-shrink: 0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bot-message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bot-message-content {
+            flex: 1;
         }
 
         .typing-indicator {
@@ -2196,13 +2315,22 @@
         .spa-filters {
           justify-content: flex-start;
           overflow-x: auto;
-          padding-bottom: 0.5rem;
+          padding: 1rem;
+          gap: 0.8rem;
         }
 
         .filter-btn {
           flex-shrink: 0;
           font-size: 0.85rem;
-          padding: 0.6rem 1rem;
+          padding: 0.8rem 1.2rem;
+        }
+
+        .filter-btn:hover {
+          transform: translateY(-2px) scale(1.02);
+        }
+
+        .filter-btn.active:hover {
+          transform: translateY(-2px) scale(1.02);
         }
 
         .spa-products-grid {
@@ -2344,6 +2472,248 @@
         transition: color 0.2s;
       }
 
+      /* Modal PQRS */
+      .pqrs-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+        overflow-y: auto;
+        padding: 2rem 0;
+      }
+
+      .pqrs-modal-overlay.active {
+        display: flex;
+      }
+
+      .pqrs-modal {
+        background: white;
+        border-radius: 20px;
+        max-width: 700px;
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+        animation: modalSlideIn 0.4s ease-out;
+        margin: auto;
+      }
+
+      .pqrs-modal-header {
+        background: linear-gradient(135deg, #2d5016, #4a7028);
+        color: white;
+        padding: 2rem;
+        border-radius: 20px 20px 0 0;
+        position: relative;
+      }
+
+      .pqrs-modal-header h3 {
+        font-size: 1.8rem;
+        margin: 0 0 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .pqrs-modal-header p {
+        margin: 0;
+        opacity: 0.9;
+        font-size: 0.95rem;
+      }
+
+      .pqrs-close-btn {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .pqrs-close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+      }
+
+      .pqrs-form {
+        padding: 2rem;
+      }
+
+      .pqrs-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .pqrs-form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pqrs-form-group.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .pqrs-form-group label {
+        color: var(--color-primary);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+      }
+
+      .pqrs-form-group input,
+      .pqrs-form-group select,
+      .pqrs-form-group textarea {
+        padding: 0.8rem 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .pqrs-form-group input:focus,
+      .pqrs-form-group select:focus,
+      .pqrs-form-group textarea:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.1);
+      }
+
+      .pqrs-form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .pqrs-form-group select {
+        cursor: pointer;
+      }
+
+      .file-hint {
+        color: #666;
+        font-size: 0.85rem;
+        margin-top: 0.3rem;
+      }
+
+      .pqrs-form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 2px solid #f0f0f0;
+      }
+
+      .pqrs-btn-primary,
+      .pqrs-btn-secondary {
+        padding: 0.9rem 2rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .pqrs-btn-primary {
+        background: linear-gradient(135deg, var(--color-accent), #ff8c00);
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+      }
+
+      .pqrs-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+      }
+
+      .pqrs-btn-secondary {
+        background: #f0f0f0;
+        color: #666;
+      }
+
+      .pqrs-btn-secondary:hover {
+        background: #e0e0e0;
+      }
+
+      .pqrs-confirmacion {
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .pqrs-success-icon {
+        font-size: 4rem;
+        color: #4caf50;
+        margin-bottom: 1rem;
+        animation: successPop 0.5s ease-out;
+      }
+
+      @keyframes successPop {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .pqrs-confirmacion h4 {
+        color: var(--color-primary);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .pqrs-confirmacion p {
+        color: #666;
+        margin-bottom: 1.5rem;
+      }
+
+      .pqrs-radicado {
+        background: linear-gradient(135deg, #f0f7ed, #e8f5e9);
+        border: 2px solid var(--color-accent);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .pqrs-radicado strong {
+        font-size: 1.8rem;
+        color: var(--color-primary);
+        letter-spacing: 2px;
+        font-family: 'Courier New', monospace;
+      }
+
+      .pqrs-info-text {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
         .footer-section a {
             color: white;
             text-decoration: none;
@@ -2417,13 +2787,22 @@
             .spa-filters {
                 justify-content: flex-start;
                 overflow-x: auto;
-                padding-bottom: 0.5rem;
+                padding: 1rem;
+                gap: 0.8rem;
             }
 
             .filter-btn {
                 flex-shrink: 0;
                 font-size: 0.85rem;
-                padding: 0.6rem 1rem;
+                padding: 0.8rem 1.2rem;
+            }
+
+            .filter-btn:hover {
+                transform: translateY(-2px) scale(1.02);
+            }
+
+            .filter-btn.active:hover {
+                transform: translateY(-2px) scale(1.02);
             }
 
             .spa-products-grid {
@@ -2581,6 +2960,44 @@
         .sede-modal-close button:hover {
             color: var(--color-primary);
         }
+
+        /* PQRS Modal Responsive */
+        .pqrs-modal {
+            max-width: 95%;
+            width: 95%;
+            max-height: 95vh;
+        }
+
+        .pqrs-modal-header h3 {
+            font-size: 1.4rem;
+        }
+
+        .pqrs-form {
+            padding: 1.5rem;
+        }
+
+        .pqrs-form-grid {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+        }
+
+        .pqrs-form-group.full-width {
+            grid-column: 1;
+        }
+
+        .pqrs-form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .pqrs-btn-primary,
+        .pqrs-btn-secondary {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .pqrs-radicado strong {
+            font-size: 1.4rem;
+        }
     </style>
 
     <!-- WhatsApp Header Bar -->
@@ -2631,6 +3048,11 @@
               >
             </li>
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            <li>
+              <a href="#" class="nav-link" onclick="openPQRS(); return false;"
+                >PQRS</a
+              >
+            </li>
           </ul>
         </nav>
       </div>
@@ -5137,7 +5559,16 @@ Gracias.`;
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
             .replace(/\n/g, "<br>");
 
-          messageDiv.innerHTML = htmlText;
+          if (sender === 'bot') {
+            messageDiv.innerHTML = `
+              <div class="bot-message-avatar">
+                <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+              </div>
+              <div class="bot-message-content">${htmlText}</div>
+            `;
+          } else {
+            messageDiv.innerHTML = htmlText;
+          }
 
           messagesContainer.appendChild(messageDiv);
           messagesContainer.scrollTop = 0;
@@ -5147,8 +5578,14 @@ Gracias.`;
           const messagesContainer = document.getElementById("chatbot-messages");
           const typingDiv = document.createElement("div");
           typingDiv.className = "message bot-message typing-indicator";
-          typingDiv.innerHTML =
-            '<span>Diana escribe</span><span class="dots">...</span>';
+          typingDiv.innerHTML = `
+            <div class="bot-message-avatar">
+              <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+            </div>
+            <div class="bot-message-content">
+              <span>Diana escribe</span><span class="dots">...</span>
+            </div>
+          `;
           typingDiv.id = "typing-indicator";
 
           messagesContainer.appendChild(typingDiv);
@@ -5165,14 +5602,19 @@ Gracias.`;
           const contactDiv = document.createElement("div");
           contactDiv.className = "message bot-message contact-options";
           contactDiv.innerHTML = `
-            <p>¿Te conecto con un asesor para cotización exacta?</p>
-            <div class="whatsapp-options">
-                <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Bogotá
-                </button>
-                <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Bucaramanga
-                </button>
+            <div class="bot-message-avatar">
+              <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+            </div>
+            <div class="bot-message-content">
+              <p>¿Te conecto con un asesor para cotización exacta?</p>
+              <div class="whatsapp-options">
+                  <button onclick="openWhatsAppSede('bogota')" class="whatsapp-btn">
+                      <i class="fab fa-whatsapp"></i> Bogotá
+                  </button>
+                  <button onclick="openWhatsAppSede('bucaramanga')" class="whatsapp-btn">
+                      <i class="fab fa-whatsapp"></i> Bucaramanga
+                  </button>
+              </div>
             </div>
         `;
 
@@ -5218,8 +5660,13 @@ Gracias.`;
         const welcomeDiv = document.createElement("div");
         welcomeDiv.className = "message bot-message";
         welcomeDiv.innerHTML = `
-        <p>¡Hola! Gracias por contactarnos 😊</p>
-        <p>¿Con cuál de nuestras sedes te gustaría comunicarte?</p>
+        <div class="bot-message-avatar">
+          <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+        </div>
+        <div class="bot-message-content">
+          <p>¡Hola! Gracias por contactarnos 😊</p>
+          <p>¿Con cuál de nuestras sedes te gustaría comunicarte?</p>
+        </div>
     `;
         messagesContainer.appendChild(welcomeDiv);
 
@@ -5227,25 +5674,30 @@ Gracias.`;
         const sedeOptionsDiv = document.createElement("div");
         sedeOptionsDiv.className = "message bot-message sede-selection";
         sedeOptionsDiv.innerHTML = `
-        <div class="whatsapp-options">
-            <button onclick="contactarSede('bogota')" class="whatsapp-btn-sede bogota">
-                <i class="fab fa-whatsapp"></i>
-                <div class="sede-info">
-                    <strong>Bogotá (Virtual)</strong>
-                    <span>Atención remota especializada</span>
-                </div>
-            </button>
-            <button onclick="contactarSede('bucaramanga')" class="whatsapp-btn-sede bucaramanga">
+        <div class="bot-message-avatar">
+          <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+        </div>
+        <div class="bot-message-content">
+          <div class="whatsapp-options">
+              <button onclick="contactarSede('bogota')" class="whatsapp-btn-sede bogota">
+                  <i class="fab fa-whatsapp"></i>
+                  <div class="sede-info">
+                      <strong>Bogotá (Virtual)</strong>
+                      <span>Atención remota especializada</span>
+                  </div>
+              </button>
+              <button onclick="contactarSede('bucaramanga')" class="whatsapp-btn-sede bucaramanga">
                 <i class="fab fa-whatsapp"></i>
                 <div class="sede-info">
                     <strong>Bucaramanga (Física)</strong>
                     <span>Cll 34 # 11-27 - Visitas presenciales</span>
                 </div>
             </button>
+          </div>
+          <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+              También puedes continuar chateando aquí para más información 💬
+          </p>
         </div>
-        <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
-            También puedes continuar chateando aquí para más información 💬
-        </p>
     `;
         messagesContainer.appendChild(sedeOptionsDiv);
 
@@ -5293,7 +5745,191 @@ Gracias.`;
     </script>
 
     <script>
-      // Write JavaScript here
+      // ============================================
+      // SISTEMA PQRS - FUNCIONES
+      // ============================================
+
+      // Abrir modal PQRS
+      function openPQRS() {
+        const modal = document.getElementById('pqrsModal');
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+
+          // Reset form and show form, hide confirmation
+          const form = document.getElementById('pqrsForm');
+          const confirmacion = document.getElementById('pqrsConfirmacion');
+          if (form) form.style.display = 'block';
+          if (confirmacion) confirmacion.style.display = 'none';
+          if (form) form.reset();
+        }
+      }
+
+      // Cerrar modal PQRS
+      function closePQRS() {
+        const modal = document.getElementById('pqrsModal');
+        if (modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = 'auto';
+
+          // Reset form
+          const form = document.getElementById('pqrsForm');
+          if (form) form.reset();
+        }
+      }
+
+      // Generar número de radicado
+      function generateTicketNumber() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const random = Math.floor(Math.random() * 9000) + 1000;
+
+        return `PQRS-${year}${month}${day}-${random}`;
+      }
+
+      // Validar formulario PQRS
+      function validatePQRS(formData) {
+        const errors = [];
+
+        // Validar tipo
+        if (!formData.tipo) {
+          errors.push('Debe seleccionar un tipo de solicitud');
+        }
+
+        // Validar nombre
+        if (!formData.nombre || formData.nombre.trim().length < 3) {
+          errors.push('El nombre debe tener al menos 3 caracteres');
+        }
+
+        // Validar email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email || !emailRegex.test(formData.email)) {
+          errors.push('Debe ingresar un correo electrónico válido');
+        }
+
+        // Validar teléfono
+        const phoneRegex = /^[0-9\s\-\+\(\)]{7,}$/;
+        if (!formData.telefono || !phoneRegex.test(formData.telefono)) {
+          errors.push('Debe ingresar un teléfono válido');
+        }
+
+        // Validar ciudad
+        if (!formData.ciudad || formData.ciudad.trim().length < 3) {
+          errors.push('Debe ingresar una ciudad válida');
+        }
+
+        // Validar asunto
+        if (!formData.asunto || formData.asunto.trim().length < 5) {
+          errors.push('El asunto debe tener al menos 5 caracteres');
+        }
+
+        // Validar descripción
+        if (!formData.descripcion || formData.descripcion.trim().length < 20) {
+          errors.push('La descripción debe tener al menos 20 caracteres');
+        }
+
+        // Validar archivo (si existe)
+        if (formData.archivo) {
+          const maxSize = 5 * 1024 * 1024; // 5MB
+          if (formData.archivo.size > maxSize) {
+            errors.push('El archivo no debe superar los 5MB');
+          }
+        }
+
+        return errors;
+      }
+
+      // Enviar solicitud PQRS
+      async function submitPQRS(event) {
+        event.preventDefault();
+
+        const form = document.getElementById('pqrsForm');
+        const formData = {
+          tipo: document.getElementById('pqrsTipo').value,
+          nombre: document.getElementById('pqrsNombre').value,
+          email: document.getElementById('pqrsEmail').value,
+          telefono: document.getElementById('pqrsTelefono').value,
+          ciudad: document.getElementById('pqrsCiudad').value,
+          asunto: document.getElementById('pqrsAsunto').value,
+          descripcion: document.getElementById('pqrsDescripcion').value,
+          archivo: document.getElementById('pqrsArchivo').files[0]
+        };
+
+        // Validar formulario
+        const errors = validatePQRS(formData);
+
+        if (errors.length > 0) {
+          alert('Por favor corrija los siguientes errores:\\n\\n' + errors.join('\\n'));
+          return;
+        }
+
+        // Generar número de radicado
+        const numeroRadicado = generateTicketNumber();
+
+        try {
+          // Aquí normalmente se enviaría a un servidor o servicio de email
+          // Por ahora simulamos el envío exitoso
+
+          // Nota: Para integración real con EmailJS, se necesitaría:
+          // emailjs.send('service_id', 'template_id', {
+          //   tipo: formData.tipo,
+          //   nombre: formData.nombre,
+          //   email: formData.email,
+          //   telefono: formData.telefono,
+          //   ciudad: formData.ciudad,
+          //   asunto: formData.asunto,
+          //   descripcion: formData.descripcion,
+          //   radicado: numeroRadicado
+          // });
+
+          // Simular tiempo de envío
+          await new Promise(resolve => setTimeout(resolve, 1500));
+
+          // Mostrar confirmación
+          form.style.display = 'none';
+          const confirmacion = document.getElementById('pqrsConfirmacion');
+          const radicadoElement = document.getElementById('pqrsNumeroRadicado');
+
+          if (radicadoElement) {
+            radicadoElement.textContent = numeroRadicado;
+          }
+
+          if (confirmacion) {
+            confirmacion.style.display = 'block';
+          }
+
+          // Log para desarrollo
+          console.log('PQRS enviada:', {
+            ...formData,
+            radicado: numeroRadicado,
+            fecha: new Date().toISOString()
+          });
+
+        } catch (error) {
+          console.error('Error al enviar PQRS:', error);
+          alert('Hubo un error al enviar su solicitud. Por favor intente nuevamente o contáctenos por WhatsApp.');
+        }
+      }
+
+      // Inicializar event listener para el formulario PQRS
+      document.addEventListener('DOMContentLoaded', function() {
+        const pqrsForm = document.getElementById('pqrsForm');
+        if (pqrsForm) {
+          pqrsForm.addEventListener('submit', submitPQRS);
+        }
+
+        // Cerrar modal al hacer click fuera
+        const pqrsModal = document.getElementById('pqrsModal');
+        if (pqrsModal) {
+          pqrsModal.addEventListener('click', function(e) {
+            if (e.target === pqrsModal) {
+              closePQRS();
+            }
+          });
+        }
+      });
     </script>
 
     <!-- Chatbot Container -->
@@ -5306,16 +5942,23 @@ Gracias.`;
       <div id="chatbot-window" class="chatbot-window">
         <div class="chatbot-header">
           <div class="chatbot-title">
-            <i class="fas fa-robot"></i>
-            Asistente Virtual - Escaleras Ferre
+            <div class="chatbot-avatar">
+              <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+            </div>
+            <span>Escaleras Ferre</span>
           </div>
           <button id="chatbot-close" class="chatbot-close">×</button>
         </div>
 
         <div id="chatbot-messages" class="chatbot-messages">
           <div class="message bot-message">
-            ¡Hola! Soy Diana, tu asistente de Escaleras Ferre 😊 ¿En qué te
-            puedo ayudar hoy?
+            <div class="bot-message-avatar">
+              <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+            </div>
+            <div class="bot-message-content">
+              ¡Hola! Soy Diana, tu asistente de Escaleras Ferre 😊 ¿En qué te
+              puedo ayudar hoy?
+            </div>
           </div>
         </div>
 
@@ -5367,6 +6010,164 @@ Gracias.`;
         </div>
         <div class="sede-modal-close">
           <button onclick="closeSedeModal()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal PQRS -->
+    <div id="pqrsModal" class="pqrs-modal-overlay">
+      <div class="pqrs-modal">
+        <div class="pqrs-modal-header">
+          <h3><i class="fas fa-file-alt"></i> Sistema PQRS</h3>
+          <p>Peticiones, Quejas, Reclamos y Sugerencias</p>
+          <button class="pqrs-close-btn" onclick="closePQRS()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <form id="pqrsForm" class="pqrs-form">
+          <div class="pqrs-form-grid">
+            <!-- Tipo de PQRS -->
+            <div class="pqrs-form-group full-width">
+              <label for="pqrsTipo">
+                <i class="fas fa-list"></i> Tipo de Solicitud *
+              </label>
+              <select id="pqrsTipo" name="tipo" required>
+                <option value="">Seleccione una opción</option>
+                <option value="peticion">Petición</option>
+                <option value="queja">Queja</option>
+                <option value="reclamo">Reclamo</option>
+                <option value="sugerencia">Sugerencia</option>
+              </select>
+            </div>
+
+            <!-- Nombre -->
+            <div class="pqrs-form-group">
+              <label for="pqrsNombre">
+                <i class="fas fa-user"></i> Nombre Completo *
+              </label>
+              <input
+                type="text"
+                id="pqrsNombre"
+                name="nombre"
+                placeholder="Ingrese su nombre completo"
+                required
+              >
+            </div>
+
+            <!-- Email -->
+            <div class="pqrs-form-group">
+              <label for="pqrsEmail">
+                <i class="fas fa-envelope"></i> Correo Electrónico *
+              </label>
+              <input
+                type="email"
+                id="pqrsEmail"
+                name="email"
+                placeholder="ejemplo@correo.com"
+                required
+              >
+            </div>
+
+            <!-- Teléfono -->
+            <div class="pqrs-form-group">
+              <label for="pqrsTelefono">
+                <i class="fas fa-phone"></i> Teléfono *
+              </label>
+              <input
+                type="tel"
+                id="pqrsTelefono"
+                name="telefono"
+                placeholder="300 123 4567"
+                required
+              >
+            </div>
+
+            <!-- Ciudad -->
+            <div class="pqrs-form-group">
+              <label for="pqrsCiudad">
+                <i class="fas fa-map-marker-alt"></i> Ciudad *
+              </label>
+              <input
+                type="text"
+                id="pqrsCiudad"
+                name="ciudad"
+                placeholder="Ciudad"
+                required
+              >
+            </div>
+
+            <!-- Asunto -->
+            <div class="pqrs-form-group full-width">
+              <label for="pqrsAsunto">
+                <i class="fas fa-heading"></i> Asunto *
+              </label>
+              <input
+                type="text"
+                id="pqrsAsunto"
+                name="asunto"
+                placeholder="Resumen breve del tema"
+                required
+              >
+            </div>
+
+            <!-- Descripción -->
+            <div class="pqrs-form-group full-width">
+              <label for="pqrsDescripcion">
+                <i class="fas fa-align-left"></i> Descripción Detallada *
+              </label>
+              <textarea
+                id="pqrsDescripcion"
+                name="descripcion"
+                rows="5"
+                placeholder="Describa detalladamente su solicitud..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- Archivo Adjunto -->
+            <div class="pqrs-form-group full-width">
+              <label for="pqrsArchivo">
+                <i class="fas fa-paperclip"></i> Archivo Adjunto (Opcional)
+              </label>
+              <input
+                type="file"
+                id="pqrsArchivo"
+                name="archivo"
+                accept="image/*,.pdf,.doc,.docx"
+              >
+              <small class="file-hint">Formatos: PDF, DOC, DOCX, imágenes. Máximo 5MB</small>
+            </div>
+          </div>
+
+          <!-- Botones -->
+          <div class="pqrs-form-actions">
+            <button type="button" class="pqrs-btn-secondary" onclick="closePQRS()">
+              Cancelar
+            </button>
+            <button type="submit" class="pqrs-btn-primary">
+              <i class="fas fa-paper-plane"></i> Enviar Solicitud
+            </button>
+          </div>
+        </form>
+
+        <!-- Mensaje de confirmación -->
+        <div id="pqrsConfirmacion" class="pqrs-confirmacion" style="display: none;">
+          <div class="pqrs-success-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h4>¡Solicitud Enviada Exitosamente!</h4>
+          <p>Su solicitud ha sido registrada con el siguiente número de radicado:</p>
+          <div class="pqrs-radicado">
+            <strong id="pqrsNumeroRadicado"></strong>
+          </div>
+          <p class="pqrs-info-text">
+            Recibirá una copia de su solicitud en el correo electrónico proporcionado.
+            Nuestro equipo le dará respuesta en un plazo máximo de 15 días hábiles.
+          </p>
+          <button class="pqrs-btn-primary" onclick="closePQRS()">
+            Aceptar
+          </button>
         </div>
       </div>
     </div>
