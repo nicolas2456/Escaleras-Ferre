@@ -3048,11 +3048,6 @@
               >
             </li>
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
-            <li>
-              <a href="#" class="nav-link" onclick="openPQRS(); return false;"
-                >PQRS</a
-              >
-            </li>
           </ul>
         </nav>
       </div>
@@ -5147,6 +5142,15 @@ Gracias.`;
             return this.responses.contactar();
           }
 
+          // ========== PQRS (Peticiones, Quejas, Reclamos, Sugerencias) ==========
+          if (
+            /pqrs|peticion|queja|reclamo|sugerencia|quejarme|reclamar|sugerir|problema|inconveniente|felicitar/.test(
+              normalized
+            )
+          ) {
+            return this.responses.pqrs();
+          }
+
           // ========== VER CATÁLOGO / INFORMACIÓN ==========
           if (
             /ver|mostrar|ensenar|catalogo|informacion|productos|tienen que/.test(
@@ -5239,6 +5243,37 @@ Gracias.`;
 
           contactar() {
             return "¡Claro! Te conecto con un asesor experto por WhatsApp 📱\n\nEllos pueden ayudarte con:\n✅ Cotizaciones personalizadas\n✅ Disponibilidad inmediata\n✅ Opciones de pago\n\n¿Prefieres **Bogotá** o **Bucaramanga**?";
+          },
+
+          pqrs() {
+            // Este método debe mostrar el botón para abrir el formulario PQRS
+            setTimeout(() => {
+              const messagesContainer = document.getElementById("chatbot-messages");
+              const pqrsDiv = document.createElement("div");
+              pqrsDiv.className = "message bot-message contact-options";
+              pqrsDiv.innerHTML = `
+                <div class="bot-message-avatar">
+                  <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+                </div>
+                <div class="bot-message-content">
+                  <p><strong>Sistema PQRS</strong></p>
+                  <p style="margin: 10px 0; font-size: 0.9rem;">Estamos aquí para ayudarte con:</p>
+                  <ul style="margin: 10px 0; padding-left: 20px; font-size: 0.9rem;">
+                    <li>📝 Peticiones</li>
+                    <li>😟 Quejas</li>
+                    <li>⚠️ Reclamos</li>
+                    <li>💡 Sugerencias</li>
+                  </ul>
+                  <button onclick="openPQRS()" class="whatsapp-btn" style="width: 100%; margin-top: 10px;">
+                    <i class="fas fa-file-alt"></i> Abrir Formulario PQRS
+                  </button>
+                </div>
+              `;
+              messagesContainer.appendChild(pqrsDiv);
+              messagesContainer.scrollTop = 0;
+            }, 500);
+
+            return "Entiendo que deseas presentar una **Petición, Queja, Reclamo o Sugerencia** 📋\n\nTu opinión es muy importante para nosotros. Te abriremos nuestro formulario oficial PQRS.";
           },
 
           verCatalogo() {
