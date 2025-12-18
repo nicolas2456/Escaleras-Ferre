@@ -5182,6 +5182,13 @@ Gracias.`;
           if (entities.type) this.context.extractedType = entities.type;
           if (entities.time) this.context.extractedTime = entities.time;
 
+          // ========== RADICADO PQRS ==========
+          // Detectar formato: EF-YYYY-DDMMHHMM (ej: EF-2025-18121530)
+          const radicadoMatch = message.match(/EF-\d{4}-\d{8}/);
+          if (radicadoMatch) {
+            return this.responses.radicadoPQRS(radicadoMatch[0]);
+          }
+
           // ========== SALUDOS ==========
           if (
             /^(hola|buenas|buenos|hey|hi|alo|que tal)/.test(normalized) &&
@@ -5336,6 +5343,37 @@ Gracias.`;
             }, 500);
 
             return "Entiendo que deseas presentar una **Petición, Queja, Reclamo o Sugerencia** 📋\n\nTu opinión es muy importante para nosotros. Te abriremos nuestro formulario oficial PQRS.";
+          },
+
+          radicadoPQRS(radicado) {
+            // Este método redirige a WhatsApp con el radicado
+            setTimeout(() => {
+              const messagesContainer = document.getElementById("chatbot-messages");
+              const whatsappDiv = document.createElement("div");
+              whatsappDiv.className = "message bot-message contact-options";
+              whatsappDiv.innerHTML = `
+                <div class="bot-message-avatar">
+                  <img src="https://i.imgur.com/Sf0Za4H.png" alt="Escaleras Ferre">
+                </div>
+                <div class="bot-message-content">
+                  <p><strong>Seguimiento PQRS</strong></p>
+                  <p style="margin: 10px 0; font-size: 0.9rem;">Te conectaré con un asesor por WhatsApp para hacer seguimiento a tu solicitud con radicado:</p>
+                  <p style="font-weight: 600; color: var(--color-accent); font-size: 1.1rem; margin: 10px 0;">${radicado}</p>
+                  <div class="whatsapp-options">
+                    <button onclick="contactarRadicadoSede('bogota', '${radicado}')" class="whatsapp-btn">
+                      <i class="fab fa-whatsapp"></i> Bogotá
+                    </button>
+                    <button onclick="contactarRadicadoSede('bucaramanga', '${radicado}')" class="whatsapp-btn">
+                      <i class="fab fa-whatsapp"></i> Bucaramanga
+                    </button>
+                  </div>
+                </div>
+              `;
+              messagesContainer.appendChild(whatsappDiv);
+              messagesContainer.scrollTop = 0;
+            }, 500);
+
+            return `Perfecto, veo que tienes el radicado **${radicado}** 📋\n\nTe conectaré con un asesor por WhatsApp para hacer seguimiento a tu PQRS.\n\n¿A qué sede prefieres contactar?`;
           },
 
           verCatalogo() {
@@ -5822,6 +5860,25 @@ Gracias.`;
         window.open(whatsappURL, "_blank");
       };
 
+      // Función para contactar con radicado PQRS
+      window.contactarRadicadoSede = function (sede, radicado) {
+        const phones = {
+          bogota: "573008611886",
+          bucaramanga: "573181027047",
+        };
+
+        const message = `Hola, necesito hacer seguimiento a mi solicitud PQRS.
+
+📋 *Número de Radicado:* ${radicado}
+
+Por favor, indíquenme el estado de mi solicitud.
+
+Gracias.`;
+
+        const whatsappURL = `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, "_blank");
+      };
+
       document.addEventListener("DOMContentLoaded", () => {
         console.log("🤖 Chatbot Ultra Inteligente inicializado");
         ChatbotController.init();
@@ -5995,11 +6052,6 @@ Gracias.`;
           if (confirmacion) {
             confirmacion.style.display = 'block';
           }
-
-          // Cerrar modal automáticamente después de 3 segundos
-          setTimeout(() => {
-            closePQRS();
-          }, 3000);
 
           console.log('✅ PQRS enviada exitosamente:', {
             radicado: numeroRadicado,
@@ -6235,14 +6287,6 @@ Gracias.`;
                 required
               ></textarea>
             </div>
-
-            <!-- Mensaje informativo -->
-            <div class="pqrs-form-group full-width">
-              <div class="pqrs-info-message">
-                <i class="fas fa-info-circle"></i>
-                <p>Su PQRS será enviado a: <strong>pqrs.escalerasferre@gmail.com</strong></p>
-              </div>
-            </div>
           </div>
 
           <!-- Botones -->
@@ -6267,12 +6311,11 @@ Gracias.`;
             <strong id="pqrsNumeroRadicado"></strong>
           </div>
           <p class="pqrs-info-text">
-            Recibirá una copia de su solicitud en el correo electrónico proporcionado.
+            <strong>¿Necesita hacer seguimiento?</strong><br>
+            Puede usar este radicado en nuestro <strong>chatbot</strong> 💬<br>
+            Simplemente escriba su número de radicado y seremos redirigidos a WhatsApp con su solicitud.<br><br>
             Nuestro equipo le dará respuesta en un plazo máximo de 15 días hábiles.
           </p>
-          <button class="pqrs-btn-primary" onclick="closePQRS()">
-            Aceptar
-          </button>
         </div>
       </div>
     </div>
