@@ -193,12 +193,30 @@
       }
 
       .logo-subtitle {
-        font-size: 1rem;
-        color: var(--color-accent);
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1rem;
+  color: var(--color-accent);
+  font-weight: 400;
+  font-style: italic;
+  text-transform: capitalize;
+  letter-spacing: 1.2px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.logo-subtitle::before {
+  content: '✦';
+  margin-right: 8px;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.logo-subtitle::after {
+  content: '✦';
+  margin-left: 8px;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
 
       .nav-menu {
         display: flex;
@@ -2056,8 +2074,14 @@
         }
 
         .logo-subtitle {
-          font-size: 0.8rem;
-        }
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.logo-subtitle::before,
+.logo-subtitle::after {
+  font-size: 0.7rem;
+}
 
         .logo-container {
           gap: 1rem;
@@ -6397,13 +6421,62 @@ Gracias.`;
       };
 
       window.openWhatsAppSede = function (sede) {
-        const phones = { bogota: "573008611886", bucaramanga: "573181027047" };
-        const message = `Hola, me gustaría recibir asesoría sobre escaleras. Vengo desde la web.`;
-        window.open(
-          `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`,
-          "_blank"
-        );
-      };
+  const phones = { bogota: "573008611886", bucaramanga: "573181027047" };
+  
+  // Recopilar contexto de la conversación
+  const conversationContext = ChatbotUltraInteligente.context;
+  const conversationHistory = ChatbotUltraInteligente.conversationHistory;
+  
+  let message = "Hola, me contacto desde el sitio web de Escaleras Ferre.\n\n";
+  
+  // Construir mensaje basado en el contexto
+  let contextDetails = [];
+  
+  if (conversationContext.extractedHeight) {
+    contextDetails.push(`📏 Altura necesaria: ${conversationContext.extractedHeight}m`);
+  }
+  
+  if (conversationContext.extractedMaterial) {
+    contextDetails.push(`🔧 Material preferido: ${conversationContext.extractedMaterial}`);
+  }
+  
+  if (conversationContext.extractedType) {
+    contextDetails.push(`⚙️ Tipo de escalera: ${conversationContext.extractedType}`);
+  }
+  
+  if (conversationContext.extractedTime) {
+    contextDetails.push(`⏰ Tiempo de alquiler: ${conversationContext.extractedTime}`);
+  }
+  
+  // Analizar el último mensaje del usuario para detectar intención
+  if (conversationHistory.length > 0) {
+    const lastUserMessage = conversationHistory
+      .filter(msg => msg.role === "user")
+      .pop()?.content?.toLowerCase() || "";
+    
+    if (lastUserMessage.includes("alquil")) {
+      contextDetails.push("🏢 Interesado en: Servicio de alquiler");
+    } else if (lastUserMessage.includes("precio") || lastUserMessage.includes("cotiz")) {
+      contextDetails.push("💰 Consulta sobre: Precios y cotización");
+    } else if (lastUserMessage.includes("electric")) {
+      contextDetails.push("⚡ Uso específico: Trabajo eléctrico");
+    } else if (lastUserMessage.includes("construccion") || lastUserMessage.includes("obra")) {
+      contextDetails.push("🏗️ Uso específico: Construcción/obra");
+    }
+  }
+  
+  if (contextDetails.length > 0) {
+    message += "Información de mi consulta:\n" + contextDetails.join("\n") + "\n\n";
+    message += "¿Podrían ayudarme con más información y disponibilidad?\n\nGracias.";
+  } else {
+    message += "Me gustaría recibir asesoría sobre escaleras industriales.\n\n¿Podrían enviarme información sobre productos disponibles?\n\nGracias.";
+  }
+  
+  window.open(
+    `https://wa.me/${phones[sede]}?text=${encodeURIComponent(message)}`,
+    "_blank"
+  );
+};
 
       // Función para abrir chatbot con flujo de contacto
       window.abrirChatbotContacto = function () {
