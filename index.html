@@ -2424,6 +2424,337 @@
         transform: translateY(0);
       }
 
+      /* ===================================
+         FAQ SECTION STYLES
+         =================================== */
+
+      .faq-section {
+        padding: var(--spacing-xl) var(--spacing-sm);
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      }
+
+      .faq-header {
+        text-align: center;
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .faq-title {
+        font-family: var(--font-heading);
+        font-size: 2.5rem;
+        color: var(--color-primary);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .faq-subtitle {
+        font-size: 1.1rem;
+        color: var(--color-text-light);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .faq-container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        background: white;
+        border-radius: var(--border-radius-md);
+        margin-bottom: var(--spacing-sm);
+        box-shadow: var(--shadow-card);
+        overflow: hidden;
+        transition: var(--transition-smooth);
+      }
+
+      .faq-item:hover {
+        box-shadow: var(--shadow-elevated);
+      }
+
+      .faq-question {
+        width: 100%;
+        padding: 1.5rem;
+        text-align: left;
+        background: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--color-primary);
+        transition: var(--transition-smooth);
+      }
+
+      .faq-question:hover {
+        background: #f8f9fa;
+      }
+
+      .faq-question-text {
+        flex: 1;
+      }
+
+      .faq-icon {
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+      }
+
+      .faq-item.active .faq-icon {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+        padding: 0 1.5rem;
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 500px;
+        padding: 0 1.5rem 1.5rem 1.5rem;
+      }
+
+      .faq-answer-text {
+        color: var(--color-text);
+        line-height: 1.7;
+        font-size: 0.95rem;
+      }
+
+      .faq-view-all-btn {
+        display: block;
+        margin: var(--spacing-lg) auto 0;
+        padding: 1rem 2.5rem;
+        background: var(--color-accent);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+      }
+
+      .faq-view-all-btn:hover {
+        background: #ff8c00;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+      }
+
+      /* FAQ SPA Styles */
+      .faq-spa {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        z-index: 8000;
+        overflow-y: auto;
+      }
+
+      .faq-spa.active {
+        display: block;
+      }
+
+      .faq-spa-header {
+        position: sticky;
+        top: 0;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+        color: white;
+        padding: var(--spacing-md) 0;
+        box-shadow: var(--shadow-elevated);
+        z-index: 100;
+      }
+
+      .faq-spa-header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .faq-spa-title {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+      }
+
+      .faq-spa-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .faq-home-btn {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--border-radius-sm);
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+      }
+
+      .faq-home-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .faq-close {
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: var(--border-radius-sm);
+        transition: var(--transition-smooth);
+      }
+
+      .faq-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .faq-spa-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: var(--spacing-md);
+      }
+
+      .faq-search-container {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .faq-search-box {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid var(--color-border);
+        border-radius: 50px;
+        font-size: 1rem;
+        transition: var(--transition-smooth);
+      }
+
+      .faq-search-box:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
+      }
+
+      .faq-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: var(--spacing-lg);
+        justify-content: center;
+      }
+
+      .faq-filter-btn {
+        padding: 0.75rem 1.5rem;
+        border: 2px solid var(--color-primary);
+        background: white;
+        color: var(--color-primary);
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: var(--transition-smooth);
+      }
+
+      .faq-filter-btn:hover {
+        background: rgba(45, 80, 22, 0.05);
+        transform: translateY(-2px);
+      }
+
+      .faq-filter-btn.active {
+        background: var(--color-primary);
+        color: white;
+        box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
+      }
+
+      .faq-category-section {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .faq-category-title {
+        font-family: var(--font-heading);
+        font-size: 1.8rem;
+        color: var(--color-primary);
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 3px solid var(--color-accent);
+      }
+
+      .faq-no-results {
+        text-align: center;
+        padding: var(--spacing-xl);
+        color: var(--color-text-light);
+      }
+
+      .faq-no-results i {
+        font-size: 4rem;
+        color: var(--color-primary);
+        margin-bottom: var(--spacing-md);
+        opacity: 0.5;
+      }
+
+      /* Responsive FAQ */
+      @media (max-width: 768px) {
+        .faq-title {
+          font-size: 2rem;
+        }
+
+        .faq-spa-title {
+          font-size: 1.2rem;
+        }
+
+        .faq-question {
+          padding: 1rem;
+          font-size: 0.95rem;
+        }
+
+        .faq-answer-text {
+          font-size: 0.9rem;
+        }
+
+        .faq-filters {
+          gap: 0.5rem;
+        }
+
+        .faq-filter-btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.85rem;
+        }
+
+        .faq-category-title {
+          font-size: 1.4rem;
+        }
+
+        .faq-spa-controls {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .faq-home-btn {
+          font-size: 0.8rem;
+          padding: 0.5rem 1rem;
+        }
+      }
+
       /* Modal de Selección de Sede */
       .sede-modal-overlay {
         display: none;
@@ -3150,6 +3481,7 @@
                 >Catálogo</a
               >
             </li>
+            <li><a href="#faq" class="nav-link" onclick="scrollToFAQ(); return false;">FAQ</a></li>
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
           </ul>
         </nav>
@@ -3291,6 +3623,154 @@
               Agendar Servicio
             </button>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <div class="faq-header">
+          <h2 class="faq-title fade-in visible">Preguntas Frecuentes</h2>
+          <p class="faq-subtitle fade-in visible">
+            Resuelve las dudas más comunes sobre nuestras escaleras
+          </p>
+        </div>
+
+        <div class="faq-container">
+          <!-- FAQ 1 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Cuál es la diferencia entre fibra de vidrio y aluminio?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                La fibra de vidrio es aislante eléctrica (ideal para trabajo eléctrico), más durable pero más pesada. El aluminio es más liviano y económico, pero conduce electricidad.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Qué capacidad de peso soportan las escaleras?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                Las escaleras industriales soportan 136kg (300 libras) Tipo IA, las comerciales 114kg (250 libras) Tipo I, y algunas comerciales de aluminio 102kg (225 libras) Tipo II.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Qué certificaciones tienen sus escaleras?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                Nuestras escaleras cumplen con ISO 9001:2015, ANSI 14.5 (Fibra de Vidrio), ANSI 14.2 (Aluminio), EN131 y OSHA.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Cuáles son los tipos de escaleras que fabrican?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                Fabricamos escaleras en extensión (2 y 3 cuerpos), tijeras, sencillas y caballete, tanto en fibra de vidrio como en aluminio, con capacidades industriales y comerciales.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Las escaleras de fibra de vidrio son seguras para trabajo eléctrico?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                Las escaleras de fibra de vidrio SÍ son 100% aislantes eléctricas y certificadas para trabajo en vivo. Las de aluminio NO deben usarse cerca de electricidad.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Cuánto tiempo dura una escalera de fibra de vidrio?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                Con el mantenimiento adecuado, una escalera de fibra de vidrio puede durar muchos años sin mostrar signos significativos de desgaste, especialmente en entornos corrosivos o eléctricos.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 7 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Qué norma certifica las escaleras en Colombia?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                El trabajo seguro en escaleras se rige por la Resolución 1409 de 2012 que establece el Reglamento de Seguridad para protección contra caídas en trabajo en alturas.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 8 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Cómo se debe inspeccionar una escalera?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                Inspeccionar rieles, peldaños, ganchos, cuerdas y zapatas antideslizantes para verificar que no haya daños o defectos antes de cada uso.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 9 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Cuáles son las escaleras más seguras?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                Las escaleras telescópicas son perfectas para trabajos seguros en diferentes alturas. Son fuertes, ligeras y resistentes.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 10 -->
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+              <span class="faq-question-text">¿Qué altura máxima pueden tener las escaleras?</span>
+              <i class="fas fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p class="faq-answer-text">
+                Está prohibido su uso para alturas superiores a 6m. Para alturas superiores a 3.5m debe utilizarse arnés de seguridad.
+              </p>
+            </div>
+          </div>
+
+          <button class="faq-view-all-btn" onclick="openFAQSPA()">
+            <i class="fas fa-question-circle"></i> Ver todas las preguntas (85)
+          </button>
         </div>
       </div>
     </section>
@@ -6143,6 +6623,526 @@ Gracias.`;
       });
     </script>
 
+    <script>
+      // ============================================
+      // SISTEMA FAQ - BASE DE DATOS Y FUNCIONES
+      // ============================================
+
+      // Base de datos de preguntas frecuentes
+      const faqDatabase = {
+        basicas: [
+          {
+            q: "¿Cómo se describe una escalera?",
+            a: "Conjunto de peldaños o escalones que enlazan dos planos a distinto nivel en una construcción o terreno, y que sirven para subir y bajar."
+          },
+          {
+            q: "¿Qué tipos de escaleras manuales hay?",
+            a: "Escalera simple de un tramo, escalera doble de tijera, escalera extensible, escalera transformable y escalera mixta con rótula."
+          },
+          {
+            q: "¿Qué medidas de escaleras hay?",
+            a: "1 huella – 1 contrahuella = 12 cm. Exteriores: 14-16 cm. Edificios públicos: 16-17 cm. En viviendas: 17-18 cm. En maquinaria: 10-25 cm. En escalas: >25 cm."
+          },
+          {
+            q: "¿Cómo se llaman las piezas de una escalera?",
+            a: "Escalón o peldaño (apoyo para los pies), huella (plano horizontal), contrahuella (plano vertical), escalón de arranque (primer peldaño de una escalera)."
+          },
+          {
+            q: "¿Cómo debe ser la estructura de una escalera?",
+            a: "Una escalera está conformada básicamente por una serie de escalones, los que se componen de una huella (parte horizontal donde se apoya el pie) y una contrahuella (parte vertical)."
+          },
+          {
+            q: "¿Cuáles son los tipos de escaleras?",
+            a: "Escalera de un tramo (sin giros), escalera con descansos (tramos separados), escalera cuadrada (tramos iguales por cuatro lados), escalera de ida y vuelta (tramos en sentidos opuestos)."
+          },
+          {
+            q: "¿Cuántos tipos de escaleras existen y cuáles son?",
+            a: "Existen tres tipos de escaleras según su forma: escaleras rectas, curvas y mixtas."
+          },
+          {
+            q: "¿Qué son y para qué sirven las escaleras?",
+            a: "Una escalera es una construcción diseñada para comunicar varios espacios situados a diferentes alturas. Está conformada por escalones (peldaños) y puede disponer de varios tramos separados por descansillos."
+          },
+          {
+            q: "¿Qué es una escalera y para qué sirve?",
+            a: "Construcción formada por una serie de planos horizontales a distintas alturas, que sirve para subir y bajar entre distintas plantas o niveles."
+          },
+          {
+            q: "¿Qué son las escaleras en la arquitectura?",
+            a: "Elemento constructivo conformado por escalones para comunicar espacios situados a diferentes alturas. Puede disponer de varios tramos separados por descansillos."
+          },
+          {
+            q: "¿Qué son las escaleras y para qué sirven?",
+            a: "La escalera manual es un aparato portátil que consiste en dos piezas paralelas o ligeramente convergentes unidas a intervalos por travesaños y que sirve para subir o bajar una persona de un nivel a otro."
+          },
+          {
+            q: "¿Qué son escaleras en construcción civil?",
+            a: "Escalera: construcción para comunicar espacios a diferentes alturas. Escalón: componentes de apoyo para los pies. Huella: plano horizontal. Contrahuella: plano vertical. Escalón de arranque: primer peldaño."
+          },
+          {
+            q: "¿Qué tipos de escaleras?",
+            a: "Pueden ser fijas, transportables o móviles. La transportable o 'de mano', elaborada con madera, cuerda o ambos materiales, se denomina escala."
+          },
+          {
+            q: "¿Cuántos tipos de escaleras hay y cuáles son?",
+            a: "Existen tres tipos de escaleras según su forma: escaleras rectas, curvas y mixtas."
+          }
+        ],
+        tipos: [
+          {
+            q: "¿Qué significa escalera tipo 1A?",
+            a: "Las de tipo IA son de uso industrial y suelen tener un peso máximo de 136 kilos y una altura que va entre los 90 cm a los 6 metros."
+          },
+          {
+            q: "¿Qué es una escalera tipo III?",
+            a: "Escalera de aluminio tipo III recomendada para trabajos de bajo impacto y uso doméstico. Modelo resistente con capacidad de carga de hasta 90 kg."
+          },
+          {
+            q: "¿Cuántos tipos de escaleras hay en la industria?",
+            a: "Los más frecuentes son la escala inclinada, escala vertical separada, escala vertical integrada, escala fija con jaula de protección o escala con punto de partida en alto."
+          },
+          {
+            q: "¿Qué significa una escalera tipo I?",
+            a: "Las de tipo I son de uso industrial y suelen tener un peso máximo de 113 kilos y una altura que va entre los 90 cm a los 6 metros."
+          },
+          {
+            q: "¿Cuáles son los tipos de escaleras?",
+            a: "Frontal (perpendicular a la fachada), adosada (paralelos a fachada), mixtas (combinación de varios tipos)."
+          },
+          {
+            q: "¿Qué es una escalera tipo 1?",
+            a: "Las escaleras tipo I son de uso industrial con peso máximo de 170 kilos y altura entre 90 cm a 6 metros."
+          },
+          {
+            q: "¿Qué tipos de escaleras manuales hay?",
+            a: "Escalera simple de un tramo, escalera doble de tijera, escalera extensible, escalera transformable, escalera mixta con rótula."
+          },
+          {
+            q: "¿Cuántos tipos de escaleras hay en la industria?",
+            a: "Escaleras de apoyo (fijas, extensibles manuales o mecánicas), escaleras de tijera, escaleras domésticas, plataformas de trabajo, escaleras telescópicas portátiles, articuladas y de fibra de vidrio."
+          },
+          {
+            q: "¿Estas escaleras de tipo industrial pueden ser?",
+            a: "Fijas, extensibles manuales o extensibles mecánicas. Se pueden usar tanto en el ámbito industrial como en el doméstico, fabricándose en múltiples alturas."
+          },
+          {
+            q: "¿Cómo se llaman las escaleras de trabajo?",
+            a: "Escaleras de tijera. Esta escalera es usada comúnmente en construcciones y sector industrial puesto que permite buena movilidad, puede ser ajustada a diferentes alturas y genera buena estabilidad."
+          },
+          {
+            q: "¿Qué tipos de escaleras usan los constructores?",
+            a: "Escaleras de apoyo, escaleras de tijera, escaleras domésticas o taburetes, plataformas de trabajo, escaleras telescópicas portátiles, escaleras articuladas, escaleras de fibra de vidrio."
+          },
+          {
+            q: "¿Cómo se llaman las escaleras de aluminio?",
+            a: "La escalera de aluminio multiposiciones, también conocida como escalera multifunción, tiene sistemas de bisagras articuladas bloqueables que permiten configurarla en distintas posiciones."
+          }
+        ],
+        materiales: [
+          {
+            q: "¿Cuánto tiempo dura una escalera de fibra de vidrio?",
+            a: "La vida útil de una escalera de fibra de vidrio tiende a ser más larga que la de aluminio, especialmente en entornos corrosivos o eléctricos. Con mantenimiento adecuado puede durar muchos años sin desgaste significativo."
+          },
+          {
+            q: "¿Cuánto peso soporta una escalera de fibra de vidrio?",
+            a: "Capacidad de carga: 136 kg (escaleras industriales tipo IA)."
+          },
+          {
+            q: "¿Qué significan los colores en las escaleras de fibra de vidrio?",
+            a: "La escalera gris es de aluminio (más común). Las verdes y naranjas son de fibra de vidrio, utilizadas por electricistas."
+          },
+          {
+            q: "¿Qué es mejor escalera de acero o aluminio?",
+            a: "Las escaleras de aluminio tienen peldaños muy seguros. Las de acero suelen tener peldaños redondos sin dentar, menos estabilidad. El aluminio no es magnético y no produce chispas."
+          },
+          {
+            q: "¿Qué es más resistente fibra de vidrio o madera?",
+            a: "La fibra de vidrio es mucho más resistente que la madera y tiene menos probabilidades de romperse; ideal para durabilidad extra prolongada."
+          },
+          {
+            q: "¿Qué tanto resiste la fibra de vidrio?",
+            a: "Es un material que no se corroe y es impermeable. Puede utilizarse en proyectos náuticos o expuestos a la intemperie. Al ser de origen mineral, es incombustible y no propaga el fuego."
+          },
+          {
+            q: "¿Qué afecta la fibra de vidrio?",
+            a: "El contacto puede irritar la piel y los ojos. Respirar vidrio fibroso puede irritar nariz y garganta. La exposición repetida puede causar hemorragia nasal."
+          },
+          {
+            q: "¿Dónde se usa la fibra de vidrio?",
+            a: "En cableado telefónico, internet, televisión por cable, aislamiento térmico y acústico, elaboración de tanques, recipientes industriales de almacenamiento, entre otros."
+          },
+          {
+            q: "¿Qué es mejor una escalera de acero o de aluminio?",
+            a: "Las escaleras de aluminio llevan peldaños muy seguros. El aluminio no es magnético y no produce chispas, reduciendo el riesgo de incendio."
+          },
+          {
+            q: "¿Cuáles son las escaleras más seguras?",
+            a: "Las escaleras telescópicas son perfectas para trabajos seguros en diferentes alturas. Son fuertes, ligeras y resistentes."
+          }
+        ],
+        seguridad: [
+          {
+            q: "¿Cuáles son las escaleras más seguras?",
+            a: "Las escaleras telescópicas son perfectas para trabajos seguros en diferentes alturas. Son fuertes, ligeras y resistentes."
+          },
+          {
+            q: "¿Qué norma certifica las escaleras?",
+            a: "La norma europea EN 131 establece criterios mínimos y máximos que las escaleras deben cumplir. La etiqueta 'EN 131' aparece solo si todos los requisitos se cumplen."
+          },
+          {
+            q: "¿Quién puede certificar una escalera?",
+            a: "La Asociación Nacional de Protección contra Incendios (NFPA) es una de las organizaciones más conocidas. Establece estándares para escaleras de mano, extensión y plataforma."
+          },
+          {
+            q: "¿Cómo saber si una escalera está homologada?",
+            a: "Las escaleras que cumplan todas las disposiciones de la norma pueden llevar el marcado EN 131, que garantiza su calidad y homologación."
+          },
+          {
+            q: "¿Qué es la NTC 4145?",
+            a: "Norma que establece las dimensiones mínimas y características generales que deben cumplir las escaleras principales en edificios y espacios urbanos y rurales."
+          },
+          {
+            q: "¿Qué norma certifica las escaleras en Colombia?",
+            a: "Resolución 1409 de 2012: establece el Reglamento de Seguridad para protección contra caídas en trabajo en alturas."
+          },
+          {
+            q: "¿Qué debo inspeccionar en una escalera?",
+            a: "Inspeccionar rieles, peldaños, ganchos, cuerdas y zapatas antideslizantes para verificar que no haya daños o defectos. Si los hay, no usar la escalera."
+          },
+          {
+            q: "¿Qué son las escaleras homologadas?",
+            a: "Las escaleras homologadas son aquellas que han sido evaluadas y certificadas por una organización acreditada, garantizando su calidad y seguridad."
+          },
+          {
+            q: "¿Qué norma deben cumplir las escaleras?",
+            a: "Las escaleras están reguladas por la norma europea EN 131. Escaleras de apoyo superiores a 3.000 mm deben equipar ensanchamiento de la base."
+          },
+          {
+            q: "¿Quién puede certificar una escalera?",
+            a: "La Asociación Nacional de Protección contra Incendios (NFPA) establece estándares y códigos para construcción y uso de escaleras."
+          },
+          {
+            q: "¿Dónde certificar escaleras?",
+            a: "La NFPA (Asociación Nacional de Protección contra Incendios) es una de las organizaciones de certificación más conocidas."
+          },
+          {
+            q: "¿Qué norma certifica las escaleras en Colombia?",
+            a: "Resolución 1409 de 2012: establece el Reglamento de Seguridad para protección contra caídas en trabajo en alturas."
+          },
+          {
+            q: "¿Qué debo inspeccionar en una escalera?",
+            a: "Inspeccionar rieles, peldaños, ganchos, cuerdas y zapatas antideslizantes para verificar que no haya daños o defectos antes de cada uso."
+          },
+          {
+            q: "¿Cómo se debe sostener una escalera de tijera?",
+            a: "La base debe quedar sólidamente asentada. En escaleras simples la parte superior se sujetará al paramento sobre el que se apoya si es necesario."
+          },
+          {
+            q: "¿Cuáles son las normas de seguridad para las pasarelas?",
+            a: "Mantener limpia y libre de obstáculos, no sobrecargar, no utilizar si está dañada, sujetarse a las barandillas, no correr por la pasarela."
+          }
+        ],
+        extension: [
+          {
+            q: "¿Qué es una escalera de extensión?",
+            a: "A diferencia de las escaleras de una longitud, las de extensión doble tienen longitud cerrada más corta. Son más fáciles de almacenar y transportar."
+          },
+          {
+            q: "¿Cómo subir escalera de extensión?",
+            a: "Alzar hasta la altura deseada y trancar ambos lados. Nunca pararse en los tres últimos peldaños. No recostar contra objeto movible. Sujetarse de los lados con ambas manos."
+          },
+          {
+            q: "¿Cuánto mide una escalera extensible?",
+            a: "Longitud plegada de 3,60 metros. Longitud extendida de 6,30 metros."
+          },
+          {
+            q: "¿Qué se le inspecciona a una escalera de extensión?",
+            a: "Inspeccionar rieles, peldaños, ganchos, cuerdas y zapatas antideslizantes para verificar que no haya daños o defectos antes de usar."
+          },
+          {
+            q: "¿Cuándo se usa una escalera de extensión para obtener el ángulo adecuado?",
+            a: "La parte superior debe superar en un metro la altura de la estructura de apoyo y debe estar inclinada en ángulo de 75 grados (1:4 - 1 pie fuera por cada 4 pies de altura)."
+          },
+          {
+            q: "¿Cuántos peldaños de una escalera de extensión deben sobresalir?",
+            a: "Debe haber como mínimo cuatro escalones libres por encima de la posición de los pies para ofrecer apoyo a las manos."
+          },
+          {
+            q: "¿Cuánto mide la escalera de 24 peldaños?",
+            a: "Longitud plegada de 3,60 metros. Longitud extendida de 6,30 metros."
+          },
+          {
+            q: "¿Qué altura alcanza una escalera de 24 peldaños?",
+            a: "Escalera de Aluminio de Extensión 24 Peldaños Tipo IA alcanza 6.40 metros con carga de 136 Kg."
+          }
+        ],
+        tijera: [
+          {
+            q: "¿Qué es una escalera tipo tijera?",
+            a: "Las escaleras de tijera tienen 2 rieles, generalmente uno solo con peldaños, pero pueden tener acceso doble. Con plataforma y bandejas facilitan la ubicación de herramientas."
+          },
+          {
+            q: "¿Cuánto mide una escalera de tijera de 7 peldaños?",
+            a: "Longitud de 2,10 metros."
+          },
+          {
+            q: "¿Qué altura tiene una escalera de 10 peldaños?",
+            a: "La escalera tijera de aluminio de 10 peldaños mide 3.05 metros, siendo la más popular en su ramo."
+          },
+          {
+            q: "¿Cuánto mide una escalera de tijera de 9 peldaños?",
+            a: "Altura 3 m, alcance máximo 4.30 m, apertura lateral 1.70 m, 9 peldaños, ancho de peldaños 7.60 cm, peso 10.65kg."
+          },
+          {
+            q: "¿Cuánto mide una escalera de tijera de 8 peldaños?",
+            a: "Escalera tijera fibra de vidrio 2.44 metros y 8 peldaños con capacidad de 102 Kg."
+          },
+          {
+            q: "¿Cuánto mide una escalera de 13 peldaños?",
+            a: "13 peldaños, peso 6.5 kg, dimensiones 350 x 6.5 x 39 cm, longitud de escalera 3.5 m."
+          },
+          {
+            q: "¿Cuáles son las condiciones para utilizar una escalera tipo tijera?",
+            a: "Mover la escalera cuando sea necesario. No moverse mientras esté parado sobre ella. No pararse, trepar o sentarse en la parte superior o estante del cubo."
+          },
+          {
+            q: "¿Cuánto mide una escalera tijera de 12 pasos?",
+            a: "Escalera Certificada Tipo Tijera 12 Pasos de 3,60 Metros en Aluminio Tipo I de 113 Kilogramos de Resistencia."
+          },
+          {
+            q: "¿Cómo se llaman las partes de una escalera de tijera?",
+            a: "Articulación (permite el plegado), largueros (soporte de peldaños), peldaños (apoyo de los pies), limitador de abertura (limita abertura máxima)."
+          }
+        ],
+        medidas: [
+          {
+            q: "¿Cuál es el mejor ángulo para una escalera?",
+            a: "La inclinación debe ser tal que la distancia del pie a la vertical esté entre el cuarto y el tercio de su longitud, correspondiendo una inclinación entre 75,5° y 70,5°."
+          },
+          {
+            q: "¿Cuántos escalones lleva una escalera de 3 metros de altura?",
+            a: "Tres metros (300 cm) dividido entre el tamaño de cada contrahuella (18 cm) = 16,6, redondeado al alza = 17 escalones."
+          },
+          {
+            q: "¿Qué anchura mínima deben tener las escaleras?",
+            a: "La anchura mínima de una escalera de uso normal es de 90 cm para no dificultar el movimiento de la persona."
+          },
+          {
+            q: "¿Cuánto mide una escalera dieléctrica?",
+            a: "Longitud plegada de 4,90 metros. Longitud extendida de 8,90 metros. Peso de 32,60 kilogramos."
+          },
+          {
+            q: "¿Cuánto mide una escalera de tijera de 12 peldaños?",
+            a: "Longitud plegada de 3,65 metros. Longitud extendida de 6,40 metros. Peso de 35,50 kilogramos."
+          },
+          {
+            q: "¿Cuánto mide escalera de 8 peldaños?",
+            a: "Longitud plegada de 2,40 metros. Longitud extendida de 3,90 metros."
+          },
+          {
+            q: "¿Qué medidas de escaleras hay?",
+            a: "1 huella – 1 contrahuella = 12 cm. Exteriores: 14-16 cm. Edificios públicos: 16-17 cm. En viviendas: 17-18 cm. En maquinaria: 10-25 cm."
+          },
+          {
+            q: "¿Cuál es la distancia entre escalones de escalera?",
+            a: "La distancia entre todos los peldaños debe ser igual, con distancia mínima de 20 cm y máxima de 30 cm. La profundidad debe tener al menos 20 milímetros."
+          }
+        ]
+      };
+
+      // Funciones del FAQ
+      function toggleFAQ(button) {
+        const faqItem = button.closest('.faq-item');
+        const wasActive = faqItem.classList.contains('active');
+
+        // Cerrar todas las FAQs
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.classList.remove('active');
+        });
+
+        // Abrir la seleccionada si no estaba activa
+        if (!wasActive) {
+          faqItem.classList.add('active');
+        }
+      }
+
+      function scrollToFAQ() {
+        const faqSection = document.getElementById('faq');
+        if (faqSection) {
+          const headerOffset = 120;
+          const elementPosition = faqSection.offsetTop;
+          const offsetPosition = elementPosition - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+
+      function openFAQSPA() {
+        const faqSPA = document.getElementById('faqSPA');
+        if (faqSPA) {
+          faqSPA.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          renderAllFAQs();
+        }
+      }
+
+      function closeFAQSPA() {
+        const faqSPA = document.getElementById('faqSPA');
+        if (faqSPA) {
+          faqSPA.classList.remove('active');
+          document.body.style.overflow = 'auto';
+
+          // Limpiar búsqueda y filtros
+          document.getElementById('faqSearchInput').value = '';
+          filterFAQs('todos');
+        }
+      }
+
+      function closeFAQSPAAndGoHome() {
+        closeFAQSPA();
+        setTimeout(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }, 300);
+      }
+
+      function renderAllFAQs() {
+        const container = document.getElementById('faqCategoriesContainer');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        const categories = {
+          'basicas': 'Básicas y Definiciones',
+          'tipos': 'Tipos y Clasificaciones',
+          'materiales': 'Materiales y Propiedades',
+          'seguridad': 'Seguridad y Normativas',
+          'extension': 'Escaleras de Extensión',
+          'tijera': 'Escaleras de Tijera',
+          'medidas': 'Medidas y Especificaciones'
+        };
+
+        for (const [catKey, catName] of Object.entries(categories)) {
+          if (faqDatabase[catKey] && faqDatabase[catKey].length > 0) {
+            const categorySection = document.createElement('div');
+            categorySection.className = 'faq-category-section';
+            categorySection.dataset.category = catKey;
+
+            const categoryTitle = document.createElement('h3');
+            categoryTitle.className = 'faq-category-title';
+            categoryTitle.textContent = catName;
+            categorySection.appendChild(categoryTitle);
+
+            faqDatabase[catKey].forEach((faq, index) => {
+              const faqItem = document.createElement('div');
+              faqItem.className = 'faq-item';
+              faqItem.dataset.category = catKey;
+              faqItem.dataset.question = faq.q.toLowerCase();
+              faqItem.dataset.answer = faq.a.toLowerCase();
+
+              faqItem.innerHTML = `
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                  <span class="faq-question-text">${faq.q}</span>
+                  <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                  <p class="faq-answer-text">${faq.a}</p>
+                </div>
+              `;
+
+              categorySection.appendChild(faqItem);
+            });
+
+            container.appendChild(categorySection);
+          }
+        }
+      }
+
+      function filterFAQs(category) {
+        // Actualizar botones activos
+        document.querySelectorAll('.faq-filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+
+        const clickedButton = event.target;
+        if (clickedButton) {
+          clickedButton.classList.add('active');
+        }
+
+        // Limpiar búsqueda
+        document.getElementById('faqSearchInput').value = '';
+
+        // Mostrar/ocultar categorías
+        const sections = document.querySelectorAll('.faq-category-section');
+        const noResults = document.getElementById('faqNoResults');
+        let visibleSections = 0;
+
+        sections.forEach(section => {
+          if (category === 'todos' || section.dataset.category === category) {
+            section.style.display = 'block';
+            visibleSections++;
+          } else {
+            section.style.display = 'none';
+          }
+        });
+
+        if (visibleSections === 0) {
+          noResults.style.display = 'block';
+        } else {
+          noResults.style.display = 'none';
+        }
+      }
+
+      function searchFAQs() {
+        const searchTerm = document.getElementById('faqSearchInput').value.toLowerCase();
+        const faqItems = document.querySelectorAll('.faq-item');
+        const sections = document.querySelectorAll('.faq-category-section');
+        const noResults = document.getElementById('faqNoResults');
+        let visibleCount = 0;
+
+        if (searchTerm === '') {
+          // Mostrar todo
+          faqItems.forEach(item => item.style.display = 'block');
+          sections.forEach(section => section.style.display = 'block');
+          noResults.style.display = 'none';
+          return;
+        }
+
+        faqItems.forEach(item => {
+          const question = item.dataset.question || '';
+          const answer = item.dataset.answer || '';
+
+          if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+            item.style.display = 'block';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Mostrar/ocultar secciones según si tienen items visibles
+        sections.forEach(section => {
+          const visibleItems = section.querySelectorAll('.faq-item[style="display: block;"]');
+          if (visibleItems.length > 0) {
+            section.style.display = 'block';
+          } else {
+            section.style.display = 'none';
+          }
+        });
+
+        if (visibleCount === 0) {
+          noResults.style.display = 'block';
+        } else {
+          noResults.style.display = 'none';
+        }
+      }
+    </script>
+
     <!-- Chatbot Container -->
     <div id="chatbot-container" class="chatbot-fixed">
       <div id="chatbot-toggle" class="chatbot-toggle">
@@ -6377,5 +7377,64 @@ Gracias.`;
         </div>
       </div>
     </div>
+
+    <!-- FAQ SPA -->
+    <div id="faqSPA" class="faq-spa">
+      <div class="faq-spa-header">
+        <div class="faq-spa-header-content">
+          <h2 class="faq-spa-title">
+            <i class="fas fa-question-circle"></i>
+            Preguntas Frecuentes - Escaleras Ferre
+          </h2>
+          <div class="faq-spa-controls">
+            <button class="faq-home-btn" onclick="closeFAQSPAAndGoHome()">
+              <i class="fas fa-home"></i>
+              Volver al Inicio
+            </button>
+            <button class="faq-close" onclick="closeFAQSPA()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-spa-content">
+        <!-- Buscador -->
+        <div class="faq-search-container">
+          <input
+            type="text"
+            id="faqSearchInput"
+            class="faq-search-box"
+            placeholder="🔍 Busca tu pregunta aquí..."
+            onkeyup="searchFAQs()"
+          />
+        </div>
+
+        <!-- Filtros -->
+        <div class="faq-filters">
+          <button class="faq-filter-btn active" onclick="filterFAQs('todos')">Todos</button>
+          <button class="faq-filter-btn" onclick="filterFAQs('basicas')">Básicas</button>
+          <button class="faq-filter-btn" onclick="filterFAQs('tipos')">Tipos</button>
+          <button class="faq-filter-btn" onclick="filterFAQs('materiales')">Materiales</button>
+          <button class="faq-filter-btn" onclick="filterFAQs('seguridad')">Seguridad</button>
+          <button class="faq-filter-btn" onclick="filterFAQs('extension')">Extensión</button>
+          <button class="faq-filter-btn" onclick="filterFAQs('tijera')">Tijera</button>
+          <button class="faq-filter-btn" onclick="filterFAQs('medidas')">Medidas</button>
+        </div>
+
+        <!-- Contenedor de FAQs -->
+        <div id="faqCategoriesContainer">
+          <!-- Las preguntas se generarán dinámicamente con JavaScript -->
+        </div>
+
+        <!-- Mensaje sin resultados -->
+        <div id="faqNoResults" class="faq-no-results" style="display: none;">
+          <i class="fas fa-search"></i>
+          <h3>No se encontraron preguntas</h3>
+          <p>Intenta con otras palabras clave o selecciona una categoría diferente</p>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
