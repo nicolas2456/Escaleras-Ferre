@@ -77,7 +77,7 @@
 
       .whatsapp-container {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         gap: 40px;
         max-width: 1200px;
         margin: 0 auto;
@@ -464,6 +464,27 @@
 
       .spa-close:hover {
         background: rgba(255, 255, 255, 0.2);
+      }
+
+      .spa-home-btn {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--border-radius-sm);
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        margin-right: 1rem;
+      }
+
+      .spa-home-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.5);
       }
 
       .spa-content {
@@ -3105,11 +3126,6 @@
               >
             </li>
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
-            <li>
-              <a href="#" class="nav-link" onclick="openPQRS(); return false;"
-                >PQRS</a
-              >
-            </li>
           </ul>
         </nav>
       </div>
@@ -3350,9 +3366,15 @@
             <i class="fas fa-th-large"></i>
             Catálogo Completo - Escaleras Ferre
           </h2>
-          <button class="spa-close" onclick="closeCatalogSPA()">
-            <i class="fas fa-times"></i>
-          </button>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <button class="spa-home-btn" onclick="closeCatalogAndGoHome()">
+              <i class="fas fa-home"></i>
+              Volver al Inicio
+            </button>
+            <button class="spa-close" onclick="closeCatalogSPA()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -4431,6 +4453,17 @@
           document.body.style.overflow = "auto";
           console.log("✅ Catálogo SPA cerrado");
         }
+      }
+
+      function closeCatalogAndGoHome() {
+        console.log("🏠 Cerrando catálogo y volviendo al inicio...");
+        closeCatalogSPA();
+        setTimeout(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }, 300);
       }
 
       function filterProducts(category) {
