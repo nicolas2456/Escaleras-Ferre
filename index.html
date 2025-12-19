@@ -1953,6 +1953,39 @@
         color: rgba(255, 255, 255, 0.7);
       }
 
+      /* Mobile Menu Toggle */
+      .mobile-menu-toggle {
+        display: none;
+        flex-direction: column;
+        background: var(--color-primary);
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      .mobile-menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: white;
+        margin: 3px 0;
+        transition: 0.3s;
+        border-radius: 3px;
+      }
+
+      .mobile-menu-toggle.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-6px, 6px);
+      }
+
+      .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .mobile-menu-toggle.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-6px, -6px);
+      }
+
       /* Responsive */
       @media (max-width: 768px) {
         body {
@@ -1975,8 +2008,47 @@
           font-size: 0.8rem;
         }
 
+        .mobile-menu-toggle {
+          display: flex;
+        }
+
         .nav-menu {
-          display: none;
+          position: fixed;
+          top: 0;
+          right: -100%;
+          width: 75%;
+          max-width: 300px;
+          height: 100vh;
+          background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 30px;
+          transition: right 0.3s ease;
+          z-index: 1000;
+          box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          width: 80%;
+          text-align: center;
+        }
+
+        .nav-menu .nav-link {
+          color: white;
+          font-size: 1.2rem;
+          padding: 15px;
+          display: block;
+          border-radius: 8px;
+          transition: background 0.3s ease;
+        }
+
+        .nav-menu .nav-link:hover {
+          background: rgba(255, 255, 255, 0.1);
         }
 
         .logo-text {
@@ -2712,7 +2784,131 @@
         opacity: 0.5;
       }
 
+      /* Nueva Sección FAQ Atractiva */
+      .faq-hero {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 80px 0;
+        border-top: 1px solid #dee2e6;
+      }
+
+      .faq-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .faq-text h2 {
+        font-family: var(--font-heading);
+        font-size: 2.5rem;
+        color: var(--color-primary);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .faq-text p {
+        font-size: 1.1rem;
+        color: var(--color-text);
+        line-height: 1.7;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .faq-stats {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .faq-stats span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1rem;
+        color: var(--color-text-light);
+        font-weight: 500;
+      }
+
+      .faq-stats i {
+        color: var(--color-accent);
+        font-size: 1.2rem;
+      }
+
+      .faq-action {
+        display: flex;
+        justify-content: center;
+      }
+
+      .btn-faq-main {
+        background: linear-gradient(135deg, var(--color-primary), #3a6b1e);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 8px 20px rgba(45,80,22,0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        min-width: 280px;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .btn-faq-main:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(45,80,22,0.4);
+      }
+
+      .btn-faq-main i {
+        font-size: 2rem;
+        flex-shrink: 0;
+      }
+
+      .btn-faq-main span {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .btn-faq-main strong {
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .btn-faq-main small {
+        font-size: 0.85rem;
+        opacity: 0.9;
+        font-weight: 400;
+      }
+
       /* Responsive FAQ */
+      @media (max-width: 768px) {
+        .faq-hero {
+          padding: 60px 0;
+        }
+
+        .faq-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 30px;
+        }
+
+        .faq-text h2 {
+          font-size: 2rem;
+        }
+
+        .faq-stats {
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 15px;
+        }
+
+        .btn-faq-main {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Responsive FAQ SPA (existente) */
       @media (max-width: 768px) {
         .faq-title {
           font-size: 2rem;
@@ -3485,6 +3681,13 @@
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
           </ul>
         </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </header>
 
@@ -3504,7 +3707,7 @@
                 </p>
                 <div class="hero-ctas fade-in visible">
                     <a href="#" onclick="openCatalogSPA()" class="cta-primary">
-                        <i class="fas fa-th-large"></i>
+                        <i class="fas fa-layer-group"></i>
                         Ver Catálogo Completo
                     </a>
                     <a href="#" onclick="abrirChatbotContacto()" class="cta-secondary">
@@ -3627,149 +3830,26 @@
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="faq-section">
+    <section id="faq" class="faq-hero">
       <div class="container">
-        <div class="faq-header">
-          <h2 class="faq-title fade-in visible">Preguntas Frecuentes</h2>
-          <p class="faq-subtitle fade-in visible">
-            Resuelve las dudas más comunes sobre nuestras escaleras
-          </p>
-        </div>
-
-        <div class="faq-container">
-          <!-- FAQ 1 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Cuál es la diferencia entre fibra de vidrio y aluminio?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                La fibra de vidrio es aislante eléctrica (ideal para trabajo eléctrico), más durable pero más pesada. El aluminio es más liviano y económico, pero conduce electricidad.
-              </p>
+        <div class="faq-content">
+          <div class="faq-text">
+            <h2>¿Tienes Preguntas?</h2>
+            <p>Encuentra respuestas a todas tus dudas sobre escaleras, seguridad, instalación y mantenimiento en nuestro centro de ayuda completo.</p>
+            <div class="faq-stats">
+              <span><i class="fas fa-question-circle"></i> 85+ Preguntas</span>
+              <span><i class="fas fa-tags"></i> 7 Categorías</span>
             </div>
           </div>
-
-          <!-- FAQ 2 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Qué capacidad de peso soportan las escaleras?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
+          <div class="faq-action">
+            <button onclick="openFAQSPA()" class="btn-faq-main">
+              <i class="fas fa-book-open"></i>
+              <span>
+                <strong>Ver Todas las Preguntas</strong>
+                <small>Centro de Ayuda Completo</small>
+              </span>
             </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                Las escaleras industriales soportan 136kg (300 libras) Tipo IA, las comerciales 114kg (250 libras) Tipo I, y algunas comerciales de aluminio 102kg (225 libras) Tipo II.
-              </p>
-            </div>
           </div>
-
-          <!-- FAQ 3 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Qué certificaciones tienen sus escaleras?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                Nuestras escaleras cumplen con ISO 9001:2015, ANSI 14.5 (Fibra de Vidrio), ANSI 14.2 (Aluminio), EN131 y OSHA.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 4 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Cuáles son los tipos de escaleras que fabrican?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                Fabricamos escaleras en extensión (2 y 3 cuerpos), tijeras, sencillas y caballete, tanto en fibra de vidrio como en aluminio, con capacidades industriales y comerciales.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 5 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Las escaleras de fibra de vidrio son seguras para trabajo eléctrico?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                Las escaleras de fibra de vidrio SÍ son 100% aislantes eléctricas y certificadas para trabajo en vivo. Las de aluminio NO deben usarse cerca de electricidad.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 6 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Cuánto tiempo dura una escalera de fibra de vidrio?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                Con el mantenimiento adecuado, una escalera de fibra de vidrio puede durar muchos años sin mostrar signos significativos de desgaste, especialmente en entornos corrosivos o eléctricos.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 7 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Qué norma certifica las escaleras en Colombia?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                El trabajo seguro en escaleras se rige por la Resolución 1409 de 2012 que establece el Reglamento de Seguridad para protección contra caídas en trabajo en alturas.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 8 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Cómo se debe inspeccionar una escalera?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                Inspeccionar rieles, peldaños, ganchos, cuerdas y zapatas antideslizantes para verificar que no haya daños o defectos antes de cada uso.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 9 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Cuáles son las escaleras más seguras?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                Las escaleras telescópicas son perfectas para trabajos seguros en diferentes alturas. Son fuertes, ligeras y resistentes.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ 10 -->
-          <div class="faq-item">
-            <button class="faq-question" onclick="toggleFAQ(this)">
-              <span class="faq-question-text">¿Qué altura máxima pueden tener las escaleras?</span>
-              <i class="fas fa-chevron-down faq-icon"></i>
-            </button>
-            <div class="faq-answer">
-              <p class="faq-answer-text">
-                Está prohibido su uso para alturas superiores a 6m. Para alturas superiores a 3.5m debe utilizarse arnés de seguridad.
-              </p>
-            </div>
-          </div>
-
-          <button class="faq-view-all-btn" onclick="openFAQSPA()">
-            <i class="fas fa-question-circle"></i> Ver todas las preguntas 
-          </button>
         </div>
       </div>
     </section>
@@ -4920,6 +5000,14 @@
                 ]
             }
         ];
+
+      // Función para el menú móvil
+      function toggleMobileMenu() {
+        const navMenu = document.querySelector('.nav-menu');
+        const toggleBtn = document.querySelector('.mobile-menu-toggle');
+        navMenu.classList.toggle('active');
+        toggleBtn.classList.toggle('active');
+      }
 
       // Funciones del catálogo
       function openCatalogSPA() {
