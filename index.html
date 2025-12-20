@@ -2031,6 +2031,18 @@
           transform: translateX(-50%);
           z-index: 1001;
           pointer-events: auto;
+          transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          left: auto;
+          bottom: auto;
+          transform: none;
+          z-index: 1002;
+          background: rgba(255, 255, 255, 0.2);
         }
 
         .nav-menu {
