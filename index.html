@@ -1961,14 +1961,18 @@
 
       /* Mobile Menu Toggle */
       .mobile-menu-toggle {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
         display: none;
         flex-direction: column;
         background: var(--color-primary);
         border: none;
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 6px;
         cursor: pointer;
-        z-index: 1001;
+        z-index: 999;
       }
 
       .mobile-menu-toggle span {
@@ -2014,8 +2018,23 @@
           font-size: 0.8rem;
         }
 
+        .nav-container {
+          position: relative;
+        }
+
         .mobile-menu-toggle {
           display: flex;
+          position: absolute;
+          right: 15px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: var(--color-primary);
+          border: none;
+          padding: 10px;
+          border-radius: 6px;
+          cursor: pointer;
+          z-index: 1001;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .nav-menu {
@@ -3698,14 +3717,14 @@
             <li><a href="#faq" class="nav-link" onclick="scrollToFAQ(); return false;">FAQ</a></li>
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
           </ul>
-        </nav>
 
-        <!-- Mobile Menu Toggle -->
-        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-menu-toggle" id="mobile-hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
       </div>
     </header>
 
