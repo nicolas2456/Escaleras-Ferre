@@ -122,18 +122,17 @@
       .nav-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 1.2rem var(--spacing-sm);
+        padding: 1.2rem var(--spacing-sm) 2rem var(--spacing-sm);
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
 
-      .logo-container {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-      }
-
+    .logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
       .logo {
         width: 50px;
         height: 50px;
@@ -192,31 +191,20 @@
         letter-spacing: 1px;
       }
 
-      .logo-subtitle {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 1rem;
-  color: var(--color-accent);
-  font-weight: 400;
-  font-style: italic;
-  text-transform: capitalize;
-  letter-spacing: 1.2px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-  position: relative;
+     .logo-subtitle-img {
+  height: 100px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  margin-left: 0px;
+  margin-top: 15px;
+  transform: translate(-38px, -13px);
+  transition: all 0.3s ease;
+  filter: brightness(1.1);
+  flex-shrink: 0;
 }
 
-.logo-subtitle::before {
-  content: '✦';
-  margin-right: 8px;
-  font-size: 0.8rem;
-  opacity: 0.8;
-}
 
-.logo-subtitle::after {
-  content: '✦';
-  margin-left: 8px;
-  font-size: 0.8rem;
-  opacity: 0.8;
-}
 
       .nav-menu {
         display: flex;
@@ -2073,11 +2061,14 @@
           font-size: 1.2rem;
         }
 
-        .logo-subtitle {
-  font-size: 0.85rem;
-  letter-spacing: 1px;
+      .logo-subtitle-img {
+    height: 80px;
+    max-width: 120px;
+    margin-left: 10px;
+    margin-top: 5px;
+    transform: translate(0, 0); /* quita el desplazamiento */
+  }
 }
-
 .logo-subtitle::before,
 .logo-subtitle::after {
   font-size: 0.7rem;
@@ -3680,16 +3671,19 @@
     <header class="header">
       <div class="nav-container">
         <div class="logo-container">
-          <img
-            src="https://i.ibb.co/4Z35yMq4/logo-negro.png"
-            alt="Escaleras Ferre Logo"
-            class="logo-svg"
-          />
-          <div>
-            <div class="logo-text">ESCALERAS FERRE</div>
-            <div class="logo-subtitle">Suministros Varios</div>
-          </div>
-        </div>
+  <img
+    src="https://i.ibb.co/4Z35yMq4/logo-negro.png"
+    alt="Escaleras Ferre Logo"
+    class="logo-svg"
+  />
+  <div>
+    <div style="display: flex; align-items: center; gap: 20px;">
+  <div>
+    <div class="logo-text">ESCALERAS FERRE</div>
+  </div>
+  <img src="https://i.imgur.com/sF5UraB.png" alt="Suministros Varios" class="logo-subtitle-img" />
+</div>
+</div>
 
         <nav>
           <ul class="nav-menu">
