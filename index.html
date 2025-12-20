@@ -2011,7 +2011,7 @@
 
         .nav-container {
           position: relative;
-          padding: 2rem var(--spacing-sm);
+          padding: 1.5rem var(--spacing-sm) 4rem;
           flex-wrap: wrap;
           justify-content: center;
           gap: 15px;
@@ -2020,9 +2020,11 @@
         .mobile-menu-toggle {
           display: flex;
           position: absolute;
-          bottom: 10px;
+          bottom: 15px;
           left: 50%;
           transform: translateX(-50%);
+          z-index: 1001;
+          pointer-events: auto;
         }
 
         .nav-menu {
@@ -5016,10 +5018,28 @@
 
       // Función para el menú móvil
       function toggleMobileMenu() {
+        console.log('🔘 Toggle menu clicked');
         const navMenu = document.querySelector('.nav-menu');
         const toggleBtn = document.querySelector('.mobile-menu-toggle');
+
+        if (!navMenu || !toggleBtn) {
+          console.error('❌ Elementos no encontrados');
+          return;
+        }
+
+        const isActive = navMenu.classList.contains('active');
+
         navMenu.classList.toggle('active');
         toggleBtn.classList.toggle('active');
+
+        // Bloquear/desbloquear scroll del body
+        if (!isActive) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = 'auto';
+        }
+
+        console.log('✅ Menu toggled, active:', !isActive);
       }
 
       // Cerrar menú móvil al hacer clic en un enlace
@@ -5032,6 +5052,7 @@
             if (navMenu.classList.contains('active')) {
               navMenu.classList.remove('active');
               toggleBtn.classList.remove('active');
+              document.body.style.overflow = 'auto';
             }
           });
         });
