@@ -1955,18 +1955,19 @@
 
       /* Mobile Menu Toggle */
       .mobile-menu-toggle {
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
+        position: fixed;
+        left: 50%;
+        top: 100px;
+        transform: translateX(-50%);
         display: none;
         flex-direction: column;
         background: var(--color-primary);
         border: none;
-        padding: 10px;
-        border-radius: 6px;
+        padding: 12px;
+        border-radius: 8px;
         cursor: pointer;
         z-index: 999;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
 
       .mobile-menu-toggle span {
@@ -2012,23 +2013,9 @@
           font-size: 0.8rem;
         }
 
-        .nav-container {
-          position: relative;
-        }
-
         .mobile-menu-toggle {
           display: flex;
-          position: absolute;
-          right: 15px;
-          top: 50%;
-          transform: translateY(-50%);
-          background: var(--color-primary);
-          border: none;
-          padding: 10px;
-          border-radius: 6px;
-          cursor: pointer;
-          z-index: 1001;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          top: 170px;
         }
 
         .nav-menu {
@@ -3699,16 +3686,16 @@
             <li><a href="#faq" class="nav-link" onclick="scrollToFAQ(); return false;">FAQ</a></li>
             <li><a href="#contacto" class="nav-link">Contacto</a></li>
           </ul>
-
-          <!-- Mobile Menu Toggle -->
-          <button class="mobile-menu-toggle" id="mobile-hamburger" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
         </nav>
       </div>
     </header>
+
+    <!-- Mobile Menu Toggle - Centrado debajo del header -->
+    <button class="mobile-menu-toggle" id="mobile-hamburger" onclick="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
     <!-- Hero Section -->
     <section id="inicio" class="hero">
